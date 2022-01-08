@@ -1,8 +1,8 @@
-﻿namespace ZeUnit
+﻿namespace ZeUnit;
+
+public class ZeAssertion
 {
-    public class ZeAssertion
-    {
-        public ZeStatus Status { get; set; }
-        public string Message { get; set; }
-    }
+    public ZeStatus Status { get; set; }
+    public string Message { get; set; }
+
 }

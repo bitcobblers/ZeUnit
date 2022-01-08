@@ -1,8 +1,6 @@
-﻿namespace ZeUnit
+﻿namespace ZeUnit;
+public enum ZeStatus
 {
-    public enum ZeStatus
-    {
-        Passed,
-        Failed
-    }
+    Passed,
+    Failed
 }

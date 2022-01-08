@@ -1,33 +1,15 @@
-﻿using System.Collections;
-
-namespace ZeUnit
+﻿namespace ZeUnit;
+public class ZeResult : IEnumerable<ZeAssertion>
 {
-    public static class Ze
+    private List<ZeAssertion> assertions = new List<ZeAssertion>();
+
+    public ZeResult Assert(ZeAssertion assertion)
     {
-        public static ZeResult Assert()
-        {
-            return new ZeResult();
-        }
+        assertions.Add(assertion);
+        return this;
     }
 
-    public class ZeResult : IEnumerable<ZeAssertion>
-    {
-        private List<ZeAssertion> assertions = new List<ZeAssertion>();        
+    public IEnumerator<ZeAssertion> GetEnumerator() => assertions.GetEnumerator();
 
-        public ZeResult Assert(ZeAssertion assertion)
-        {
-            assertions.Add(assertion);
-            return this;
-        }
-
-        public IEnumerator<ZeAssertion> GetEnumerator()
-        {
-            return assertions.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return assertions.GetEnumerator();
-        }
-    }
+    IEnumerator IEnumerable.GetEnumerator() => assertions.GetEnumerator();
 }

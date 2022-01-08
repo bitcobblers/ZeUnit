@@ -1,13 +1,8 @@
-﻿using System.Reflection;
+﻿namespace ZeUnit;
 
-namespace ZeUnit
+public class ZeTest
 {
-    public class ZeTest
-    {
-        public string Name { get; set; }
+    public TypeInfo Class { get; set; }
 
-        public string Description { get; set; }
-
-        public MethodInfo Method { get; set; }
-    }
+    public MethodInfo Method { get; set; }
 }
