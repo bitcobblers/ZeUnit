@@ -3,7 +3,10 @@
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
     private List<ZeTest> tests = new List<ZeTest>();
-
+    private List<Func<Type, bool>> conditions = new List<Func<Type, bool>>()
+    {
+        (type) => type.Namespace != "ZeUnit",        
+    };
     public ZeDiscovery FromAssemblies(Assembly[] sources)
     {
         foreach (var assembly in sources)
@@ -14,18 +17,25 @@ public class ZeDiscovery : IEnumerable<ZeTest>
         return this;
     }
 
+    public ZeDiscovery Where(Func<Type, bool> selctor)
+    {
+        conditions.Add(selctor);
+        return this;
+    }
+
     public ZeDiscovery FromAssembly(Assembly source)
     {
-        tests.AddRange(source.GetTypes()
-            .Where(type => type.Namespace != "ZeUnit")
+        tests.AddRange(source.GetTypes()            
             .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
                 .Where(m => m.ReturnType.Equals(typeof(ZeResult)))
                 .Select(m => new ZeTest() { Class = type.GetTypeInfo(), Method = m })));
 
         return this;
-    }
+    }    
 
-    public IEnumerator<ZeTest> GetEnumerator() => tests.GetEnumerator();
+    public IEnumerator<ZeTest> GetEnumerator() => tests
+        .Where(test => conditions.Aggregate(true, (sum, n) => n(test.Class) && sum))
+        .GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() => tests.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 }

@@ -7,19 +7,17 @@ public static class Ze
         return new ZeResult();
     }
     
-    public static void Unit<TActivator>(params Assembly[] assemblies)
+    public static void Unit<TActivator>(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)
         where TActivator : IZeTestActivator, IDisposable, new()
     {
         var testRunner = new ZeRunner<TActivator>();
-        var discovery = new ZeDiscovery()
-            .FromAssemblies(assemblies);
-        
-        var reporter = new ZeReporter();
-
+        var discovery = config(new ZeDiscovery());                
         foreach (var test in discovery)
         {
             var result = testRunner.Run(test);            
-            reporter.Report(test, result);
+            foreach (var reporter in reporters) {
+                reporter.Report(test, result);
+            }
         }
     }
 }

@@ -2,8 +2,8 @@
 
 using ZeUnit;
 
-public class ZeReporter : IZeReporter
-{
+public class ConsoleReporter : IZeReporter
+{    
     public void Report(ZeTest test, ZeResult? result)
     {
         var state = result.Aggregate(
