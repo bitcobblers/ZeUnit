@@ -1,28 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 namespace ZeUnit;
 
-public class ZeRunner : IZeRunner
+public class ZeRunner<TActivator> : IZeRunner
+    where TActivator : IZeTestActivator, IDisposable, new()
 {
     public ZeResult? Run(ZeTest test)
-    {        
-        var container = new Container(new ServiceRegistry());
-        var loaders = test.Class.GetCustomAttributes<ZeLoaderAttribute>();
-        var inputs = test.Method.GetCustomAttributes<ZeInputsAttribute>();
-
-        foreach (var loaderType in loaders.Select(l => l.Loader).Concat(inputs.SelectMany(l => l.Loaders)))
-        {
-            var loader = (ZeContainerLoader)container.GetInstance(loaderType);
-            foreach (var registry in loader.Registration())
-            {
-                container.Configure(registry);
-            }            
-        }
+    {
         try
         {
-            var instance = container.GetInstance(test.Class);
-            var parameters = test.Method.GetParameters().Select(n => container.GetInstance(n.ParameterType)).ToArray();
-
-            return (ZeResult)test.Method.Invoke(instance, parameters.Length == 0 ? null : parameters);
+            using var activator = new TActivator();
+            var instance = activator.Get(test.Class);
+            return activator.Run(instance, test.Method);
         }
         catch (Exception ex)
         {

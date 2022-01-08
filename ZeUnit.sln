@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Tests", "ZeUnit.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Demo", "ZeUnit.Demo\ZeUnit.Demo.csproj", "{5A7FD285-711D-4912-B4F2-58AD59864F91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Lamar", "ZeUnit.Lamar\ZeUnit.Lamar.csproj", "{F7008C07-0C7D-4D5B-A47C-547A56E5087B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{271E9FAD-D129-491C-AC50-E1845EA35E79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,17 @@ Global
 		{5A7FD285-711D-4912-B4F2-58AD59864F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A7FD285-711D-4912-B4F2-58AD59864F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A7FD285-711D-4912-B4F2-58AD59864F91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7008C07-0C7D-4D5B-A47C-547A56E5087B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7008C07-0C7D-4D5B-A47C-547A56E5087B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7008C07-0C7D-4D5B-A47C-547A56E5087B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7008C07-0C7D-4D5B-A47C-547A56E5087B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{52AB436E-CF3E-4B8A-BBCA-EC6BBEF84712} = {271E9FAD-D129-491C-AC50-E1845EA35E79}
+		{5A7FD285-711D-4912-B4F2-58AD59864F91} = {271E9FAD-D129-491C-AC50-E1845EA35E79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1BAB840-8A6E-419E-A544-C534A35FE237}

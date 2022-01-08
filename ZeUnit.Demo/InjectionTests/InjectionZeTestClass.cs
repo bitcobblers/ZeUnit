@@ -1,6 +1,6 @@
 ﻿namespace ZeUnit.Demo.InjectionTests;
 
-[ZeLoader(typeof(SimpleInjectionFixture))]
+[LamarContainer(typeof(SimpleServiceInjectionRegistry))]
 public class InjectionZeTestClass
 {
     private readonly ISimpleInjectedService service;
@@ -16,7 +16,7 @@ public class InjectionZeTestClass
             .IsNotNull(this.service);            
     }
 
-    [ZeInputs(typeof(SimpleValueInjectionFixture))]
+    [LamarContainer(typeof(SimpleValueInjectionRegistry))]
     public ZeResult MethodInjectionTestMethodThatPasses(string value)
     {        
         return Ze.Assert()
