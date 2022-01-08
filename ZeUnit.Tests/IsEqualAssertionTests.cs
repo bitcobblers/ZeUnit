@@ -1,6 +1,4 @@
-﻿
-
-namespace ZeUnit.Tests;
+﻿namespace ZeUnit.Tests;
 
 public class IsEqualAssertionTests 
 { 

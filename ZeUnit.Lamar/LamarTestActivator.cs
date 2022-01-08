@@ -1,11 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Lamar;
-using System.Reflection;
-
 namespace ZeUnit.Lamar;
-
-
 
 public class LamarTestActivator : IZeTestActivator, IDisposable
 {
