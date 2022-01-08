@@ -1,6 +1,4 @@
-﻿using ZeUnit.Assertions;
-
-namespace ZeUnit.Demo.SimpleTests;
+﻿namespace ZeUnit.Demo.SimpleTests;
 
 public class SampleZeTestClass
 {

@@ -4,6 +4,16 @@ public class ZeDiscovery : IEnumerable<ZeTest>
 {
     private List<ZeTest> tests = new List<ZeTest>();
 
+    public ZeDiscovery FromAssemblies(Assembly[] sources)
+    {
+        foreach (var assembly in sources)
+        {
+            this.FromAssembly(assembly);
+        }
+
+        return this;
+    }
+
     public ZeDiscovery FromAssembly(Assembly source)
     {
         tests.AddRange(source.GetTypes()
@@ -14,7 +24,6 @@ public class ZeDiscovery : IEnumerable<ZeTest>
 
         return this;
     }
-
 
     public IEnumerator<ZeTest> GetEnumerator() => tests.GetEnumerator();
 
