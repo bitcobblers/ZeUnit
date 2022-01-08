@@ -24,4 +24,4 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Run Demo Test Application
-      run: dotnet run --project ZeUnit.Demo\ZeUnit.Demo.csproj
+      run: dotnet run --project ZeUnit.Demo/ZeUnit.Demo.csproj
