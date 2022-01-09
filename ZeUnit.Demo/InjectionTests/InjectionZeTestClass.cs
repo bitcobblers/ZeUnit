@@ -12,8 +12,9 @@ public class InjectionZeTestClass
 
     public ZeResult ConstructorInjectionTestMethodThatPasses()
     {
-        return Ze.Assert()
-            .IsNotNull(this.service);            
+        return Ze.Assert()  
+            .IsNotNull(this.service);
+
     }
 
     [LamarContainer(typeof(SimpleValueInjectionRegistry))]

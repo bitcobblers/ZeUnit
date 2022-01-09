@@ -5,8 +5,8 @@ public static class Ze
     public static ZeResult Assert()
     {
         return new ZeResult();
-    }
-    
+    }       
+
     public static void Unit<TActivator>(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)
         where TActivator : IZeTestActivator, IDisposable, new()
     {

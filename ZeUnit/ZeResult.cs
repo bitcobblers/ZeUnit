@@ -1,7 +1,7 @@
 ﻿namespace ZeUnit;
 public class ZeResult : IEnumerable<ZeAssertion>
 {
-    private List<ZeAssertion> assertions = new List<ZeAssertion>();
+    private readonly List<ZeAssertion> assertions = new();
 
     public ZeResult Assert(ZeAssertion assertion)
     {

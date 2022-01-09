@@ -2,8 +2,8 @@
 
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
-    private List<ZeTest> tests = new List<ZeTest>();
-    private List<Func<Type, bool>> conditions = new List<Func<Type, bool>>()
+    private readonly List<ZeTest> tests = new();
+    private readonly List<Func<Type, bool>> conditions = new()
     {
         (type) => type.Namespace != "ZeUnit",        
     };
