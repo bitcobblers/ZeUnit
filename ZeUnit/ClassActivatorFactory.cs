@@ -21,6 +21,6 @@ public static class ClassActivatorFactory
                 break;
         }
 
-        throw new Exception("Could not create insatnce of class, defining mulitple activator types on a single class is not supported.");
+        throw new Exception("Could not create instance of class, defining mulitple activator types on a single class is not supported.");
     }
 }

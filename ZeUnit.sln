@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32104.313
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit", "ZeUnit\ZeUnit.csproj", "{DEE81C63-429D-4696-B53B-7329C6CCD6B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit", "ZeUnit\ZeUnit.csproj", "{DEE81C63-429D-4696-B53B-7329C6CCD6B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Tests", "ZeUnit.Tests\ZeUnit.Tests.csproj", "{52AB436E-CF3E-4B8A-BBCA-EC6BBEF84712}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Tests", "ZeUnit.Tests\ZeUnit.Tests.csproj", "{52AB436E-CF3E-4B8A-BBCA-EC6BBEF84712}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Demo", "ZeUnit.Demo\ZeUnit.Demo.csproj", "{5A7FD285-711D-4912-B4F2-58AD59864F91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Demo", "ZeUnit.Demo\ZeUnit.Demo.csproj", "{5A7FD285-711D-4912-B4F2-58AD59864F91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Lamar", "ZeUnit.Lamar\ZeUnit.Lamar.csproj", "{F7008C07-0C7D-4D5B-A47C-547A56E5087B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Lamar", "ZeUnit.Lamar\ZeUnit.Lamar.csproj", "{F7008C07-0C7D-4D5B-A47C-547A56E5087B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{271E9FAD-D129-491C-AC50-E1845EA35E79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Runner.VisualStudio", "ZeUnit.Runner.VisualStudio\ZeUnit.Runner.VisualStudio.csproj", "{5AFD032F-C756-4B97-9E03-98E08714B6C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Runner.VisualStudio", "ZeUnit.Runner.VisualStudio\ZeUnit.Runner.VisualStudio.csproj", "{5AFD032F-C756-4B97-9E03-98E08714B6C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.FakeItEasy", "ZeUnit.FakeItEasy\ZeUnit.FakeItEasy.csproj", "{021D6D97-515B-4D5D-9F66-E757A436F407}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{5AFD032F-C756-4B97-9E03-98E08714B6C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AFD032F-C756-4B97-9E03-98E08714B6C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AFD032F-C756-4B97-9E03-98E08714B6C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021D6D97-515B-4D5D-9F66-E757A436F407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021D6D97-515B-4D5D-9F66-E757A436F407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021D6D97-515B-4D5D-9F66-E757A436F407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021D6D97-515B-4D5D-9F66-E757A436F407}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
