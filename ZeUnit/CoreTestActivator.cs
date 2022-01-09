@@ -1,7 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 namespace ZeUnit;
 
-public class CoreTestActivator : IZeTestActivator, IDisposable
+
+
+
+public class CoreTestActivator : IZeTestActivator
 {    
     public object Get(TypeInfo @class)
     {
