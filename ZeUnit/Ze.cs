@@ -1,5 +1,16 @@
 ﻿namespace ZeUnit;
 
+public class ZeActivatorAttribute : Attribute
+{    
+    public Type Activator { get; protected set; }
+
+    protected void WithActivator<TActivator>()
+        where TActivator : IZeTestActivator, IDisposable, new()
+    {
+        this.Activator = typeof(TActivator);
+    }
+}
+
 public static class Ze
 {
     public static ZeResult Assert()
@@ -7,10 +18,9 @@ public static class Ze
         return new ZeResult();
     }       
 
-    public static void Unit<TActivator>(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)
-        where TActivator : IZeTestActivator, IDisposable, new()
+    public static void Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
     {
-        var testRunner = new ZeRunner<TActivator>();
+        var testRunner = new ZeRunner();
         var discovery = config(new ZeDiscovery());                
         foreach (var test in discovery)
         {

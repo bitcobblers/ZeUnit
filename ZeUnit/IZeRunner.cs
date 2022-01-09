@@ -3,6 +3,6 @@ namespace ZeUnit
 {
     public interface IZeRunner
     {
-        ZeResult? Run(ZeTest test);
+        IEnumerable<ZeResult> Run(ZeTest test);
     }
 }
