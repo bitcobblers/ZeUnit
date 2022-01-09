@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Lamar", "ZeUnit.Lama
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{271E9FAD-D129-491C-AC50-E1845EA35E79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Runner.VisualStudio", "ZeUnit.Runner.VisualStudio\ZeUnit.Runner.VisualStudio.csproj", "{5AFD032F-C756-4B97-9E03-98E08714B6C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{F7008C07-0C7D-4D5B-A47C-547A56E5087B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7008C07-0C7D-4D5B-A47C-547A56E5087B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7008C07-0C7D-4D5B-A47C-547A56E5087B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AFD032F-C756-4B97-9E03-98E08714B6C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AFD032F-C756-4B97-9E03-98E08714B6C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AFD032F-C756-4B97-9E03-98E08714B6C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AFD032F-C756-4B97-9E03-98E08714B6C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

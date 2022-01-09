@@ -1,25 +1,28 @@
 ﻿namespace ZeUnit.Tests;
 
 public class IsEqualAssertionTests 
-{ 
-    [Fact]
-    public void ApplyingAnAssertionOnZeResultCreatesAnEnumerable()
+{     
+    public ZeResult ApplyingAnAssertionOnZeResultCreatesAnEnumerable()
     {
         var result = Ze.Assert().IsEqual("test", "test");
-        Assert.NotEmpty(result);
+        
+        return Ze.Assert()
+            .IsNotEmpty(result);
     }
-
-    [Fact]
-    public void SuccessfulResultIsReturnedOnMatch()
+    
+    public ZeResult SuccessfulResultIsReturnedOnMatch()
     {
         var result = Ze.Assert().IsEqual("test", "test");
-        Assert.IsType<Successful>(result.First());
+        
+        return Ze.Assert()
+            .IsType<Successful>(result.First());
     }
-
-    [Fact]
-    public void FailedResultIsReturnedOnFailedMatch()
+    
+    public ZeResult FailedResultIsReturnedOnFailedMatch()
     {
         var result = Ze.Assert().IsEqual("test", "test-failed");
-        Assert.IsType<Failed>(result.First());
+        
+        return Ze.Assert()
+            .IsType<Failed>(result.First());
     }
 }

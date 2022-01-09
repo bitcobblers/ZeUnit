@@ -1,10 +1,9 @@
 namespace ZeUnit.Tests;
 
 public class TestResultTests
-{
-    [Fact]
-    public void CanCreateATestResult()
+{    
+    public ZeResult CanCreateATestResult()
     {
-        Assert.NotNull(Ze.Assert());
+        return Ze.Assert().IsNotNull(Ze.Assert());
     }
 }

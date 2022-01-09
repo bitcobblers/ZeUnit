@@ -1,4 +1,4 @@
 ﻿global using System.Linq;
 
-global using Xunit;
+global using ZeUnit;
 global using ZeUnit.Assertions;
