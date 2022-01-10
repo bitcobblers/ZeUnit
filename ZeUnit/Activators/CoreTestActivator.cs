@@ -1,11 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
-namespace ZeUnit;
+
+namespace ZeUnit.Activators;
 
 
 public class CoreTestActivator : IZeActivator
 {
     public void Dispose()
-    {        
+    {
     }
 
     public object Get(TypeInfo @class)
@@ -16,5 +17,5 @@ public class CoreTestActivator : IZeActivator
     public IEnumerable<object[]> Get(MethodInfo method)
     {
         yield return new object[0];
-    }    
+    }
 }

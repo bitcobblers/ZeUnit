@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-namespace ZeUnit;
+﻿namespace ZeUnit;
 
 public class ZeRunner : IZeRunner
 {

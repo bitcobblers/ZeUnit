@@ -1,14 +1,8 @@
 ﻿namespace ZeUnit;
 
-public class ZeActivatorAttribute : Attribute
+public abstract class ZeActivatorAttribute : Attribute
 {    
-    public Type Activator { get; protected set; }
-
-    protected void WithActivator<TActivator>()
-        where TActivator : IZeActivator, IDisposable, new()
-    {
-        this.Activator = typeof(TActivator);
-    }
+    public abstract Type Activator { get; }    
 }
 
 public static class Ze

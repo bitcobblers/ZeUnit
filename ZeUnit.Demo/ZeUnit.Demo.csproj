@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="Lamar" Version="7.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ZeUnit.Lamar\ZeUnit.Lamar.csproj" />
+    <ProjectReference Include="..\ZeUnit.Runner.VisualStudio\ZeUnit.Runner.VisualStudio.csproj" />
     <ProjectReference Include="..\ZeUnit\ZeUnit.csproj" />
   </ItemGroup>
 

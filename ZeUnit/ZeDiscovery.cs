@@ -1,4 +1,6 @@
-﻿namespace ZeUnit;
+﻿using ZeUnit.Activators;
+
+namespace ZeUnit;
 
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
