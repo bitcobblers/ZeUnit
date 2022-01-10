@@ -25,10 +25,16 @@ public class ZeDiscovery : IEnumerable<ZeTest>
 
     public ZeDiscovery FromAssembly(Assembly source)
     {
-        tests.AddRange(source.GetTypes()            
+        tests.AddRange(source.GetTypes()
             .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
                 .Where(m => m.ReturnType.Equals(typeof(ZeResult)))
-                .Select(m => new ZeTest() { Class = type.GetTypeInfo(), Method = m })));
+                .SelectMany(method => MethodActivatorFactory.Get(method).Select(activator => (method, activator)))
+                .Select(item => new ZeTest() {
+                    Class = type.GetTypeInfo(),
+                    ClassActivator = ClassActivatorFactory.Get(type.GetTypeInfo()),
+                    Method = item.method,
+                    MethdoActivator = item.activator,
+                })));
 
         return this;
     }    

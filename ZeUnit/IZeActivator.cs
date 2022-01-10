@@ -1,8 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 namespace ZeUnit;
 
-public interface IZeTestActivator : IDisposable
+public interface IZeActivator : IDisposable
 {
     object Get(TypeInfo @class);
-    ZeResult Run(object instance, MethodInfo method);
+    IEnumerable<object[]> Get(MethodInfo method);
 }

@@ -3,7 +3,7 @@ namespace ZeUnit;
 
 public static class ClassActivatorFactory
 {
-    public static IZeTestActivator Get(TypeInfo @class)
+    public static IZeActivator Get(TypeInfo @class)
     {
         var activators = @class.GetCustomAttributes()
             .Where(n => n.GetType().IsAssignableTo(typeof(ZeActivatorAttribute)))
@@ -16,7 +16,7 @@ public static class ClassActivatorFactory
             case 0:
                 return new CoreTestActivator();
             case 1:
-                return (IZeTestActivator)Activator.CreateInstance(activators.First());
+                return (IZeActivator)Activator.CreateInstance(activators.First());
             default:
                 break;
         }

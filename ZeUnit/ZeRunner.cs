@@ -4,15 +4,14 @@ namespace ZeUnit;
 public class ZeRunner : IZeRunner
 {
     public IEnumerable<ZeResult> Run(ZeTest test)
-    {
-        using var activator = ClassActivatorFactory.Get(test.Class);
-        var instance = activator.Get(test.Class);
-        foreach (var methodActivator in MethodActivatorFactory.Get(test.Method))
+    {        
+        var instance = test.ClassActivator.Get(test.Class);        
+        foreach (var arguments in test.MethdoActivator.Get(test.Method))
         {
             var result = Ze.Assert();
             try
             {
-                result = methodActivator.Run(instance, test.Method);
+                result = (ZeResult)test.Method.Invoke(instance, arguments.Any() ? arguments : null);
             }
             catch (Exception ex)
             {

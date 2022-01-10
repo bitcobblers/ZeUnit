@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 namespace ZeUnit;
 
+[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
 public class InlineDataAttribute : ZeActivatorAttribute
 {
     public InlineDataAttribute(params object[] args)
@@ -21,9 +22,8 @@ public class InlineAttributeActivator : AttributeActivator<InlineDataAttribute>
         return @class.GetConstructor(args.Select(n => n.GetType()).ToArray()).Invoke(args);
     }
 
-    protected override ZeResult Run(object instance, MethodInfo method, IEnumerable<InlineDataAttribute> attributes)
+    protected override IEnumerable<object[]> Get(MethodInfo method, IEnumerable<InlineDataAttribute> attributes)
     {
-        var args = attributes.SelectMany(n => n.Args).ToArray();
-        return (ZeResult)method.Invoke(instance, args);                        
-    }
+        return attributes.Select(n => n.Args).ToArray();        
+    }    
 }

@@ -2,7 +2,7 @@
 
 namespace ZeUnit.Lamar;
 
-public class LamarTestActivator : IZeTestActivator, IDisposable
+public class LamarTestActivator : IZeActivator, IDisposable
 {
     private readonly Container container;
 
@@ -23,15 +23,12 @@ public class LamarTestActivator : IZeTestActivator, IDisposable
         return new LamarRegistryBuilder(loaders).Build(container).GetInstance(@class);        
     }
 
-    public ZeResult Run(object instance, MethodInfo method)
+    public IEnumerable<object[]>Get(MethodInfo method)
     {
         var loaders = method.GetCustomAttributes<LamarContainerAttribute>().Select(n => n.Registry);
         _ = new LamarRegistryBuilder(loaders).Build(this.container);
-        
-        var parameters = method.GetParameters()
+        yield return method.GetParameters()
             .Select(n => this.container.GetInstance(n.ParameterType))
             .ToArray();
-        
-        return (ZeResult)method.Invoke(instance, parameters.Length == 0 ? null : parameters);
     }    
 }

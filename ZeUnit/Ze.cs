@@ -5,7 +5,7 @@ public class ZeActivatorAttribute : Attribute
     public Type Activator { get; protected set; }
 
     protected void WithActivator<TActivator>()
-        where TActivator : IZeTestActivator, IDisposable, new()
+        where TActivator : IZeActivator, IDisposable, new()
     {
         this.Activator = typeof(TActivator);
     }
