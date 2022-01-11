@@ -2,7 +2,7 @@
 
 public static class EqualsType
 {
-    public static ZeResult IsType(this ZeResult result, Type expectedType, object actual)
+    public static ZeResult Type(this ZeResult result, Type expectedType, object actual)
     {
         var actualType = actual.GetType();
         return result.Assert(expectedType.Equals(actualType)
@@ -10,8 +10,8 @@ public static class EqualsType
             : new Failed($"Value '{actualType.Name}' didn't match the expected value '{expectedType.Name}'."));
     }
 
-    public static ZeResult IsType<TExpected>(this ZeResult result, object actual)
+    public static ZeResult Type<TExpected>(this ZeResult result, object actual)
     {
-        return result.IsType(typeof(TExpected), actual);
+        return result.Type(typeof(TExpected), actual);
     }
 }

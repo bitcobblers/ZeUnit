@@ -2,7 +2,7 @@
 
 public static class EqualsValue
 {    
-    public static ZeResult IsEqual<TType>(this ZeResult result, TType expected, TType actual)
+    public static ZeResult Equal<TType>(this ZeResult result, TType expected, TType actual)
         where TType : IEquatable<TType>
     {
         return result.Assert(expected.Equals(actual)

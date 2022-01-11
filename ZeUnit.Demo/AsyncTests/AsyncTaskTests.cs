@@ -4,8 +4,7 @@
     {
         public async Task<ZeResult> AsyncTestRun()
         {
-            return Ze.Assert()
-                .IsEqual(1, 1);
+            return Ze.Is.Equal(1, 1);
         }
     }
 }

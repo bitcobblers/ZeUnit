@@ -3,11 +3,8 @@
 namespace ZeUnit;
 
 public static class Ze
-{
-    public static ZeResult Assert()
-    {
-        return new ZeResult();
-    }       
+{    
+    public static ZeResult Is => new ZeResult();
 
     public static async Task<int> Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
     {        
