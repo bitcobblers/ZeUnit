@@ -5,13 +5,12 @@ namespace ZeUnit;
 
 public class ZeRunner
 {
-    private readonly List<TestRunner> runners = new List<TestRunner>()
+    private readonly List<TestRunner> runners;    
+
+    public ZeRunner(List<TestRunner> testRunners)
     {
-        new ObservableTestRunner(),
-        new TaskTestRunner(),
-        new EnumerableTestRunner(),
-        new ObjectTestRunner(),
-    };
+        this.runners = testRunners;
+    }
 
     public IEnumerable<Type> SupportedTest => runners.Select(n => n.SupportType);
 

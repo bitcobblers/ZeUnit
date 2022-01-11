@@ -16,7 +16,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
     
     public VisualStudioZeUnitTestAdapter()
     {
-        this.runner = new ZeRunner();
+        this.runner = new ZeRunner(Ze.TestRunners);
     }    
 
     public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger, ITestCaseDiscoverySink discoverySink)

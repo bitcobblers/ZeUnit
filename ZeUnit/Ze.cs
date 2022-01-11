@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Linq;
+using ZeUnit.TestRunners;
 
 namespace ZeUnit;
 
@@ -6,9 +7,17 @@ public static class Ze
 {    
     public static ZeResult Is => new ZeResult();
 
+    public static List<TestRunner> TestRunners = new List<TestRunner>()
+    {
+        new ObservableTestRunner(),
+        new TaskTestRunner(),
+        new EnumerableTestRunner(),
+        new ObjectTestRunner(),
+    };
+    
     public static async Task<int> Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
     {        
-        var runner = new ZeRunner();
+        var runner = new ZeRunner(TestRunners);
         var discovery = config(new ZeDiscovery(runner.SupportedTest));
         var failCount = 0;        
 
