@@ -2,11 +2,6 @@
 
 namespace ZeUnit.Demo.FileTests
 {
-    public class SerializedType
-    {
-        public string Text { get; set; }
-    }
-
     public class FileInjectionTests
     {
         [LoadFile("FileTests/test.txt")]

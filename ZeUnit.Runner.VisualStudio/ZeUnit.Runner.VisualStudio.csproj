@@ -5,6 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>$(MSBuildProjectName).TestAdapter</AssemblyName>
+    <Version>0.1.0-alpha</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <OutputType>Library</OutputType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
