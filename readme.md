@@ -13,7 +13,7 @@ ZeUnit was conceived as am idea for preloading state into XUnit because when a c
 
 Several iterations later, this has turned into a framework that supports a testing based set of custom class and method activators, that allow context to be created for the execution of a tests.  One example of this would be the Lamar container class that allows a user to re-user their *ServiceRegistry* classes to populate a container that creates the test class instance.
 
-```
+```csharp
 [LamarContainer(typeof(SimpleServiceInjectionRegistry))]
 public class InjectionZeUnitClass
 {
@@ -37,7 +37,7 @@ Behind the scenes, the *SimpleServiceInjectorRegistraty* that is passed into the
 
 At the same time, there is nothing that prevents the test from being as simple as an XUnit/NUnit test is today. A test requires no additional context to exist before it is run.
 
-```
+```csharp
 public class SampleZeUnitClass
 {
     public ZeResult SimpleTestMethodThatPasses() 
@@ -61,7 +61,7 @@ Because the power of the test and method activation is yours, you get to define 
 
 Or mixing in any amount of aditional activation, in this next example focus on file loading activator.  When used with a method that requires data to be pulled from files.  The activators load the file as best is it can for the type that is being requestd.
 
-```
+```csharp
 public class FileInjectionTests
 {
     [LoadFile("FileTests/test.txt")]
@@ -94,7 +94,7 @@ In the example above, we can see the same test.txt file binding to different met
 
 But we can take that one step forward and create file loaders that also deserialize the file into an read dotnet object as seen in the example bellow.
 
-```
+```csharp
 public class DeserializeTests
 {
     [LoadFile("FileTests/test.xml")]
