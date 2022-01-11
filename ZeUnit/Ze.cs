@@ -12,7 +12,7 @@ public static class Ze
     public static async Task<int> Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
     {        
         var runner = new ZeRunner();
-        var discovery = config(new ZeDiscovery());
+        var discovery = config(new ZeDiscovery(runner.SupportedTest));
         var failCount = 0;        
 
         var subject = Observable.Merge(discovery

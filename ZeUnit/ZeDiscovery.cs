@@ -5,12 +5,12 @@ namespace ZeUnit;
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
     private readonly List<ZeTest> tests = new();
-    private List<Type> vaidTypes = new List<Type>() {
-        typeof(ZeResult),
-        typeof(Task<ZeResult>),
-        typeof(IEnumerable<ZeResult>),
-        typeof(IObservable<ZeResult>)
-    };
+    private List<Type> supportedTypes = new List<Type>();
+
+    public ZeDiscovery(IEnumerable<Type> supportedTypes)
+    {
+        this.supportedTypes.AddRange(supportedTypes);
+    }
 
     private readonly List<Func<Type, bool>> conditions = new()
     {
@@ -41,7 +41,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
         foreach(var method in source
             .GetTypes()
             .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-            .Where(m => vaidTypes.Contains(m.ReturnType)))
+            .Where(m => supportedTypes.Contains(m.ReturnType)))
         {
             var classType = method.DeclaringType.GetTypeInfo();
             var activators = this.ClassFactory.Get(classType);

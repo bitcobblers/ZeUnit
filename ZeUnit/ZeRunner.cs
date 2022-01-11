@@ -12,7 +12,9 @@ public class ZeRunner
         new EnumerableResultRunner(),
         new SingleResultRunner(),
     };
-    
+
+    public IEnumerable<Type> SupportedTest => runners.Select(n => n.SupportType);
+
     public IEnumerable<IObservable<(ZeTest, ZeResult)>> Run(ZeTest test)
     {                       
         var instance = test.ClassActivator.Get(test.Class);               
