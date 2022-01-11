@@ -2,19 +2,10 @@
 
 namespace ZeUnit.Activators;
 
-public class LoadFileTextAttribute : ZeActivatorAttribute
-{
-    public LoadFileTextAttribute(params string[] fileName) : base(typeof(FileTextMethodActivator))
-    {
-        this.FileNames = fileName;
-    }
-
-    public string[] FileNames { get; }
-}
-
-public class LoadFileStreamAttribute : ZeActivatorAttribute
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+public class LoadFileAttribute : ZeActivatorAttribute
 {    
-    public LoadFileStreamAttribute(params string[] fileName) : base(typeof(FileStreamMethodActivator))
+    public LoadFileAttribute(params string[] fileName) : base(typeof(FileReaderMethodActivator))
     {
         this.FileNames = fileName;
     }
