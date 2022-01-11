@@ -25,11 +25,10 @@ namespace ZeUnit.Demo.FileTests
         [LoadFile("FileTests/test.txt")]
         public ZeResult LoadFileByteArray(byte[] actual)
         {
-            // this test looks tricky because of the BOM (EF BB BF in hex)
-            var expected = Encoding.ASCII.GetBytes("test");
-            var actualWithOutBom = actual.Skip(3);
+            // This test looks skip the first 3 char to avoid the BOM (EF BB BF in hex)
+            var expected = Encoding.ASCII.GetBytes("test");            
             return Ze.Is                                
-                .True(expected.SequenceEqual(actualWithOutBom));
+                .True(expected.SequenceEqual(actual.Skip(3)));
         }
 
         [LoadFile("FileTests/test.txt", "FileTests/test.txt")]
@@ -45,19 +44,6 @@ namespace ZeUnit.Demo.FileTests
         public ZeResult LoadFileTextWithMultipleActivations(string actual)
         {
             return Ze.Is.Equal("test", actual);
-        }
-
-
-        [LoadFile("FileTests/test.xml")]
-        public ZeResult LoadFileSerializedXMLObject(SerializedType actual)
-        {
-            return Ze.Is.Equal("test", actual.Text);
-        }
-
-        [LoadFile("FileTests/test.json")]
-        public ZeResult LoadFileSerializedJsonObject(SerializedType actual)
-        {
-            return Ze.Is.Equal("test", actual.Text);
-        }
+        }        
     }
 }

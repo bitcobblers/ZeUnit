@@ -59,6 +59,59 @@ public class SampleZeUnitClass
 
 Because the power of the test and method activation is yours, you get to define the scale of each test class with existing or custom *ZeActivationAttributes* and the *ZeActivator* classes. 
 
+Or mixing in any amount of aditional activation, in this next example focus on file loading activator.  When used with a method that requires data to be pulled from files.  The activators load the file as best is it can for the type that is being requestd.
+
+```
+public class FileInjectionTests
+{
+    [LoadFile("FileTests/test.txt")]
+    public ZeResult LoadFileStream(FileStream stream)
+    {
+        using var reader = new StreamReader(stream);
+        return Ze.Is.Equal("test", reader.ReadToEnd());
+    }
+
+    [LoadFile("FileTests/test.txt")]
+    public ZeResult LoadFileText(string actual)
+    {            
+        return Ze.Is.Equal("test", actual);
+    }
+
+    [LoadFile("FileTests/test.txt")]
+    public ZeResult LoadFileByteArray(byte[] actual)
+    {        
+        var expected = Encoding.ASCII.GetBytes("test");            
+        return Ze.Is                                
+            // skip(3) ignores the BOM (EF BB BF in hex)
+            .True(expected.SequenceEqual(actual.Skip(3)));
+    }
+}
+```
+In the example above, we can see the same test.txt file binding to different method paramters:
+* Stream
+* byte[]
+* string
+
+But we can take that one step forward and create file loaders that also deserialize the file into an read dotnet object as seen in the example bellow.
+
+```
+public class DeserializeTests
+{
+    [LoadFile("FileTests/test.xml")]
+    public ZeResult LoadFileSerializedXMLObject(SerializedType actual)
+    {
+        return Ze.Is.Equal("test", actual.Text);
+    }
+
+    [LoadFile("FileTests/test.json")]
+    public ZeResult LoadFileSerializedJsonObject(SerializedType actual)
+    {
+        return Ze.Is.Equal("test", actual.Text);
+    }
+}
+
+```
+
 ### Some basics
 
 * The way you should get data out of a function is by getting its return value. To follow this functional practice ZeUnit does away with static Assert and instead expects that test methods will return their *ZeResult* value(s) instead.
