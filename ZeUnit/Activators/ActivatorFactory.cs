@@ -7,21 +7,19 @@ public abstract class ActivatorFactory<TInterface, TDefault>
 {
     public IEnumerable<TInterface> Get(Type type)
     {
-        return this.Get(type.GetCustomAttributes()
-            .Where(n => n.GetType().IsAssignableTo(typeof(ZeActivatorAttribute)))
-            .Select(n => (ZeActivatorAttribute)n));
+        return this.Get(type.GetCustomAttributes());
     }
 
     public IEnumerable<TInterface> Get(MethodInfo method)
     {
-        return this.Get(method.GetCustomAttributes()
-            .Where(n => n.GetType().IsAssignableTo(typeof(ZeActivatorAttribute)))
-            .Select(n => (ZeActivatorAttribute)n));
+        return this.Get(method.GetCustomAttributes());
     }
 
-    public IEnumerable<TInterface> Get(IEnumerable<ZeActivatorAttribute> attributes)
+    public IEnumerable<TInterface> Get(IEnumerable<Attribute> attributes)
     {
-        var activatorGroups = attributes 
+        var activatorGroups = attributes
+            .Where(n => n.GetType().IsAssignableTo(typeof(ZeActivatorAttribute)))
+            .Select(n => (ZeActivatorAttribute)n)
             .GroupBy(n => n.Activator, n => n);
 
         if (!activatorGroups.Any())
@@ -50,7 +48,7 @@ public abstract class ActivatorFactory<TInterface, TDefault>
                 continue;
             }
 
-            if (args.Length == 1 && args.First().ParameterType == typeof(ZeActivatorAttribute))
+            if (args.Length == 1 && typeof(ZeActivatorAttribute) == args.First().ParameterType)
             {                
                 foreach (var attribute in group) 
                 {
