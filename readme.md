@@ -26,7 +26,7 @@ public class InjectionZeUnitClass
 
     public ZeResult ConstructorInjectionTestMethodThatPasses()
     {
-        return Ze.Assert()  
+        return Ze.Is  
             .IsNotNull(this.service);
 
     }
@@ -43,7 +43,7 @@ public class SampleZeUnitClass
     public ZeResult SimpleTestMethodThatPasses() 
     {            
         var result = 2 + 2;
-        return Ze.Assert()
+        return Ze.Is
             .IsType<int>(result)
             .IsEqual(4, result);
     }
@@ -51,7 +51,7 @@ public class SampleZeUnitClass
     public ZeResult SimpleTestMethodThatFailes()
     {
         var result = 2 + 2;
-        return Ze.Assert()            
+        return Ze.Is            
             .IsEqual(5, result);
     }
 }
