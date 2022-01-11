@@ -3,7 +3,6 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using System.Reflection;
 
 [FileExtension(".dll")]
 [FileExtension(".exe")]
@@ -25,7 +24,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
         foreach (var source in sources)
         {
             var discovery = new ZeDiscovery(runner.SupportedTest)
-                .FromAssembly(Assembly.LoadFrom(source));
+                .FromAssembly(source);
 
             foreach (var test in discovery)
             {

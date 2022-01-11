@@ -34,7 +34,12 @@ public class ZeDiscovery : IEnumerable<ZeTest>
     
     public ClassActivatorFactory ClassFactory = new ClassActivatorFactory();
 
-    public MethodActivatorFactory MethodFactory = new MethodActivatorFactory();    
+    public MethodActivatorFactory MethodFactory = new MethodActivatorFactory();
+
+    public ZeDiscovery FromAssembly(string source)
+    {
+;        return this.FromAssembly(Assembly.Load(source));
+    }
 
     public ZeDiscovery FromAssembly(Assembly source)
     {
