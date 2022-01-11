@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZeUnit.Demo.InlineTests
-{    
+﻿namespace ZeUnit.Demo.InlineTests
+{
     public class InlineInjectionTests
     {      
         [InlineData("test1", 1)]

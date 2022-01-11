@@ -6,21 +6,14 @@ public class FileReaderMethodActivator : IZeMethodActivator
 {
     private readonly LoadFileAttribute attribute;
     private bool disposedValue;
-    private Func<FileInfo, object> defaultLoad = file => null;
-    private Dictionary<Type, Func<FileInfo, object>> loaders = new()
+    private List<IZeFileLoader> loaders = new()
     {
-        [typeof(string)] = file => (object)file.OpenText().ReadToEnd(),
-        [typeof(FileStream)] = file => (object)file.OpenRead(),
-        [typeof(Stream)] = file => (object)file.OpenRead(),
-        [typeof(byte[])] = file =>
-        {
-            using (var stream = file.OpenRead())
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
-        }
+        new ByteArrayFileLoader(),
+        new FileStreamFileLoader(),
+        new StreamFileLoader(),
+        new StringFileLoader(),
+        new DeserializeXmlLoad(),
+        new DeserializeJsonLoad(),
     };
 
     public FileReaderMethodActivator(ZeActivatorAttribute attribute)
@@ -36,7 +29,11 @@ public class FileReaderMethodActivator : IZeMethodActivator
         yield return this.attribute.FileNames
             .Select(f => new FileInfo(f))
             .Zip(paramters)
-            .Select(pair => (loaders.ContainsKey(pair.Second) ? loaders[pair.Second] : defaultLoad)(pair.First))
+            .Select(pair =>
+            {
+                var loader = loaders.FirstOrDefault(n => n.Match(pair.Second, pair.First), new NullFileLoader());
+                return loader.Load(pair.Second, pair.First);
+            })
             .ToArray();                    
     }
 

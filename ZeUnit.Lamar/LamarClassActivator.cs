@@ -9,13 +9,13 @@ public class LamarClassActivator : IZeClassActivator
 
     public LamarClassActivator(IEnumerable<ZeActivatorAttribute> attributes)
     {
-        container = new Container(new ServiceRegistry());
+        this.container = new Container(new ServiceRegistry());
         foreach (var registryType in attributes            
             .Where(n=>n.GetType().IsAssignableTo(typeof(LamarContainerAttribute)))            
             .Select(n => ((LamarContainerAttribute)n).Registry))
         {
-            var registry = (ServiceRegistry)container.GetInstance(registryType);
-            container.Configure(registry);
+            var registry = (ServiceRegistry)this.container.GetInstance(registryType);
+            this.container.Configure(registry);
         }
     }
     

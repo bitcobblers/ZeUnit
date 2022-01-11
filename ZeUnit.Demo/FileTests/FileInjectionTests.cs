@@ -2,6 +2,11 @@
 
 namespace ZeUnit.Demo.FileTests
 {
+    public class SerializedType
+    {
+        public string Text { get; set; }
+    }
+
     public class FileInjectionTests
     {
         [LoadFile("FileTests/test.txt")]
@@ -40,6 +45,19 @@ namespace ZeUnit.Demo.FileTests
         public ZeResult LoadFileTextWithMultipleActivations(string actual)
         {
             return Ze.Is.Equal("test", actual);
+        }
+
+
+        [LoadFile("FileTests/test.xml")]
+        public ZeResult LoadFileSerializedXMLObject(SerializedType actual)
+        {
+            return Ze.Is.Equal("test", actual.Text);
+        }
+
+        [LoadFile("FileTests/test.json")]
+        public ZeResult LoadFileSerializedJsonObject(SerializedType actual)
+        {
+            return Ze.Is.Equal("test", actual.Text);
         }
     }
 }
