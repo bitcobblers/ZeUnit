@@ -45,9 +45,8 @@ public abstract class ActivatorFactory<TInterface, TDefault>
             }
             
             if (args.Length == 1 && typeof(IEnumerable).IsAssignableFrom(args.First().ParameterType))
-            {
-                var value = group.Select(n=>(ZeActivatorAttribute)n).ToArray();
-                yield return (TInterface)constructor.Invoke(new[] { value });
+            {                
+                yield return (TInterface)constructor.Invoke(new[] { group.ToArray() });
                 continue;
             }
 
