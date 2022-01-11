@@ -4,5 +4,5 @@ public abstract class ObservableRunner
 {
     public abstract Type SupportType { get; }
 
-    public abstract void Run(IObserver<(ZeTest, ZeResult)> observer, ZeTest test, object instance, object[] arguments);
+    public abstract IObservable<(ZeTest, ZeResult)> Run(ZeTest test, object instance, object[] arguments);
 }

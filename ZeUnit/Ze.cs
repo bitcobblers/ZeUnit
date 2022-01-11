@@ -1,16 +1,6 @@
-﻿using System.Reactive.Subjects;
+﻿using System.Reactive.Linq;
 
 namespace ZeUnit;
-
-public abstract class ZeActivatorAttribute : Attribute
-{    
-    protected ZeActivatorAttribute(Type type)
-    {
-        this.Activator = type;
-    }
-
-    public Type Activator { get; }    
-}
 
 public static class Ze
 {
@@ -19,23 +9,27 @@ public static class Ze
         return new ZeResult();
     }       
 
-    public static void Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
-    {
-        var subject = new Subject<(ZeTest, ZeResult)>();
-        var testRunner = new ZeRunner(subject);
+    public static async Task<int> Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
+    {        
+        var runner = new ZeRunner();
         var discovery = config(new ZeDiscovery());
+        var failCount = 0;        
 
-        subject.Subscribe(n =>
-        {
-            foreach (var reporter in reporters)
+        var subject = Observable.Merge(discovery
+            .SelectMany(test => runner.Run(test)))
+            .Do(n =>
             {
-                reporter.Report(n.Item1, n.Item2);
-            }
-        });
-
-        foreach (var test in discovery)
-        {
-            testRunner.Run(test);
-        }
+                if (n.Item2.State == ZeStatus.Failed)
+                {
+                    failCount++;
+                }
+                foreach (var reporter in reporters)
+                {
+                    reporter.Report(n.Item1, n.Item2);
+                }                
+            });
+                
+        await subject.LastAsync();
+        return failCount;
     }
 }

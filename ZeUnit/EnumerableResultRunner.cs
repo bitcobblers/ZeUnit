@@ -5,11 +5,14 @@ namespace ZeUnit;
 
 public class EnumerableResultRunner : ObservableRunner<IEnumerable<ZeResult>>
 {
-    public override void Run(IObserver<(ZeTest, ZeResult)> subject, ZeTest test, object instance, object[] arguments)
-    {        
+    public override IObservable<(ZeTest, ZeResult)> Run(ZeTest test, object instance, object[] arguments)
+    {
+        var subject = new ReplaySubject<(ZeTest, ZeResult)>();        
         foreach (var result in (IEnumerable<ZeResult>)test.Method.Invoke(instance, arguments.Any() ? arguments : null))
         {
             subject.OnNext((test, result));
         }     
+        subject.OnCompleted();
+        return subject;
     }
 }

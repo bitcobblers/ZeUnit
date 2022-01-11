@@ -12,27 +12,14 @@ public class ZeRunner
         new EnumerableResultRunner(),
         new SingleResultRunner(),
     };
-    private IObserver<(ZeTest, ZeResult)> subject;
-
-    public ZeRunner(IObserver<(ZeTest, ZeResult)> subject)
-    {
-        this.subject = subject;
-    }
-
-    public void Run(ZeTest test)
+    
+    public IEnumerable<IObservable<(ZeTest, ZeResult)>> Run(ZeTest test)
     {                       
         var instance = test.ClassActivator.Get(test.Class);               
         foreach (var arguments in test.MethdoActivator.Get(test.Method))
         {            
             var runner = runners.First(n => n.SupportType == test.Method.ReturnType);
-            try
-            {
-                runner.Run(this.subject, test, instance, arguments);
-            }
-            catch (Exception ex)
-            {
-                this.subject.OnNext((test, Ze.Assert().Assert(new Failed(ex.Message))));
-            }            
+            yield return runner.Run(test, instance, arguments);            
         }               
     }
 }

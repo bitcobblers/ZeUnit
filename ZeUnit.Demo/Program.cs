@@ -1,8 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Ze.Unit(
+
+return await Ze.Unit(
     discovery => discovery.FromAssembly(typeof(Program).Assembly),
 //    new TeamCityReporter(),
 //    new HtmlFileReporter(),
     new ConsoleReporter());
-
-Console.ReadKey();
