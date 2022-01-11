@@ -1,14 +1,13 @@
 ﻿namespace ZeUnit;
 
-[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class InlineDataAttribute : ZeActivatorAttribute
 {
-    public InlineDataAttribute(params object[] args)
+    public InlineDataAttribute(params object[] args) 
+        : base(typeof(InlineMethodAttributeActivator))
     {
         this.Args = args;        
     }
 
-    public object[] Args { get; }
-
-    public override Type Activator => typeof(InlineAttributeActivator);
+    public object[] Args { get; }    
 }

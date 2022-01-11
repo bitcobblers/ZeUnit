@@ -4,7 +4,7 @@ public class ZeRunner : IZeRunner
 {
     public IEnumerable<ZeResult> Run(ZeTest test)
     {        
-        var instance = test.ClassActivator.Get(test.Class);        
+         var instance = test.ClassActivator.Get(test.Class);        
         foreach (var arguments in test.MethdoActivator.Get(test.Method))
         {
             var result = Ze.Assert();

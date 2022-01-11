@@ -1,9 +1,10 @@
 ﻿namespace ZeUnit.Lamar;
 
-[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public class LamarContainerAttribute : ZeActivatorAttribute
 {
-    public LamarContainerAttribute(Type registry)
+    public LamarContainerAttribute(Type registry) 
+        : base(typeof(LamarClassActivator))
     {        
         if (!registry.IsAssignableTo(typeof(ServiceRegistry)))
         {
@@ -11,10 +12,7 @@ public class LamarContainerAttribute : ZeActivatorAttribute
         }
 
         this.Registry = registry;        
-
     }
 
     public Type Registry { get; }
-
-    public override Type Activator => typeof(LamarTestActivator);
 }

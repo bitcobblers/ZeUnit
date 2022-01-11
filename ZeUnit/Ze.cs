@@ -2,7 +2,12 @@
 
 public abstract class ZeActivatorAttribute : Attribute
 {    
-    public abstract Type Activator { get; }    
+    protected ZeActivatorAttribute(Type type)
+    {
+        this.Activator = type;
+    }
+
+    public Type Activator { get; }    
 }
 
 public static class Ze

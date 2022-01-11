@@ -16,11 +16,4 @@ public class InjectionZeTestClass
             .IsNotNull(this.service);
 
     }
-
-    [LamarContainer(typeof(SimpleValueInjectionRegistry))]
-    public ZeResult MethodInjectionTestMethodThatPasses(string value)
-    {        
-        return Ze.Assert()
-            .IsEqual("Test", value);
-    }
 }

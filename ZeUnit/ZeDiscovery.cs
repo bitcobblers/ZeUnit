@@ -23,7 +23,11 @@ public class ZeDiscovery : IEnumerable<ZeTest>
     {
         conditions.Add(selctor);
         return this;
-    }
+    } 
+    
+    public ClassActivatorFactory ClassFactory = new ClassActivatorFactory();
+
+    public MethodActivatorFactory MethodFactory = new MethodActivatorFactory(); 
 
     public ZeDiscovery FromAssembly(Assembly source)
     {
@@ -33,16 +37,18 @@ public class ZeDiscovery : IEnumerable<ZeTest>
             .Where(m => m.ReturnType.Equals(typeof(ZeResult))))
         {
             var classType = method.DeclaringType.GetTypeInfo();
-            var activator = ClassActivatorFactory.Get(classType);
-            foreach (var activation in MethodActivatorFactory.Get(method))
-            {                
-                tests.Add(new ZeTest()
+            var activators = this.ClassFactory.Get(classType);
+            foreach (var activator in activators) {
+                foreach (var activation in this.MethodFactory.Get(method))
                 {
-                    Class = classType,
-                    ClassActivator = activator,
-                    Method = method,
-                    MethdoActivator = activation,
-                });
+                    tests.Add(new ZeTest()
+                    {
+                        Class = classType,
+                        ClassActivator = activator,
+                        Method = method,
+                        MethdoActivator = activation,
+                    });
+                }
             }
         }
 

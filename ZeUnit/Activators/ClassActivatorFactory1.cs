@@ -2,7 +2,6 @@
 
 namespace ZeUnit.Activators;
 
-public class MethodActivatorFactory : ActivatorFactory<IZeMethodActivator, CoreMethodActivator>
+public class ClassActivatorFactory : ActivatorFactory<IZeClassActivator, CoreClassActivator>
 {
-
 }
