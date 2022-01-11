@@ -18,4 +18,10 @@
     <ProjectReference Include="..\ZeUnit\ZeUnit.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="FileTests\test.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

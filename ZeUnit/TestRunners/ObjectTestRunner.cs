@@ -3,15 +3,12 @@ using System.Reactive.Subjects;
 
 namespace ZeUnit.TestRunners;
 
-public class EnumerableResultRunner : ObservableRunner<IEnumerable<ZeResult>>
+public class ObjectTestRunner : TestRunner<ZeResult>
 {
     public override IObservable<(ZeTest, ZeResult)> Run(ZeTest test, object instance, object[] arguments)
     {
         var subject = new ReplaySubject<(ZeTest, ZeResult)>();
-        foreach (var result in (IEnumerable<ZeResult>)test.Method.Invoke(instance, arguments.Any() ? arguments : null))
-        {
-            subject.OnNext((test, result));
-        }
+        subject.OnNext((test, (ZeResult)test.Method.Invoke(instance, arguments.Any() ? arguments : null)));
         subject.OnCompleted();
         return subject;
     }

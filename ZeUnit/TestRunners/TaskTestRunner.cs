@@ -3,7 +3,7 @@ using System.Reactive.Threading.Tasks;
 
 namespace ZeUnit.TestRunners;
 
-public class TaskResultRunner : ObservableRunner<Task<ZeResult>>
+public class TaskTestRunner : TestRunner<Task<ZeResult>>
 {
     public override IObservable<(ZeTest, ZeResult)> Run(ZeTest test, object instance, object[] arguments)
     {

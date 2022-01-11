@@ -2,7 +2,7 @@
 
 namespace ZeUnit.TestRunners;
 
-public class ObservableResultRunner : ObservableRunner<IObservable<ZeResult>>
+public class ObservableTestRunner : TestRunner<IObservable<ZeResult>>
 {
     public override IObservable<(ZeTest, ZeResult)> Run(ZeTest test, object instance, object[] arguments)
     {

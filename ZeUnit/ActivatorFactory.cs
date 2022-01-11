@@ -1,18 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-namespace ZeUnit.Activators;
+namespace ZeUnit;
 
-public abstract class ActivatorFactory<TInterface, TDefault>    
+public abstract class ActivatorFactory<TInterface, TDefault>
     where TDefault : TInterface, new()
 {
     public IEnumerable<TInterface> Get(Type type)
     {
-        return this.Get(type.GetCustomAttributes());
+        return Get(type.GetCustomAttributes());
     }
 
     public IEnumerable<TInterface> Get(MethodInfo method)
     {
-        return this.Get(method.GetCustomAttributes());
+        return Get(method.GetCustomAttributes());
     }
 
     public IEnumerable<TInterface> Get(IEnumerable<Attribute> attributes)
@@ -30,10 +30,10 @@ public abstract class ActivatorFactory<TInterface, TDefault>
 
         foreach (var group in activatorGroups)
         {
-            var activator = group.Key;                                                   
+            var activator = group.Key;
             var constructor = activator
                 .GetConstructors()
-                .OrderBy(n=>n.GetParameters().Length)
+                .OrderBy(n => n.GetParameters().Length)
                 .First();
 
             var args = constructor.GetParameters();
@@ -42,16 +42,16 @@ public abstract class ActivatorFactory<TInterface, TDefault>
                 yield return (TInterface)constructor.Invoke(null);
                 continue;
             }
-            
+
             if (args.Length == 1 && typeof(IEnumerable).IsAssignableFrom(args.First().ParameterType))
-            {                
+            {
                 yield return (TInterface)constructor.Invoke(new[] { group.ToArray() });
                 continue;
             }
 
             if (args.Length == 1 && typeof(ZeActivatorAttribute) == args.First().ParameterType)
-            {                
-                foreach (var attribute in group) 
+            {
+                foreach (var attribute in group)
                 {
                     yield return (TInterface)constructor.Invoke(new object[] { attribute });
                 }
@@ -60,6 +60,6 @@ public abstract class ActivatorFactory<TInterface, TDefault>
             }
 
             throw new ArgumentException("Could not create activator, constructor must be empty, take a single ZeActivatorAttribute or a IEnumerable<ZeActivationAttribute> to be valid.");
-        }                    
+        }
     }
 }

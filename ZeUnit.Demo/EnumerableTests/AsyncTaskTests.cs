@@ -1,4 +1,4 @@
-﻿namespace ZeUnit.Demo.AsyncTests
+﻿namespace ZeUnit.Demo.EnumerableTests
 {
     public class EnumerableTests
     {

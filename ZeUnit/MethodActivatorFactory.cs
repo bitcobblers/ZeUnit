@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-namespace ZeUnit.Activators;
+using ZeUnit.Activators;
+
+namespace ZeUnit;
 
 public class MethodActivatorFactory : ActivatorFactory<IZeMethodActivator, CoreMethodActivator>
 {
