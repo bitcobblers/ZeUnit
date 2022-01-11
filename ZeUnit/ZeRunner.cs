@@ -1,23 +1,38 @@
-﻿namespace ZeUnit;
+﻿using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
-public class ZeRunner : IZeRunner
+namespace ZeUnit;
+
+public class ZeRunner
 {
-    public IEnumerable<ZeResult> Run(ZeTest test)
-    {        
-         var instance = test.ClassActivator.Get(test.Class);        
+    private readonly List<ObservableRunner> runners = new List<ObservableRunner>()
+    {
+        new ObservableResultRunner(),
+        new TaskResultRunner(),
+        new EnumerableResultRunner(),
+        new SingleResultRunner(),
+    };
+    private IObserver<(ZeTest, ZeResult)> subject;
+
+    public ZeRunner(IObserver<(ZeTest, ZeResult)> subject)
+    {
+        this.subject = subject;
+    }
+
+    public void Run(ZeTest test)
+    {                       
+        var instance = test.ClassActivator.Get(test.Class);               
         foreach (var arguments in test.MethdoActivator.Get(test.Method))
-        {
-            var result = Ze.Assert();
+        {            
+            var runner = runners.First(n => n.SupportType == test.Method.ReturnType);
             try
             {
-                result = (ZeResult)test.Method.Invoke(instance, arguments.Any() ? arguments : null);
+                runner.Run(this.subject, test, instance, arguments);
             }
             catch (Exception ex)
             {
-                result.Assert(new Failed(ex.Message));
-            }
-
-            yield return result;
-        }
+                this.subject.OnNext((test, Ze.Assert().Assert(new Failed(ex.Message))));
+            }            
+        }               
     }
 }

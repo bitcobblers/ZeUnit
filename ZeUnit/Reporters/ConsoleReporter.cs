@@ -4,14 +4,11 @@ namespace ZeUnit.Reporters;
 
 public class ConsoleReporter : IZeReporter
 {
-    public void Report(ZeTest test, IEnumerable<ZeResult> results)
+    public void Report(ZeTest test, ZeResult result)
     {
-        foreach (var result in results)
-        {
-            var state = result.Aggregate(
-            ZeStatus.Passed,
-            (sum, current) => current.Status == ZeStatus.Failed ? ZeStatus.Failed : sum);
-            Console.WriteLine($"[{test.Class.FullName}]::{test.Method.Name} - {state}");
-        }
+        var state = result.Aggregate(
+        ZeStatus.Passed,
+        (sum, current) => current.Status == ZeStatus.Failed ? ZeStatus.Failed : sum);
+        Console.WriteLine($"[{test.Class.FullName}]::{test.Method.Name} - {state}");        
     }
 }

@@ -5,6 +5,13 @@ namespace ZeUnit;
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
     private readonly List<ZeTest> tests = new();
+    private List<Type> vaidTypes = new List<Type>() {
+        typeof(ZeResult),
+        typeof(Task<ZeResult>),
+        typeof(IEnumerable<ZeResult>),
+        typeof(IObservable<ZeResult>)
+    };
+
     private readonly List<Func<Type, bool>> conditions = new()
     {
         (type) => type.Namespace != "ZeUnit",        
@@ -27,14 +34,14 @@ public class ZeDiscovery : IEnumerable<ZeTest>
     
     public ClassActivatorFactory ClassFactory = new ClassActivatorFactory();
 
-    public MethodActivatorFactory MethodFactory = new MethodActivatorFactory(); 
+    public MethodActivatorFactory MethodFactory = new MethodActivatorFactory();    
 
     public ZeDiscovery FromAssembly(Assembly source)
     {
         foreach(var method in source
             .GetTypes()
             .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-            .Where(m => m.ReturnType.Equals(typeof(ZeResult))))
+            .Where(m => vaidTypes.Contains(m.ReturnType)))
         {
             var classType = method.DeclaringType.GetTypeInfo();
             var activators = this.ClassFactory.Get(classType);

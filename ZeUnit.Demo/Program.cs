@@ -4,3 +4,5 @@ Ze.Unit(
 //    new TeamCityReporter(),
 //    new HtmlFileReporter(),
     new ConsoleReporter());
+
+Console.ReadKey();

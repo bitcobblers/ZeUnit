@@ -4,5 +4,5 @@ namespace ZeUnit;
 
 public interface IZeReporter
 {
-    void Report(ZeTest test, IEnumerable<ZeResult> result);
+    void Report(ZeTest test, ZeResult result);
 }

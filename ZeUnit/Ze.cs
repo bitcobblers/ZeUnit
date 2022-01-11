@@ -1,4 +1,6 @@
-﻿namespace ZeUnit;
+﻿using System.Reactive.Subjects;
+
+namespace ZeUnit;
 
 public abstract class ZeActivatorAttribute : Attribute
 {    
@@ -19,14 +21,21 @@ public static class Ze
 
     public static void Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
     {
-        var testRunner = new ZeRunner();
-        var discovery = config(new ZeDiscovery());                
+        var subject = new Subject<(ZeTest, ZeResult)>();
+        var testRunner = new ZeRunner(subject);
+        var discovery = config(new ZeDiscovery());
+
+        subject.Subscribe(n =>
+        {
+            foreach (var reporter in reporters)
+            {
+                reporter.Report(n.Item1, n.Item2);
+            }
+        });
+
         foreach (var test in discovery)
         {
-            var result = testRunner.Run(test);            
-            foreach (var reporter in reporters) {
-                reporter.Report(test, result);
-            }
+            testRunner.Run(test);
         }
     }
 }

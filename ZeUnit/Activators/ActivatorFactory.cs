@@ -32,7 +32,8 @@ public abstract class ActivatorFactory<TInterface, TDefault>
         {
             var activator = group.Key;                                                   
             var constructor = activator
-                .GetConstructors()                    
+                .GetConstructors()
+                .OrderBy(n=>n.GetParameters().Length)
                 .First();
 
             var args = constructor.GetParameters();
