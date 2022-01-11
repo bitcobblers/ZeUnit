@@ -2,23 +2,23 @@
 
 namespace ZeUnit.Activators;
 
-public class FileStreamMethodActivator : IZeMethodActivator
+public class FileTextMethodActivator : IZeMethodActivator
 {
-    private readonly LoadFileStreamAttribute attribute;
     private bool disposedValue;
+    private LoadFileTextAttribute attribute;
 
-    public FileStreamMethodActivator(ZeActivatorAttribute attribute)
+    public FileTextMethodActivator(ZeActivatorAttribute attribute)
     {
-        this.attribute = (LoadFileStreamAttribute)attribute;
+        this.attribute = (LoadFileTextAttribute)attribute;
     }
 
     public IEnumerable<object[]> Get(MethodInfo method)
     {
         yield return this.attribute.FileNames
             .Select(f => new FileInfo(f))
-            .Where(f=> f.Exists)        
-            .Select(f => (object)f.OpenRead())
-            .ToArray();                    
+            .Where(f => f.Exists)
+            .Select(f => (object)f.OpenText().ReadToEnd())
+            .ToArray();        
     }
 
     protected virtual void Dispose(bool disposing)
@@ -36,10 +36,19 @@ public class FileStreamMethodActivator : IZeMethodActivator
         }
     }
 
+    // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+    // ~FileTextMethodActivator()
+    // {
+    //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+    //     Dispose(disposing: false);
+    // }
+
     public void Dispose()
     {
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
+
+    
 }
