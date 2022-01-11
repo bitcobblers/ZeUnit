@@ -7,8 +7,8 @@ using System.Reflection;
 
 [FileExtension(".dll")]
 [FileExtension(".exe")]
-[DefaultExecutorUri(VisualStudioZeUnitTestAdapter.ExecutorUri)]
-[ExtensionUri(VisualStudioZeUnitTestAdapter.ExecutorUri)]
+[DefaultExecutorUri(ExecutorUri)]
+[ExtensionUri(ExecutorUri)]
 public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 {
     public const string ExecutorUri = "executor://ZeUnit.Runner.VisualStudio.VisualStudioZeUnitTestAdapter";

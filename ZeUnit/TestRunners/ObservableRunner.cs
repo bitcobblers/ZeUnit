@@ -1,6 +1,6 @@
-﻿namespace ZeUnit;
+﻿namespace ZeUnit.TestRunners;
 
-public abstract class ObservableRunner 
+public abstract class ObservableRunner
 {
     public abstract Type SupportType { get; }
 

@@ -1,6 +1,6 @@
 ﻿using System.Reactive.Linq;
 
-namespace ZeUnit;
+namespace ZeUnit.TestRunners;
 
 public class ObservableResultRunner : ObservableRunner<IObservable<ZeResult>>
 {
