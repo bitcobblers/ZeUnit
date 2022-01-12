@@ -4,8 +4,8 @@ using ZeUnit.Composers.FileLoaders;
 
 public class LoadFileMethodComposer : IZeMethodComposer
 {
-    private readonly LoadFileAttribute attribute;
     private bool disposedValue;
+    private readonly LoadFileAttribute attribute;    
     private List<IZeFileLoader> loaders = new()
     {
         new StreamFileLoader(),

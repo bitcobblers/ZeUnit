@@ -11,7 +11,7 @@ ZeUnit aims to fit as a bridge between these two worlds, allowing developer cent
 
 ZeUnit was conceived as am idea for preloading state into XUnit because when a colleague asked for an Integration Testing framework recommendation, I couldn't give him one.  This led me down a rabbit hole of looking at XUnit code, and after some thinking I had an answer to my integration testing framework.  What if we give Test classes dependency injection?
 
-Several iterations later, this has turned into a framework that supports a testing based set of custom class and method activators, that allow context to be created for the execution of a tests.  One example of this would be the Lamar container class that allows a user to re-user their *ServiceRegistry* classes to populate a container that creates the test class instance.
+Several iterations later, this has turned into a framework that supports a testing based set of custom class and method composer, that allow context to be created for the execution of a tests.  One example of this would be the Lamar container class that allows a user to re-user their *ServiceRegistry* classes to populate a container that creates the test class instance.
 
 ```csharp
 [LamarContainer(typeof(SimpleServiceInjectionRegistry))]
@@ -33,7 +33,7 @@ public class InjectionZeUnitClass
 }
 ```
 
-Behind the scenes, the *SimpleServiceInjectorRegistraty* that is passed into the *LamarContainerAttribute* creates the container registration for *ISimpleInjectedService* with some implementation. When the testing framework calls the Activator defined in the *LamarContainerAttribute*, it creates the instance of the class.
+Behind the scenes, the *SimpleServiceInjectorRegistraty* that is passed into the *LamarContainerAttribute* creates the container registration for *ISimpleInjectedService* with some implementation. When the testing framework calls a Composer defined in the *LamarContainerAttribute*, this composer is responsible for creating the instance of the class.
 
 At the same time, there is nothing that prevents the test from being as simple as an XUnit/NUnit test is today. A test requires no additional context to exist before it is run.
 
@@ -57,9 +57,9 @@ public class SampleZeUnitClass
 }
 ```
 
-Because the power of the test and method activation is yours, you get to define the scale of each test class with existing or custom *ZeActivationAttributes* and the *ZeActivator* classes. 
+Because the power of the test and method composition is yours, you get to define the scale of each test class with existing or custom *ZeComposerAttributes* and the *ZeClassComposer* and *ZeMethodComposer* classes. 
 
-Or mixing in any amount of aditional activation, in this next example focus on file loading activator.  When used with a method that requires data to be pulled from files.  The activators load the file as best is it can for the type that is being requestd.
+Mix in any amount of composition, in this next example the class doesn't need any dependancies but the test methodon a argument depedency and require composition.  The *LoadFile* attribute tells the composer what file to load, and the arguments on the method define the type the system should try to load the file into.
 
 ```csharp
 public class FileInjectionTests
