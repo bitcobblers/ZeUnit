@@ -2,7 +2,7 @@
 {
     public TestRowTemplatePart()
     {
-        this.Compile(
+        this.Compile(new StringSource(
 @"<div class='alert alert-{{status}}' role='alert'>   
     <h4>{{name}}</h4>
  </div>
@@ -13,6 +13,6 @@
     </tr>
 {{/messages}}
 </table>
-");
+"));
     }
 }

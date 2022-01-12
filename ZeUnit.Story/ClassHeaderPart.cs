@@ -2,6 +2,6 @@
 {
     public ClassHeaderPart()
     {
-        this.Compile(@"<h2>{{name}}</h2>");
+        this.Compile(new StringSource(@"<h2>{{name}}</h2>"));
     }
 }
