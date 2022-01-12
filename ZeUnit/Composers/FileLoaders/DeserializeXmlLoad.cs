@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-namespace ZeUnit.Activators;
+
+namespace ZeUnit.Composers.FileLoaders;
 using System.Xml.Serialization;
 
 public class DeserializeXmlLoad : IZeFileLoader
@@ -11,5 +12,5 @@ public class DeserializeXmlLoad : IZeFileLoader
         var serializer = new XmlSerializer(type);
         using var reader = file.OpenRead();
         return serializer.Deserialize(reader);
-    }       
+    }
 }

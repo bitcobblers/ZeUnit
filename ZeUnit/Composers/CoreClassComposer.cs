@@ -1,16 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-namespace ZeUnit.Activators;
+namespace ZeUnit.Composers;
 
-public class CoreMethodActivator : IZeMethodActivator
+
+public class CoreClassComposer : IZeClassComposer
 {
     private bool disposedValue;
 
-    public IEnumerable<object[]> Get(MethodInfo method)
+    public object Get(TypeInfo @class)
     {
-        yield return new object[0];
+        return Activator.CreateInstance(@class);
     }
-
 
     protected virtual void Dispose(bool disposing)
     {
@@ -26,13 +26,6 @@ public class CoreMethodActivator : IZeMethodActivator
             disposedValue = true;
         }
     }
-
-    // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-    // ~CoreMethodActivator()
-    // {
-    //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-    //     Dispose(disposing: false);
-    // }
 
     public void Dispose()
     {

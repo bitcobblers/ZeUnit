@@ -5,9 +5,9 @@ namespace ZeUnit;
 
 public class ZeRunner
 {
-    private readonly List<TestRunner> runners;    
+    private readonly List<ZeTestRunner> runners;    
 
-    public ZeRunner(List<TestRunner> testRunners)
+    public ZeRunner(List<ZeTestRunner> testRunners)
     {
         this.runners = testRunners;
     }

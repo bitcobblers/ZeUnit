@@ -2,7 +2,7 @@
 
 namespace ZeUnit;
 
-public abstract class ActivatorFactory<TInterface, TDefault>
+public abstract class BaseComposerFactory<TInterface, TDefault>
     where TDefault : TInterface, new()
 {
     public IEnumerable<TInterface> Get(Type type)
@@ -18,8 +18,8 @@ public abstract class ActivatorFactory<TInterface, TDefault>
     public IEnumerable<TInterface> Get(IEnumerable<Attribute> attributes)
     {
         var activatorGroups = attributes
-            .Where(n => n.GetType().IsAssignableTo(typeof(ZeActivatorAttribute)))
-            .Select(n => (ZeActivatorAttribute)n)
+            .Where(n => n.GetType().IsAssignableTo(typeof(ZeComposerAttribute)))
+            .Select(n => (ZeComposerAttribute)n)
             .GroupBy(n => n.Activator, n => n);
 
         if (!activatorGroups.Any())
@@ -49,7 +49,7 @@ public abstract class ActivatorFactory<TInterface, TDefault>
                 continue;
             }
 
-            if (args.Length == 1 && typeof(ZeActivatorAttribute) == args.First().ParameterType)
+            if (args.Length == 1 && typeof(ZeComposerAttribute) == args.First().ParameterType)
             {
                 foreach (var attribute in group)
                 {

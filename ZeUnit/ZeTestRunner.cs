@@ -1,6 +1,6 @@
 ﻿namespace ZeUnit;
 
-public abstract class TestRunner
+public abstract class ZeTestRunner
 {
     public abstract Type SupportType { get; }
 

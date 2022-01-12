@@ -7,7 +7,7 @@ public static class Ze
 {    
     public static ZeResult Is => new ZeResult();
 
-    public static List<TestRunner> TestRunners = new List<TestRunner>()
+    public static List<ZeTestRunner> TestRunners = new List<ZeTestRunner>()
     {
         new ObservableTestRunner(),
         new TaskTestRunner(),

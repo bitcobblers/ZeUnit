@@ -6,7 +6,7 @@ public static class EqualsValue
         where TType : IEquatable<TType>
     {
         return result.Assert(expected.Equals(actual)
-            ? new Successful($"Value '{expected}' matched expected results.")
-            : new Failed($"Value '{actual}' didn't match the expected value '{expected}'."));
+            ? new AssertPassed($"Value '{expected}' matched expected results.")
+            : new AssertFailed($"Value '{actual}' didn't match the expected value '{expected}'."));
     }
 }

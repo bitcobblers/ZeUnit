@@ -6,8 +6,8 @@ public static class EqualsType
     {
         var actualType = actual.GetType();
         return result.Assert(expectedType.Equals(actualType)
-            ? new Successful($"Type '{actualType.Name}' matched expected result.")
-            : new Failed($"Value '{actualType.Name}' didn't match the expected value '{expectedType.Name}'."));
+            ? new AssertPassed($"Type '{actualType.Name}' matched expected result.")
+            : new AssertFailed($"Value '{actualType.Name}' didn't match the expected value '{expectedType.Name}'."));
     }
 
     public static ZeResult Type<TExpected>(this ZeResult result, object actual)

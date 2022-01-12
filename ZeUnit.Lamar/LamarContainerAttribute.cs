@@ -1,10 +1,10 @@
 ﻿namespace ZeUnit.Lamar;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public class LamarContainerAttribute : ZeActivatorAttribute
+public class LamarContainerAttribute : ZeComposerAttribute
 {
     public LamarContainerAttribute(Type registry) 
-        : base(typeof(LamarClassActivator))
+        : base(typeof(LamarContainerClassComposer))
     {        
         if (!registry.IsAssignableTo(typeof(ServiceRegistry)))
         {

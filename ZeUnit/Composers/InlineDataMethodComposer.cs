@@ -1,19 +1,20 @@
 ﻿// See https://aka.ms/new-console-template for more information
-namespace ZeUnit;
 
-public class InlineMethodAttributeActivator : IZeMethodActivator
+namespace ZeUnit.Composers;
+
+public class InlineDataMethodComposer : IZeMethodComposer
 {
     private readonly InlineDataAttribute attribute;
     private bool disposedValue;
 
-    public InlineMethodAttributeActivator(ZeActivatorAttribute attribute)
+    public InlineDataMethodComposer(ZeComposerAttribute attribute)
     {
         this.attribute = (InlineDataAttribute)attribute;
-    }    
+    }
 
     public IEnumerable<object[]> Get(MethodInfo method)
     {
-        yield return this.attribute.Args;
+        yield return attribute.Args;
     }
 
     protected virtual void Dispose(bool disposing)

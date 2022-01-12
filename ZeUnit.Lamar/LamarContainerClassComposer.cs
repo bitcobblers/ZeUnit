@@ -2,12 +2,12 @@
 
 namespace ZeUnit.Lamar;
 
-public class LamarClassActivator : IZeClassActivator
+public class LamarContainerClassComposer : IZeClassComposer
 {
     private readonly Container container;
     private bool disposedValue;
 
-    public LamarClassActivator(IEnumerable<ZeActivatorAttribute> attributes)
+    public LamarContainerClassComposer(IEnumerable<ZeComposerAttribute> attributes)
     {
         this.container = new Container(new ServiceRegistry());
         foreach (var registryType in attributes            

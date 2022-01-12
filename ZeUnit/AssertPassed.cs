@@ -1,8 +1,8 @@
 ﻿namespace ZeUnit;
 
-public class Successful : ZeAssertion
+public class AssertPassed : ZeAssert
 {
-    public Successful(string message)
+    public AssertPassed(string message)
     {
         this.Status = ZeStatus.Passed;
         this.Message = message;

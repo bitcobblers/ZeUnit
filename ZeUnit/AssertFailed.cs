@@ -1,8 +1,8 @@
 ﻿namespace ZeUnit;
 
-public class Failed : ZeAssertion
+public class AssertFailed : ZeAssert
 {
-    public Failed(string message)
+    public AssertFailed(string message)
     {
         this.Status = ZeStatus.Failed;
         this.Message = message;

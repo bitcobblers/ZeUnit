@@ -1,8 +1,8 @@
 ﻿namespace ZeUnit;
 
-public abstract class ZeActivatorAttribute : Attribute
+public abstract class ZeComposerAttribute : Attribute
 {    
-    protected ZeActivatorAttribute(Type type)
+    protected ZeComposerAttribute(Type type)
     {
         this.Activator = type;
     }

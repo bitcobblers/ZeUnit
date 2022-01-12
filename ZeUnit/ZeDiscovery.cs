@@ -30,9 +30,9 @@ public class ZeDiscovery : IEnumerable<ZeTest>
         return this;
     } 
     
-    public ClassActivatorFactory ClassFactory = new ClassActivatorFactory();
+    public ComposerClassFactory ClassFactory = new ComposerClassFactory();
 
-    public MethodActivatorFactory MethodFactory = new MethodActivatorFactory();
+    public ComposerMethodFactory MethodFactory = new ComposerMethodFactory();
 
     public ZeDiscovery FromAssembly(string source)
     {

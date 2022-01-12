@@ -1,8 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿namespace ZeUnit.Composers;
 
-namespace ZeUnit.Activators;
+using ZeUnit.Composers.FileLoaders;
 
-public class FileReaderMethodActivator : IZeMethodActivator
+public class LoadFileMethodComposer : IZeMethodComposer
 {
     private readonly LoadFileAttribute attribute;
     private bool disposedValue;
@@ -16,7 +16,7 @@ public class FileReaderMethodActivator : IZeMethodActivator
         new DeserializeJsonLoad(),
     };
 
-    public FileReaderMethodActivator(ZeActivatorAttribute attribute)
+    public LoadFileMethodComposer(ZeComposerAttribute attribute)
     {
         this.attribute = (LoadFileAttribute)attribute;
     }
@@ -24,9 +24,9 @@ public class FileReaderMethodActivator : IZeMethodActivator
     public IEnumerable<object[]> Get(MethodInfo method)
     {
         var paramters = method.GetParameters()
-            .Select(n=>n.ParameterType);
+            .Select(n => n.ParameterType);
 
-        yield return this.attribute.FileNames
+        yield return attribute.FileNames
             .Select(f => new FileInfo(f))
             .Zip(paramters)
             .Select(pair =>
@@ -34,7 +34,7 @@ public class FileReaderMethodActivator : IZeMethodActivator
                 var loader = loaders.FirstOrDefault(n => n.Match(pair.Second, pair.First), new NullFileLoader());
                 return loader.Load(pair.Second, pair.First);
             })
-            .ToArray();                    
+            .ToArray();
     }
 
     protected virtual void Dispose(bool disposing)

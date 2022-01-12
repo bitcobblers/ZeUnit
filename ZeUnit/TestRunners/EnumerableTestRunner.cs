@@ -3,7 +3,7 @@ using System.Reactive.Subjects;
 
 namespace ZeUnit.TestRunners;
 
-public class EnumerableTestRunner : TestRunner<IEnumerable<ZeResult>>
+public class EnumerableTestRunner : ZeTestRunner<IEnumerable<ZeResult>>
 {
     public override IObservable<(ZeTest, ZeResult)> Run(ZeTest test, object instance, object[] arguments)
     {

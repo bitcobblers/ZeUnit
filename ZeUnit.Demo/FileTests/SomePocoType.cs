@@ -1,6 +1,6 @@
 ﻿namespace ZeUnit.Demo.FileTests
 {
-    public class SerializedType
+    public class SomePocoType
     {
         public string Text { get; set; }
     }
