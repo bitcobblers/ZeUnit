@@ -8,10 +8,12 @@ public class LoadFileMethodComposer : IZeMethodComposer
     private bool disposedValue;
     private List<IZeFileLoader> loaders = new()
     {
-        new ByteArrayFileLoader(),
-        new FileStreamFileLoader(),
         new StreamFileLoader(),
-        new StringFileLoader(),
+        new FileStreamFileLoader(),
+        new ByteArrayFileLoader(),               
+        new StringFileLoader(),    
+        new XDocumentFileLoader(),
+        new JsonObjectFileLoader(),
         new DeserializeXmlLoad(),
         new DeserializeJsonLoad(),
     };
