@@ -25,10 +25,6 @@ public static class Ze
             .SelectMany(test => runner.Run(test)))
             .Do(n =>
             {
-                if (n.Item2.State == ZeStatus.Failed)
-                {
-                    failCount++;
-                }
                 foreach (var reporter in reporters)
                 {
                     reporter.Report(n.Item1, n.Item2);
@@ -36,6 +32,11 @@ public static class Ze
             });
                 
         await subject.LastAsync();
+        foreach (var reporter in reporters)
+        {
+            reporter.Close();
+        }
+
         return failCount;
     }
 }

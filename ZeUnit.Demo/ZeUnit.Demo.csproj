@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ZeUnit.Lamar\ZeUnit.Lamar.csproj" />
     <ProjectReference Include="..\ZeUnit.Runner.VisualStudio\ZeUnit.Runner.VisualStudio.csproj" />
+    <ProjectReference Include="..\ZeUnit.Story\ZeUnit.Story.csproj" />
     <ProjectReference Include="..\ZeUnit\ZeUnit.csproj" />
   </ItemGroup>
 
