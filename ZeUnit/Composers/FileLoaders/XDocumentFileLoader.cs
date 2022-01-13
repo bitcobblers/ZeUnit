@@ -8,6 +8,6 @@ public class XDocumentFileLoader : ZeTypeFileLoader<XDocument>
 {
     public override object Load(Type type, FileInfo file)
     {
-        return XDocument.Load(file.OpenText().ReadToEnd();
+        return XDocument.Load(file.OpenText().ReadToEnd());
     }
 }

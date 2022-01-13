@@ -48,7 +48,8 @@ public class ZeDiscovery : IEnumerable<ZeTest>
         {
             var classType = method.DeclaringType.GetTypeInfo();
             var activators = this.ClassFactory.Get(classType);
-            foreach (var activator in activators) {
+            foreach (var activator in activators) 
+            {
                 foreach (var activation in this.MethodFactory.Get(method))
                 {
                     tests.Add(new ZeTest()

@@ -2,6 +2,7 @@
 
 namespace ZeUnit.Demo.FileTests
 {
+    [Singleton]
     public class FileInjectionTests
     {
         [LoadFile("FileTests/test.txt")]

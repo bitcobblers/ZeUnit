@@ -7,7 +7,7 @@ public class EnumerableTestRunner : ZeTestRunner<IEnumerable<ZeResult>>
 {
     public override IObservable<(ZeTest, ZeResult)> Run(ZeTest test, object instance, object[] arguments)
     {
-        var subject = new ReplaySubject<(ZeTest, ZeResult)>();
+        var subject = new AsyncSubject<(ZeTest, ZeResult)>();
         foreach (var result in (IEnumerable<ZeResult>)test.Method.Invoke(instance, arguments.Any() ? arguments : null))
         {
             subject.OnNext((test, result));

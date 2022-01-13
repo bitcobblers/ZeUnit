@@ -1,5 +1,6 @@
 ﻿using System.Reactive.Linq;
 using ZeUnit.TestRunners;
+using System.Linq;
 
 namespace ZeUnit;
 
@@ -15,28 +16,38 @@ public static class Ze
         new ObjectTestRunner(),
     };
     
-    public static async Task<int> Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
+    public static async Task Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
     {        
         var runner = new ZeRunner(TestRunners);
-        var discovery = config(new ZeDiscovery(runner.SupportedTest));
-        var failCount = 0;        
+        var discovery = config(new ZeDiscovery(runner.SupportedTest))
+            .GroupBy(n=>(n.Class, n.ClassActivator), n=>n);       
 
-        var subject = Observable.Merge(discovery
-            .SelectMany(test => runner.Run(test)))
-            .Do(n =>
-            {
-                foreach (var reporter in reporters)
+        foreach (var classActivation in discovery)
+        {
+            var @class = classActivation.Key.Item1;
+            var composer = classActivation.Key.Item2;
+
+            var lifeCycle = @class
+                .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
+
+            var factory = lifeCycle.Create(composer, @class);
+
+            var subject = Observable.Merge(classActivation
+                .SelectMany(test => runner.Run(test, factory)))
+                .Do(n =>
                 {
-                    reporter.Report(n.Item1, n.Item2);
-                }                
-            });
-                
-        await subject.LastAsync();
+                    foreach (var reporter in reporters)
+                    {
+                        reporter.Report(n.Item1, n.Item2);
+                    }
+                });
+            
+            await subject.LastAsync();
+        }
+                               
         foreach (var reporter in reporters)
         {
             reporter.Close();
-        }
-
-        return failCount;
+        }        
     }
 }
