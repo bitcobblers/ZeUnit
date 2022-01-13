@@ -7,12 +7,14 @@ public class ConsoleReporter : IZeReporter
     private int total = 0;
     private int error = 0;
 
-    public void Report(ZeTest test, ZeResult result)
-    {                
+    public void OnNext((ZeTest, ZeResult) value)
+    {
+        var (test, result) = value;
         Console.WriteLine($"[{test.Class.FullName}]::{test.Method.Name} - {result.State}");
-        foreach (var assertion in result) {
+        foreach (var assertion in result)
+        {
             Console.WriteLine($" -- {assertion.Message}");
-        }        
+        }
 
         if (result.State == ZeStatus.Failed)
         {
@@ -21,8 +23,15 @@ public class ConsoleReporter : IZeReporter
         total++;
     }
 
-    public void Close()
+    public void OnError(Exception error)
+    {
+        this.error++;
+        Console.WriteLine($" ERROR: {error.Message}");
+        Console.WriteLine($" ERROR: {error.StackTrace}");
+    }
+
+    public void OnCompleted()
     {
         Console.WriteLine($"Test completed with {error} out of {total}.");
-    }
+    }    
 }

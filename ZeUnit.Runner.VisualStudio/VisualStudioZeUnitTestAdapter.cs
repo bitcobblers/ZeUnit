@@ -11,19 +11,18 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 {
     public const string ExecutorUri = "executor://ZeUnit.Runner.VisualStudio.VisualStudioZeUnitTestAdapter";
+    private ZeTestRunnerDiscovery testRunnerDiscovery;
 
-    private readonly ZeRunner runner;
-    
     public VisualStudioZeUnitTestAdapter()
     {
-        this.runner = new ZeRunner(Ze.TestRunners);
+        this.testRunnerDiscovery = new DefaultTestRunnerDiscovery();        
     }    
 
     public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
     {
         foreach (var source in sources)
         {
-            var discovery = new ZeDiscovery(runner.SupportedTest)
+            var discovery = new ZeDiscovery(testRunnerDiscovery.SupportedTypes())
                 .FromAssembly(source);
 
             foreach (var test in discovery)
@@ -39,7 +38,6 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
     public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
         Console.WriteLine("test");
-
     }
 
     public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)

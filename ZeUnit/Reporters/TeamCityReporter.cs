@@ -3,17 +3,20 @@
 namespace ZeUnit.Reporters;
 
 public class TeamCityReporter : IZeReporter
-{    
-    public void Report(ZeTest test, ZeResult result)
+{
+    public void OnNext((ZeTest, ZeResult) value)
     {
-        var state = result.Aggregate(
-        ZeStatus.Passed,
-        (sum, current) => current.Status == ZeStatus.Failed ? ZeStatus.Failed : sum);
-
-        Console.WriteLine($"TeamCity::[{test.Class.FullName}]::{test.Method.Name} - {state}");        
+        var (test, result) = value;
+        Console.WriteLine($"TeamCity::[{test.Class.FullName}]::{test.Method.Name} - {result.State}");
     }
 
-    public void Close()
-    {        
+    public void OnError(Exception error)
+    {
+        Console.WriteLine($" ERROR: {error.Message}");
+        Console.WriteLine($" ERROR: {error.StackTrace}");
+    }
+
+    public void OnCompleted()
+    {
     }
 }

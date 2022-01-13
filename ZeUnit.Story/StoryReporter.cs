@@ -10,16 +10,15 @@ namespace ZeUnit.Story
 
         public StoryReporter(string fileName = "story.html")
         {
-            this.fileName = fileName;
-            
-        }
-        
-        public void Report(ZeTest test, ZeResult result)
-        {
-            this.tests.Add((test, result));
+            this.fileName = fileName;            
         }
 
-        public void Close()
+        public void OnNext((ZeTest, ZeResult) value)
+        {
+            this.tests.Add(value);
+        }
+
+        public void OnCompleted()
         {
             var report = new StringBuilder();
             
@@ -57,5 +56,10 @@ namespace ZeUnit.Story
 
             File.WriteAllText(fileName, report.ToString());
         }
+
+        public void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }   
     }
 }

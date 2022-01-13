@@ -1,27 +1,36 @@
 ﻿using System.Reactive.Linq;
 using ZeUnit.TestRunners;
 using System.Linq;
+using System.Reactive;
 
 namespace ZeUnit;
 
 public static class Ze
 {    
     public static ZeResult Is => new ZeResult();
-
-    public static List<ZeTestRunner> TestRunners = new List<ZeTestRunner>()
-    {
-        new ObservableTestRunner(),
-        new TaskTestRunner(),
-        new EnumerableTestRunner(),
-        new ObjectTestRunner(),
-    };
     
-    public static async Task Unit(Func<ZeDiscovery, ZeDiscovery> config, params IZeReporter[] reporters)        
-    {        
-        var runner = new ZeRunner(TestRunners);
-        var discovery = config(new ZeDiscovery(runner.SupportedTest))
-            .GroupBy(n=>(n.Class, n.ClassActivator), n=>n);       
+    public static IEnumerable<TType> Each<TType>(this IEnumerable<TType> enumerable, Action<TType> action)
+    {
+        foreach (var item in enumerable)
+        {
+            action(item);
+        }
+        return enumerable;
+    }
 
+    public static async Task Unit(Func<ZeDiscovery, ZeDiscovery> config, ZeTestRunnerDiscovery runnerDiscovery, params IZeReporter[] reporters)        
+    {                        
+        var runner = new ZeRunner(runnerDiscovery.Runners());
+        var discovery = config(new ZeDiscovery(runnerDiscovery.SupportedTypes()))
+            .GroupBy(n=>(n.Class, n.ClassActivator), n=>n);
+
+        var report = Observer.Create<(ZeTest, ZeResult)>(
+            n => _ = reporters.Each(r => r.OnNext(n)),
+            e => _ = reporters.Each(r => r.OnError(e)),
+            () => _ = reporters.Each(r => r.OnCompleted())
+        );
+
+        var classRuns = new List<IObservable<(ZeTest, ZeResult)>>();
         foreach (var classActivation in discovery)
         {
             var @class = classActivation.Key.Item1;
@@ -32,22 +41,14 @@ public static class Ze
 
             var factory = lifeCycle.GetFactory(composer, @class);
 
-            var subject = Observable.Merge(classActivation
+            classRuns.Add(Observable.Merge(classActivation
                 .SelectMany(test => runner.Run(test, factory)))
-                .Do(n =>
-                {
-                    foreach (var reporter in reporters)
-                    {
-                        reporter.Report(n.Item1, n.Item2);
-                    }
-                });
-            
-            await subject.LastAsync();
+                .Publish()
+                .RefCount()
+                .Do(n => report.OnNext(n)));            
         }
-                               
-        foreach (var reporter in reporters)
-        {
-            reporter.Close();
-        }        
+
+        await Observable.Merge(classRuns).LastAsync();
+        report.OnCompleted();
     }
 }

@@ -2,9 +2,6 @@
 
 namespace ZeUnit;
 
-public interface IZeReporter
+public interface IZeReporter : IObserver<(ZeTest, ZeResult)>
 {
-    void Report(ZeTest test, ZeResult result);
-
-    void Close();
 }

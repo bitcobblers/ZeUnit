@@ -5,11 +5,11 @@ namespace ZeUnit;
 
 public class ZeRunner
 {
-    private readonly List<ZeTestRunner> runners;    
+    private readonly ZeTestRunner[] runners;    
 
-    public ZeRunner(List<ZeTestRunner> testRunners)
+    public ZeRunner(IEnumerable<ZeTestRunner> testRunners)
     {
-        this.runners = testRunners;
+        this.runners = testRunners.ToArray();
     }
 
     public IEnumerable<Type> SupportedTest => runners.Select(n => n.SupportType);
