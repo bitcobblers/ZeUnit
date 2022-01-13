@@ -2,7 +2,7 @@
 
 public class SingletonAttribute : ZeLifeCycleAttribute
 {
-    public override ZeClassInstanceFactory Create(IZeClassComposer composer, TypeInfo type)
+    public override ZeClassInstanceFactory GetFactory(IZeClassComposer composer, TypeInfo type)
     {
         return new SingletonInstanceFactory(composer, type);
     }

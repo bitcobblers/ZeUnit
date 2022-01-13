@@ -2,7 +2,7 @@
 
 public class TransientAttribute : ZeLifeCycleAttribute
 {
-    public override ZeClassInstanceFactory Create(IZeClassComposer composer, TypeInfo type)
+    public override ZeClassInstanceFactory GetFactory(IZeClassComposer composer, TypeInfo type)
     {
         return new TransientInstanceFactory(composer, type);
     }

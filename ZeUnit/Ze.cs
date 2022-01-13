@@ -30,7 +30,7 @@ public static class Ze
             var lifeCycle = @class
                 .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
 
-            var factory = lifeCycle.Create(composer, @class);
+            var factory = lifeCycle.GetFactory(composer, @class);
 
             var subject = Observable.Merge(classActivation
                 .SelectMany(test => runner.Run(test, factory)))
