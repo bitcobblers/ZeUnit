@@ -43,8 +43,6 @@ public static class Ze
 
             classRuns.Add(Observable.Merge(classActivation
                 .SelectMany(test => runner.Run(test, factory)))
-                .Publish()
-                .RefCount()
                 .Do(n => report.OnNext(n)));            
         }
 

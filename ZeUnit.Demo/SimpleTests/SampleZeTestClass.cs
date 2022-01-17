@@ -10,10 +10,10 @@ public class SampleZeTestClass
             .Equal(4, result);
     }
 
-    public ZeResult SimpleTestMethodThatFailes()
-    {
-        var result = 2 + 2;
-        return Ze.Is            
-            .Equal(5, result);
-    }
+    //public ZeResult SimpleTestMethodThatFailes()
+    //{
+    //    var result = 2 + 2;
+    //    return Ze.Is            
+    //        .Equal(5, result);
+    //}
 }
