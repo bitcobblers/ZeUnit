@@ -1,52 +1,79 @@
-﻿using System.Reactive.Linq;
-using ZeUnit.TestRunners;
-using System.Linq;
-using System.Reactive;
+﻿namespace ZeUnit;
 
-namespace ZeUnit;
+using System.Reactive.Linq;
+using System.Reactive;
+using ZeUnit.Reporters;
+
+public class ZeBuilder
+{
+    private List<Func<ZeDiscovery, ZeDiscovery>> configs = new();
+    private List<IZeReporter> reporters = new();
+    private IZeTestRunnerDiscovery runnerDiscovery;    
+
+    public ZeBuilder() : this(new DefaultTestRunnerDiscovery())
+    {        
+    }
+    public ZeBuilder(IZeTestRunnerDiscovery runnerDiscovery)
+    {
+        this.runnerDiscovery = runnerDiscovery;       
+    }
+
+    public ZeBuilder With(Func<ZeDiscovery, ZeDiscovery> configFn)
+    {
+        this.configs.Add(configFn);
+        return this;
+    }
+
+    public ZeBuilder With(params IZeReporter[] reporters)
+    {
+        this.reporters.AddRange(reporters);
+        return this;
+    }            
+
+    public ZeDiscovery GetDiscovery()
+    {
+        var discovery = new ZeDiscovery(runnerDiscovery.SupportedTypes());
+        return configs.Aggregate(discovery, (discovery, config) => config(discovery));        
+    }
+
+    public IZeReporter GetReporter()
+    {
+        return new CompoundReporter(this.reporters);
+    }
+
+    public IEnumerable<ZeTestRunner> Runners()
+    {
+        return runnerDiscovery.Runners();
+    }
+}
 
 public static class Ze
 {    
     public static ZeResult Is => new ZeResult();
-    
-    public static IEnumerable<TType> Each<TType>(this IEnumerable<TType> enumerable, Action<TType> action)
+
+    public static Dictionary<string, object> Global = new();
+
+    public static IObservable<(ZeTest, ZeResult)> Unit(ZeBuilder builder)   
     {
-        foreach (var item in enumerable)
-        {
-            action(item);
-        }
-        return enumerable;
-    }
-
-    public static async Task Unit(Func<ZeDiscovery, ZeDiscovery> config, ZeTestRunnerDiscovery runnerDiscovery, params IZeReporter[] reporters)        
-    {                        
-        var runner = new ZeRunner(runnerDiscovery.Runners());
-        var discovery = config(new ZeDiscovery(runnerDiscovery.SupportedTypes()))
-            .GroupBy(n=>(n.Class, n.ClassActivator), n=>n);
-
-        var report = Observer.Create<(ZeTest, ZeResult)>(
-            n => _ = reporters.Each(r => r.OnNext(n)),
-            e => _ = reporters.Each(r => r.OnError(e)),
-            () => _ = reporters.Each(r => r.OnCompleted())
-        );
-
         var classRuns = new List<IObservable<(ZeTest, ZeResult)>>();
+        var reporter = builder.GetReporter();
+        var discovery = builder.GetDiscovery()
+            .GroupBy(n=>(n.Class, n.ClassActivator), n=>n);
+        
         foreach (var classActivation in discovery)
         {
-            var @class = classActivation.Key.Item1;
-            var composer = classActivation.Key.Item2;
-
+            var (@class, composer) = classActivation.Key;            
             var lifeCycle = @class
                 .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
 
             var factory = lifeCycle.GetFactory(composer, @class);
 
-            classRuns.Add(Observable.Merge(classActivation
-                .SelectMany(test => runner.Run(test, factory)))
-                .Do(n => report.OnNext(n)));            
+            classRuns.AddRange(classActivation
+                .SelectMany(test => new ZeRunner(builder.Runners()).Run(test, factory)));
         }
 
-        await Observable.Merge(classRuns).LastAsync();
-        report.OnCompleted();
+        return Observable.Merge(classRuns)
+            .Do(n=> reporter.OnNext(n));
+
     }
 }

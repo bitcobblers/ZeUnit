@@ -2,6 +2,32 @@
 
 namespace ZeUnit.Reporters;
 
+public class CompoundReporter : IZeReporter
+{
+    private List<IZeReporter> reporters;
+
+    public CompoundReporter(List<IZeReporter> reporters)
+    {
+        this.reporters = reporters;
+    }
+
+    public void OnCompleted()
+    {
+        reporters.ForEach(reporter => reporter.OnCompleted());
+    }
+
+    public void OnError(Exception error)
+    {
+        reporters.ForEach(reporter => reporter.OnError(error));
+    }
+
+    public void OnNext((ZeTest, ZeResult) value)
+    {
+        reporters.ForEach(reporter => reporter.OnNext(value));
+    }
+}
+
+
 public class ConsoleReporter : IZeReporter
 {
     private int total = 0;

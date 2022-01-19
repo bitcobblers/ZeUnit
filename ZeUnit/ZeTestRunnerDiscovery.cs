@@ -1,6 +1,6 @@
 ﻿namespace ZeUnit;
 
-public abstract class ZeTestRunnerDiscovery
+public abstract class ZeTestRunnerDiscovery : IZeTestRunnerDiscovery
 {
     protected List<ZeTestRunner> zeTestRunners = new List<ZeTestRunner>();
 

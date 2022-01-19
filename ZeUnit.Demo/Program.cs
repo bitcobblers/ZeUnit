@@ -1,13 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Reactive.Linq;
 using ZeUnit.Story;
-    
-await Ze.Unit(
-    discovery => discovery.FromAssembly(typeof(Program).Assembly),
-//    new TeamCityReporter(),
-//    new HtmlFileReporter(),
-    new DefaultTestRunnerDiscovery(),
-    new ConsoleReporter(),
-    new StoryReporter());
+var builder = new ZeBuilder()
+    .With(discovery => discovery.FromAssembly(typeof(Program).Assembly))
+    .With(new ConsoleReporter(),
+            new StoryReporter());
 
+await Ze.Unit(builder).LastAsync();
 return 0;

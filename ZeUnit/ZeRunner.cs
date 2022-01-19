@@ -5,14 +5,12 @@ namespace ZeUnit;
 
 public class ZeRunner
 {
-    private readonly ZeTestRunner[] runners;    
+    private readonly IEnumerable<ZeTestRunner> runners;    
 
     public ZeRunner(IEnumerable<ZeTestRunner> testRunners)
     {
-        this.runners = testRunners.ToArray();
+        this.runners = testRunners;
     }
-
-    public IEnumerable<Type> SupportedTest => runners.Select(n => n.SupportType);
 
     public IEnumerable<IObservable<(ZeTest, ZeResult)>> Run(ZeTest test, ZeClassInstanceFactory factory)
     {                               
