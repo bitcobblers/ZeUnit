@@ -40,5 +40,5 @@ jobs:
       run: dotnet pack -o ..\publish    
     - name: Push Package to NuGet.org
       if: github.ref == 'refs/heads/master'
-      working-directory: Publish
+      working-directory: ..\publish
       run: dotnet nuget push *.nupkg -k ${{ secrets.NUGETPUBLISH }} -s https://api.nuget.org/v3/index.json 
