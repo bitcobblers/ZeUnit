@@ -19,8 +19,6 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
     - name: Run Demo Test Application
       working-directory: ZeUnit.Demo
       run: dotnet run 
