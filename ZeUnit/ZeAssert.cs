@@ -2,7 +2,7 @@
 
 public class ZeAssert
 {
-    public ZeStatus Status { get; set; }
-    public string Message { get; set; }
+    public virtual ZeStatus Status { get; set; }
+    public virtual string Message { get; set; }
 
 }

@@ -65,15 +65,21 @@ public static class Ze
             var (@class, composer) = classActivation.Key;            
             var lifeCycle = @class
                 .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
+            try
+            {
+                var factory = lifeCycle.GetFactory(composer, @class);
 
-            var factory = lifeCycle.GetFactory(composer, @class);
-
-            classRuns.AddRange(classActivation
-                .SelectMany(test => new ZeRunner(builder.Runners()).Run(test, factory)));
+                classRuns.AddRange(classActivation
+                    .SelectMany(test => new ZeRunner(builder.Runners()).Run(test, factory)));
+            }
+            catch (Exception ex)
+            {
+                classRuns.AddRange(classActivation.Select(test => new ZeTestException(test, ex)));
+            }
         }
 
         return Observable.Merge(classRuns)
-            .Do(n=> reporter.OnNext(n));
+            .Do(reporter);
 
     }
 }
