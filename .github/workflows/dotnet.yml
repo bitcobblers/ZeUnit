@@ -23,8 +23,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Run Demo Test Application
       working-directory: ZeUnit.Demo
-      run: dotnet run
-    
+      run: dotnet run 
     - name: Pack ZeUnit
       if: github.ref == 'refs/heads/master'
       working-directory: ZeUnit
