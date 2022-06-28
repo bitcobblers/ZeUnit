@@ -1,11 +1,10 @@
 ﻿namespace ZeUnit.Behave
 {
     public abstract class ZeBehavior
-    {        
+    {
         protected ZeResult Given(string message, Action action = null)
         {
-            var given = new AssertPassed($"Given: '{message}'");
-            return new ZeResult(this.Try(given, () =>
+            return new ZeResult(this.Try($"Given: '{message}'", () =>
             {
                 (action ?? (() => { }))();
             }));
@@ -13,8 +12,7 @@
 
         protected ZeResult When(string message, Action action)
         {
-            var when = new AssertPassed($"When: '{message}'");
-            return new ZeResult(this.Try(when, () =>
+            return new ZeResult(this.Try($"When: '{message}'", () =>
             {
                 (action ?? (() => { }))();
             }));
@@ -22,16 +20,16 @@
 
         protected ZeResult Then(string message, Func<ZeResult, ZeResult> action)
         {
-            var when = new AssertPassed($"Then: '{message}'");
-            return new ZeResult(this.Try(when, () =>
+            return new ZeResult(this.Try($"Then: '{message}'", () =>
             {
                 (action ?? ((result) => { return result; }))(new ZeResult());
             }));
         }
 
-        private IEnumerable<ZeAssert> Try(ZeAssert attempted, Action action)
+        private IEnumerable<ZeAssert> Try(string message, Action action)
         {
-            var result = new[] { attempted };
+            var attempted = new AssertPassed(message);
+            var result = new ZeAssert[] { attempted };
             try
             {
                 action();
