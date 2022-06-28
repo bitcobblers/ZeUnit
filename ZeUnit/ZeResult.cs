@@ -3,6 +3,15 @@ public class ZeResult : IEnumerable<ZeAssert>
 {
     private readonly List<ZeAssert> assertions = new();
 
+    public ZeResult()
+    {        
+    }
+
+    public ZeResult(IEnumerable<ZeAssert> assertions)
+    {
+        this.assertions.AddRange(assertions);
+    }
+
     public ZeStatus State => this.Aggregate(
         ZeStatus.Passed,
         (sum, current) => current.Status == ZeStatus.Failed ? ZeStatus.Failed : sum);
