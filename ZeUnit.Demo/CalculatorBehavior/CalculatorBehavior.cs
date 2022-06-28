@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZeUnit.Behave;
+﻿using ZeUnit.Behave;
 
 namespace ZeUnit.Demo.CalculatorBehavior
-{
-    public class CalculatorRegistry : ServiceRegistry
-    {
-        public CalculatorRegistry()
-        {
-            this.For<Calculator>().Use<Calculator>();
-        }
-    }
-
-    [LamarContainer(typeof(CalculatorRegistry))]
+{    
+    [LamarContainer()]
     public class CalculatorBehavior : ZeBehavior
     {
         private readonly Calculator calulator;

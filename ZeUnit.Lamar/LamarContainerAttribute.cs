@@ -3,6 +3,10 @@
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public class LamarContainerAttribute : ZeComposerAttribute
 {
+    public LamarContainerAttribute() : this(typeof(ServiceRegistry))
+    {
+    }
+
     public LamarContainerAttribute(Type registry) 
         : base(typeof(LamarContainerClassComposer))
     {        
