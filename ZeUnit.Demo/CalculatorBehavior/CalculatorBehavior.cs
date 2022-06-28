@@ -35,9 +35,17 @@ namespace ZeUnit.Demo.CalculatorBehavior
             // Context is the variables defined in this scope.
             int result = 0;
             
-            yield return Given($"Set first number to {a}.");
-            yield return Given($"Set the second number to {b}");
+            // these could also have an action, but by default it is empty.
+            // Given in this case is mostly a reporting too, while the method injection actually
+            // passes the "given" values
+            yield return Given($"Set first number to {a}.");           
+            yield return Given($"Set the second number to {b}", () => { Console.WriteLine("Some Action"); });
+
+            // When fuctions effect the state of the variables defined in this function.
+            // In this example result is set to the returned sum.
             yield return When("Number are added", () => { result = calulator.Add(a, b); });
+
+            // Finally Then is the test method, so a ZeResult is expected.
             yield return Then($"Expect {result} to be {expected}", z => z.Equal(result, expected));
         }
     }
