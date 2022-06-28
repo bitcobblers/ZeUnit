@@ -1,29 +1,95 @@
-﻿namespace ZeUnit.Behave
+﻿using Lamar;
+
+namespace ZeUnit.Behave
 {
-    public abstract class ZeBehavior
+    public abstract class ZeContainerBehavior
     {
-        protected ZeResult Given(string message, Action action = null)
+        private Container container = new Container(r => { });
+
+        protected ZeResult Given<TGiven>(string message = "") 
+            where TGiven : ZeGiven
         {
-            return new BehaviorResult($"Given: '{message}'", () =>
-            {
-                (action ?? (() => { }))();
-            });
+            return Ze.Is;
         }
 
-        protected ZeResult When(string message, Action action)
+        protected ZeResult When<TWhen>(string message = "")
+         where TWhen : ZeWhen
         {
-            return new BehaviorResult($"When: '{message}'", () =>
-            {
-                (action ?? (() => { }))();
-            });
+            return Ze.Is;
         }
 
-        protected ZeResult Then(string message, Func<ZeResult> action)
+        protected ZeResult Then<TThen>(string message = "")
+            where TThen : ZeThen
         {
-            return new BehaviorResult($"Then: '{message}'", () =>
-            {
-                (action ?? (() => { return Ze.Is; }))();
-            });
-        }      
+            return Ze.Is;
+        }
+    }    
+
+    public interface IBehaviorAction
+    {
+        string Message { get; }
+        IEnumerable<ServiceRegistry> Do();
+    }
+
+    public interface IBehaviorTest
+    {
+        string Message { get; }
+
+        ZeResult Do();
+    }
+
+    public class ZeGiven : IBehaviorAction
+    {
+        private readonly Action action;
+
+        public ZeGiven(string message, Action action)
+        {
+            this.action = action;
+            Message = $"GIVEN:: {message}";
+        }
+
+        public string Message { get; }
+
+        public virtual IEnumerable<ServiceRegistry> Do()
+        {
+            // (action ?? (() => { }))();
+            yield break;
+        }
+
+    }
+    public class ZeThen : IBehaviorTest
+    {
+        private readonly Func<ZeResult> fn;
+
+        public ZeThen(string message, Func<ZeResult> fn)
+        {
+            Message = $"THEN:: '{message}'";
+            this.fn = fn;
+        }
+
+        public string Message { get; }
+
+        public virtual ZeResult Do()
+        {
+            return (fn ?? (() => { return Ze.Is; }))();
+        }
+    }
+
+    public class ZeWhen : IBehaviorAction
+    {
+        private readonly Action action;
+
+        public ZeWhen(string message, Action action)
+        {
+            this.action = action;
+            this.Message = $"WHEN:: '{message}'";
+        }
+
+        public string Message { get; }
+
+        public virtual IEnumerable<ServiceRegistry> Do()
+        {
+            yield break;
+        }
     }
 }

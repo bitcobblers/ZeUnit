@@ -3,7 +3,7 @@
 namespace ZeUnit.Demo.CalculatorBehavior
 {    
     [LamarContainer()]
-    public class CalculatorBehavior : ZeBehavior
+    public class CalculatorBehavior : ZeClosureBehavior
     {
         private readonly Calculator calulator;
 
