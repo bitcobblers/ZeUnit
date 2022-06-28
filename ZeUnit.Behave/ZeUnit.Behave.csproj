@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ZeUnit\ZeUnit.csproj" />
+  </ItemGroup>
+
 </Project>
