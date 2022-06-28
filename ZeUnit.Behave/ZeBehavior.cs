@@ -37,11 +37,11 @@
             });
         }
 
-        protected ZeResult Then(string message, Func<ZeResult, ZeResult> action)
+        protected ZeResult Then(string message, Func<ZeResult> action)
         {
             return new BehaviorResult($"Then: '{message}'", () =>
             {
-                (action ?? ((result) => { return result; }))(new ZeResult());
+                (action ?? (() => { return new ZeResult(); }))();
             });
         }      
     }

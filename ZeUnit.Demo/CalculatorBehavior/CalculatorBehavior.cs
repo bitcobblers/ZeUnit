@@ -33,7 +33,7 @@ namespace ZeUnit.Demo.CalculatorBehavior
             yield return When("Number are added", () => { result = calulator.Add(a, b); });
 
             // Finally Then is the test method, so a ZeResult is expected.
-            yield return Then($"Expect {result} to be {expected}", z => z.Equal(result, expected));
+            yield return Then($"Expect {result} to be {expected}", () => Ze.Is.Equal(result, expected));
         }
     }
 }
