@@ -1,13 +1,13 @@
 ﻿using ZeUnit.Behave;
 
 namespace ZeUnit.Demo.CalculatorBehavior
-{    
+{
     [LamarContainer()]
-    public class CalculatorBehavior : ZeClosureBehavior
+    public class CalculatorSimpleBehavior : ZeSimpleBehavior
     {
         private readonly Calculator calulator;
 
-        public CalculatorBehavior(Calculator calulator)
+        public CalculatorSimpleBehavior(Calculator calulator)
         {            
             this.calulator = calulator;
         }

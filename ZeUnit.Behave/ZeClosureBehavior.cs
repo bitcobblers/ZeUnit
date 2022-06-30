@@ -1,6 +1,6 @@
 ﻿namespace ZeUnit.Behave
 {
-    public abstract class ZeClosureBehavior
+    public abstract class ZeSimpleBehavior
     {
         protected ZeResult Given(string message, Action action = null)
         {
