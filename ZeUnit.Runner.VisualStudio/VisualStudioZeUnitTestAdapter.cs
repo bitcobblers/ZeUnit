@@ -4,6 +4,11 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System.ComponentModel;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
+using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 
 [FileExtension(".dll")]
 [FileExtension(".exe")]
@@ -28,6 +33,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
     //   - vstest.console.exe /testadapterpath:"C:\Dev\ZeUnit\ZeUnit.Runner.VisualStudio\bin\Debug\net6.0" "C:\Dev\ZeUnit\ZeUnit.Demo\bin\Debug\net6.0\ZeUnit.Demo.dll"
     // No test is available in C:\Dev\ZeUnit\ZeUnit.Demo\bin\Debug\net6.0\ZeUnit.Demo.dll. Make sure that test discoverer & executors are registered and platform & framework version settings are appropriate and try again.
     private readonly ZeTestRunnerDiscovery testRunnerDiscovery;
+    private readonly Dictionary<string, (TestCase, ZeTest)> tests = new();
 
     public VisualStudioZeUnitTestAdapter()
     {
@@ -44,26 +50,58 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                 .FromAssembly(source);
 
             foreach (var test in discovery)
-            {                
-                discoverySink.SendTestCase(testBuilder.Build(test));
+            {
+                var msTest = testBuilder.Build(test);
+                tests.Add(msTest.FullyQualifiedName, (msTest, test));
+                discoverySink.SendTestCase(msTest);
             }
         }
     }
 
     public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
-        frameworkHandle.SendMessage(TestMessageLevel.Informational, "Single Test");
-        foreach (var test in tests)
-        {
-            var testResult = new TestResult(test)
-            {
-                Outcome = TestOutcome.Passed
-            };
+        frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Running {tests.Count()}");
+        
+        var discovered = tests.Select(testCase => this.tests.ContainsKey(testCase.FullyQualifiedName)
+                ? this.tests[testCase.FullyQualifiedName]
+                : (testCase, null))
+            .GroupBy(pair => (pair.Item2?.Class, pair.Item2?.ClassActivator), pair => pair);
+        
+        var executionList = new List<Task>();
+        var runner = new ZeRunner(testRunnerDiscovery.Runners());
 
-            frameworkHandle.RecordStart(testResult.TestCase);
-            frameworkHandle.RecordResult(testResult);
-            frameworkHandle.RecordEnd(testResult.TestCase, testResult.Outcome);
+        foreach (var classActivation in discovered)
+        {
+            var (@class, composer) = classActivation.Key;
+            var lifeCycle = @class
+                .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
+            
+            var factory = lifeCycle.GetFactory(composer, @class);
+            foreach (var (testCase, test) in classActivation)
+            {
+                var result = new TestResult(testCase);
+                if (test == null)
+                {
+                    result.Outcome = TestOutcome.Skipped;
+                    frameworkHandle.RecordResult(result);
+                    frameworkHandle.RecordEnd(testCase, result.Outcome);
+                    continue;
+                }
+
+                executionList.Add(runner.Run(test, factory).Merge().Select(pair =>
+                {
+                    var (zeTest, zeResult) = pair;
+                    result.Outcome = zeResult.Any() && zeResult.All(x => x.Status == ZeStatus.Passed) ? TestOutcome.Passed : TestOutcome.Failed;
+                    frameworkHandle.RecordResult(result);
+                    frameworkHandle.RecordEnd(testCase, result.Outcome);
+                    return zeResult;
+                }).ToTask());
+            }        
+            
         }
+
+        Task.WhenAll(executionList).Wait();
+
     }
 
     public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
@@ -73,20 +111,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
         {
             var testBuilder = new TestCaseBuilder(source);
 
-            Ze.Unit(new ZeBuilder()).Subscribe(pair =>
-            {
-
-                var (test, result) = pair;
-                var testResult = new TestResult(testBuilder.Build(test))
-                {
-                    Outcome = result.All(x => x.Status == ZeStatus.Passed) ? TestOutcome.Passed : TestOutcome.Failed
-                };
-
-                frameworkHandle.RecordStart(testResult.TestCase);
-                frameworkHandle.RecordResult(testResult);
-                frameworkHandle.RecordEnd(testResult.TestCase, testResult.Outcome);
-
-            });
+            
 
         }
 

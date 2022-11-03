@@ -58,7 +58,7 @@ public static class Ze
         var classRuns = new List<IObservable<(ZeTest, ZeResult)>>();
         var reporter = builder.GetReporter();
         var discovery = builder.GetDiscovery()
-            .GroupBy(n=>(n.Class, n.ClassActivator), n=>n);
+            .GroupBy(test => (test.Class, test.ClassActivator), test => test);
         
         foreach (var classActivation in discovery)
         {
