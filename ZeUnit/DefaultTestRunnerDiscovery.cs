@@ -3,7 +3,8 @@ public class DefaultTestRunnerDiscovery : ZeTestRunnerDiscovery
 {
     public DefaultTestRunnerDiscovery()
     {
-        var types = this.GetType().Assembly
+        var types = 
+            this.GetType().Assembly
             .GetExportedTypes()
             .Where(n => n.IsAssignableTo(typeof(ZeTestRunner)))
             .Where(n => !n.IsAbstract);

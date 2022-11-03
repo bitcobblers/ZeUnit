@@ -9,7 +9,7 @@ using System.ComponentModel;
 [FileExtension(".exe")]
 [Category("managed")]
 [DefaultExecutorUri(Constants.ExecutorUri)]
-[ExtensionUri(Constants.ExecutorUri)]
+//[ExtensionUri(Constants.ExecutorUri)]
 public class VisualStudioZeUnitTestDiscoverer : ITestDiscoverer
 {
     // https://github.com/Microsoft/vstest-docs/blob/main/RFCs/0004-Adapter-Extensibility.md
@@ -30,7 +30,7 @@ public class VisualStudioZeUnitTestDiscoverer : ITestDiscoverer
 
     public VisualStudioZeUnitTestDiscoverer()
     {
-        this.testRunnerDiscovery = new DefaultTestRunnerDiscovery();
+       this.testRunnerDiscovery = new DefaultTestRunnerDiscovery();
     }
 
     public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger, ITestCaseDiscoverySink discoverySink)

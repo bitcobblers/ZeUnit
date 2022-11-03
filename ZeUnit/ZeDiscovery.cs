@@ -36,7 +36,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
 
     public ZeDiscovery FromAssembly(string source)
     {
-;        return this.FromAssembly(Assembly.Load(source));
+;        return this.FromAssembly(Assembly.LoadFile(source));
     }
 
     public ZeDiscovery FromAssembly(Assembly source)
