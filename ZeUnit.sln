@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Lamar", "ZeUnit.Lama
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{271E9FAD-D129-491C-AC50-E1845EA35E79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Runner.VisualStudio", "ZeUnit.Runner.VisualStudio\ZeUnit.Runner.VisualStudio.csproj", "{5AFD032F-C756-4B97-9E03-98E08714B6C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.TestAdapter", "ZeUnit.Runner.VisualStudio\ZeUnit.TestAdapter.csproj", "{5AFD032F-C756-4B97-9E03-98E08714B6C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Story", "ZeUnit.Story\ZeUnit.Story.csproj", "{57285F62-48EF-4559-B00A-5B924AFB502D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeUnit.Behave", "ZeUnit.Behave\ZeUnit.Behave.csproj", "{F07AADEC-75CD-4A15-B779-8629CB47BD81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Behave", "ZeUnit.Behave\ZeUnit.Behave.csproj", "{F07AADEC-75CD-4A15-B779-8629CB47BD81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

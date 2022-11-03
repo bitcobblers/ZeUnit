@@ -1,5 +1,15 @@
 ﻿namespace ZeUnit.Behave
 {
+
+
+
+
+    public class LookupState : Dictionary<string, object> 
+    {
+
+    }
+
+    
     public abstract class ZeStateBehavior<TState>
         where TState : class, new()
     {
