@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System.ComponentModel;
+using System.Xml.Linq;
 
 [FileExtension(".dll")]
 [FileExtension(".exe")]
@@ -38,21 +39,13 @@ public class VisualStudioZeUnitTestDiscoverer : ITestDiscoverer
         logger.SendMessage(TestMessageLevel.Informational, "Attempting Discovery");
         foreach (var source in sources)
         {
+            var testBuilder = new TestCaseBuilder(source);
             var discovery = new ZeDiscovery(testRunnerDiscovery.SupportedTypes())
                 .FromAssembly(source);
 
             foreach (var test in discovery)
-            {
-                var name = $"{test.Class.FullName}::{test.Method.Name}";
-                discoverySink.SendTestCase(new TestCase(
-                    name,
-                    new Uri(Constants.ExecutorUri),
-                    source)
-                {
-                    CodeFilePath = "code file path",
-                    DisplayName = name,
-                    LineNumber = 1
-                });
+            {                
+                discoverySink.SendTestCase(testBuilder.Build(test));
             }
         }
     }
