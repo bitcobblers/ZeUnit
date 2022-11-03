@@ -4,14 +4,14 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System.ComponentModel;
-using System.Xml.Linq;
 
 [FileExtension(".dll")]
 [FileExtension(".exe")]
 [Category("managed")]
 [DefaultExecutorUri(Constants.ExecutorUri)]
+[ExtensionUri(Constants.ExecutorUri)]
 //[ExtensionUri(Constants.ExecutorUri)]
-public class VisualStudioZeUnitTestDiscoverer : ITestDiscoverer
+public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 {
     // https://github.com/Microsoft/vstest-docs/blob/main/RFCs/0004-Adapter-Extensibility.md
     //  https://github.com/xunit/visualstudio.xunit
@@ -29,7 +29,7 @@ public class VisualStudioZeUnitTestDiscoverer : ITestDiscoverer
     // No test is available in C:\Dev\ZeUnit\ZeUnit.Demo\bin\Debug\net6.0\ZeUnit.Demo.dll. Make sure that test discoverer & executors are registered and platform & framework version settings are appropriate and try again.
     private readonly ZeTestRunnerDiscovery testRunnerDiscovery;
 
-    public VisualStudioZeUnitTestDiscoverer()
+    public VisualStudioZeUnitTestAdapter()
     {
        this.testRunnerDiscovery = new DefaultTestRunnerDiscovery();
     }
@@ -48,5 +48,51 @@ public class VisualStudioZeUnitTestDiscoverer : ITestDiscoverer
                 discoverySink.SendTestCase(testBuilder.Build(test));
             }
         }
+    }
+
+    public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
+    {
+        frameworkHandle.SendMessage(TestMessageLevel.Informational, "Single Test");
+        foreach (var test in tests)
+        {
+            var testResult = new TestResult(test)
+            {
+                Outcome = TestOutcome.Passed
+            };
+
+            frameworkHandle.RecordStart(testResult.TestCase);
+            frameworkHandle.RecordResult(testResult);
+            frameworkHandle.RecordEnd(testResult.TestCase, testResult.Outcome);
+        }
+    }
+
+    public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
+    {
+        frameworkHandle.SendMessage(TestMessageLevel.Informational, "Starting Tests");
+        foreach (var source in sources)
+        {
+            var testBuilder = new TestCaseBuilder(source);
+
+            Ze.Unit(new ZeBuilder()).Subscribe(pair =>
+            {
+
+                var (test, result) = pair;
+                var testResult = new TestResult(testBuilder.Build(test))
+                {
+                    Outcome = result.All(x => x.Status == ZeStatus.Passed) ? TestOutcome.Passed : TestOutcome.Failed
+                };
+
+                frameworkHandle.RecordStart(testResult.TestCase);
+                frameworkHandle.RecordResult(testResult);
+                frameworkHandle.RecordEnd(testResult.TestCase, testResult.Outcome);
+
+            });
+
+        }
+
+    }
+    public void Cancel()
+    {
+
     }
 }
