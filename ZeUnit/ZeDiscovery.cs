@@ -41,10 +41,10 @@ public class ZeDiscovery : IEnumerable<ZeTest>
 
     public ZeDiscovery FromAssembly(Assembly source)
     {
-        foreach(var method in source
+        foreach (var method in source
             .GetTypes()
-            .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-            .Where(m => supportedTypes.Contains(m.ReturnType)))
+            .SelectMany(type => (type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+            .Where(m => supportedTypes.Contains(m.ReturnType))))
         {
             var classType = method.DeclaringType.GetTypeInfo();
             var activators = this.ClassFactory.Get(classType);
