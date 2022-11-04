@@ -44,48 +44,50 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
     public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
         frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Running {tests.Count()}");
-        
-        
-
-        var discovered = tests.Select(msTest => (msTest, (ZeTest)msTest.LocalExtensionData))
-            .GroupBy(pair => (pair.Item2?.Class, pair.Item2?.ClassActivator), pair => pair);
-        
+        var sources = tests.GroupBy(n => n.Source);
         var executionList = new List<Task>();
         var runner = new ZeRunner(testRunnerDiscovery.Runners());
 
-        foreach (var classActivation in discovered)
+        foreach (var source in sources)
         {
-            var (@class, composer) = classActivation.Key;
-                        
-            var lifeCycle = @class?
-                .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
-            
-            var factory = lifeCycle.GetFactory(composer, @class);
-            foreach (var (testCase, test) in classActivation)
-            {
-                var result = new TestResult(testCase);
-                if (test == null)
-                {
-                    result.Outcome = TestOutcome.Skipped;
-                    frameworkHandle.RecordResult(result);
-                    frameworkHandle.RecordEnd(testCase, result.Outcome);
-                    continue;
-                }
+            var discovery = new ZeDiscovery(testRunnerDiscovery.SupportedTypes())
+                .FromAssembly(source.Key);
 
-                executionList.Add(runner.Run(test, factory).Select(pair =>
-                {
-                    var (zeTest, zeResult) = pair;
-                    result.Outcome = zeResult.Any() && zeResult.All(x => x.Status == ZeStatus.Passed) ? TestOutcome.Passed : TestOutcome.Failed;
-                    frameworkHandle.RecordResult(result);
-                    frameworkHandle.RecordEnd(testCase, result.Outcome);
-                    return zeResult;
-                }).ToTask());
-            }        
+            var classes = source.Select(n=> (discovery.FirstOrDefault(z=>z.Name == n.FullyQualifiedName), n))                
+                .GroupBy(pair => (pair.Item1?.Class, pair.Item1?.ClassActivator));
             
-        }
+            foreach(var classPair in classes)
+            {
+                var (@class, composer) = classPair.Key;
+                var lifeCycle = @class?
+                    .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
+
+                var factory = lifeCycle.GetFactory(composer, @class);
+
+                foreach (var (zeTest, testCase) in classPair)
+                {
+                    var result = new TestResult(testCase);
+                    if (zeTest == null)
+                    {
+                        result.Outcome = TestOutcome.Skipped;
+                        frameworkHandle.RecordResult(result);
+                        frameworkHandle.RecordEnd(testCase, result.Outcome);
+                        continue;
+                    }
+
+                    executionList.Add(runner.Run(zeTest, factory).Select(pair =>
+                    {
+                        var (zeTest, zeResult) = pair;
+                        result.Outcome = zeResult.Any() && zeResult.All(x => x.Status == ZeStatus.Passed) ? TestOutcome.Passed : TestOutcome.Failed;
+                        frameworkHandle.RecordResult(result);
+                        frameworkHandle.RecordEnd(testCase, result.Outcome);
+                        return zeResult;
+                    }).ToTask());
+                }
+            }
+        }        
 
         Task.WhenAll(executionList).Wait();
-
     }
 
     public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)

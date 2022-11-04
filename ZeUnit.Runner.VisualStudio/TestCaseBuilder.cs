@@ -1,7 +1,6 @@
 ﻿namespace ZeUnit.Runner.VisualStudio;
 
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 
 public class TestCaseBuilder
 {
@@ -12,17 +11,15 @@ public class TestCaseBuilder
     }    
 
     public TestCase Build(ZeTest test)
-    {
-        var name = $"{test.Class.FullName}::{test.Method.Name}::{Guid.NewGuid()}";
+    {        
         return new TestCase(
-                    name,
+                    test.Name,
                     new Uri(Constants.ExecutorUri),
                     this.source)
         {
-            CodeFilePath = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName(),
-            DisplayName = name,
+            CodeFilePath = test.Class.FullName,
+            DisplayName = test.Name,
             LineNumber = 1,
-            LocalExtensionData = test
         };
     }
 }
