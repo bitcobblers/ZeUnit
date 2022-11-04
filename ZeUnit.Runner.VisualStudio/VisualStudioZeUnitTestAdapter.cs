@@ -45,6 +45,8 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
     {
         frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Running {tests.Count()}");
         
+        
+
         var discovered = tests.Select(msTest => (msTest, (ZeTest)msTest.LocalExtensionData))
             .GroupBy(pair => (pair.Item2?.Class, pair.Item2?.ClassActivator), pair => pair);
         
@@ -70,7 +72,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                     continue;
                 }
 
-                executionList.Add(runner.Run(test, factory).Merge().Select(pair =>
+                executionList.Add(runner.Run(test, factory).Select(pair =>
                 {
                     var (zeTest, zeResult) = pair;
                     result.Outcome = zeResult.Any() && zeResult.All(x => x.Status == ZeStatus.Passed) ? TestOutcome.Passed : TestOutcome.Failed;

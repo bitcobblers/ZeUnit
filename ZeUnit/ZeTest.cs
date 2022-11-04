@@ -6,7 +6,7 @@ public class ZeTest
 
     public IZeClassComposer ClassActivator { get; set; }
 
-    public MethodInfo Method { get; set; }
+    public MethodInfo Method { get; set; }    
 
-    public IZeMethodComposer MethdoActivator { get; set; }
+    public Func<object[]> Arguments { get; set; }
 }

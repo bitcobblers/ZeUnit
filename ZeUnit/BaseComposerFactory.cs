@@ -4,18 +4,8 @@ namespace ZeUnit;
 
 public abstract class BaseComposerFactory<TInterface, TDefault>
     where TDefault : TInterface, new()
-{
-    public IEnumerable<TInterface> Get(Type type)
-    {
-        return Get(type.GetCustomAttributes());
-    }
-
-    public IEnumerable<TInterface> Get(MethodInfo method)
-    {
-        return Get(method.GetCustomAttributes());
-    }
-
-    public IEnumerable<TInterface> Get(IEnumerable<Attribute> attributes)
+{  
+    protected IEnumerable<TInterface> Get(IEnumerable<Attribute> attributes)
     {
         var activatorGroups = attributes
             .Where(n => n.GetType().IsAssignableTo(typeof(ZeComposerAttribute)))
@@ -37,6 +27,9 @@ public abstract class BaseComposerFactory<TInterface, TDefault>
                 .First();
 
             var args = constructor.GetParameters();
+
+
+
             if (args.Length == 0)
             {
                 yield return (TInterface)constructor.Invoke(null);

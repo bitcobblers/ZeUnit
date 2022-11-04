@@ -70,7 +70,7 @@ public static class Ze
                 var factory = lifeCycle.GetFactory(composer, @class);
 
                 classRuns.AddRange(classActivation
-                    .SelectMany(test => new ZeRunner(builder.Runners()).Run(test, factory)));
+                    .Select(test => new ZeRunner(builder.Runners()).Run(test, factory)));
             }
             catch (Exception ex)
             {
