@@ -5,8 +5,9 @@ namespace ZeUnit.TestRunners;
 
 public class EnumerableTestRunner : ZeTestRunner<IEnumerable<ZeResult>>
 {
-    public override IObservable<(ZeTest, ZeResult)> Run(ZeTest test, object instance, object[] arguments)
+    public override IObservable<(ZeTest, ZeResult)> Run(ZeTest test, ZeClassInstanceFactory factory, object[] arguments)
     {
+        var instance = factory.Create();
         var subject = new AsyncSubject<(ZeTest, ZeResult)>();
         foreach (var result in (IEnumerable<ZeResult>)test.Method.Invoke(instance, arguments.Any() ? arguments : null))
         {

@@ -1,4 +1,6 @@
-﻿namespace ZeUnit;
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace ZeUnit;
 
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
@@ -36,28 +38,33 @@ public class ZeDiscovery : IEnumerable<ZeTest>
 
     public ZeDiscovery FromAssembly(string source)
     {
-;        return this.FromAssembly(Assembly.Load(source));
+;        return this.FromAssembly(Assembly.LoadFile(source));
     }
 
     public ZeDiscovery FromAssembly(Assembly source)
     {
-        foreach(var method in source
+        foreach (var method in source
             .GetTypes()
-            .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-            .Where(m => supportedTypes.Contains(m.ReturnType)))
+            .SelectMany(type => (type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+            .Where(m => supportedTypes.Contains(m.ReturnType))))
         {
             var classType = method.DeclaringType.GetTypeInfo();
             var activators = this.ClassFactory.Get(classType);
             foreach (var activator in activators) 
             {
-                foreach (var activation in this.MethodFactory.Get(method))
+                var tracker = new IndexTracker();
+                var composers = this.MethodFactory.Get(method);                
+                var methodActivations = composers.SelectMany(n => n.Get(method).Select(a=>(n.GetType().Name, a)));
+                foreach (var activation in methodActivations)
                 {
+                    var index = tracker.IndexFor(classType.Name, method.Name);
                     tests.Add(new ZeTest()
                     {
+                        Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{index}",
                         Class = classType,
                         ClassActivator = activator,
                         Method = method,
-                        MethdoActivator = activation,
+                        Arguments = () => activation.a,
                     });
                 }
             }
@@ -71,4 +78,17 @@ public class ZeDiscovery : IEnumerable<ZeTest>
         .GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+}
+
+public class IndexTracker : Dictionary<string, int>
+{
+    public int IndexFor(string className, string methodName)
+    {
+        var key = $"{className}::{methodName}";
+        if (!this.ContainsKey(key)) {
+            this[key] = 0;
+        }
+       
+        return ++this[key];
+    }
 }

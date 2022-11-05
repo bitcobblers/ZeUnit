@@ -2,11 +2,12 @@
 
 public class ZeTest
 {
-    public TypeInfo Class { get; set; }
-
+    public string Name { get; set; }
     public IZeClassComposer ClassActivator { get; set; }
 
-    public MethodInfo Method { get; set; }
+    public TypeInfo Class { get; set; }    
 
-    public IZeMethodComposer MethdoActivator { get; set; }
+    public MethodInfo Method { get; set; }    
+
+    public Func<object[]> Arguments { get; set; }
 }

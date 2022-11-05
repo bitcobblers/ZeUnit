@@ -58,7 +58,7 @@ public static class Ze
         var classRuns = new List<IObservable<(ZeTest, ZeResult)>>();
         var reporter = builder.GetReporter();
         var discovery = builder.GetDiscovery()
-            .GroupBy(n=>(n.Class, n.ClassActivator), n=>n);
+            .GroupBy(test => (test.Class, test.ClassActivator), test => test);
         
         foreach (var classActivation in discovery)
         {
@@ -70,7 +70,7 @@ public static class Ze
                 var factory = lifeCycle.GetFactory(composer, @class);
 
                 classRuns.AddRange(classActivation
-                    .SelectMany(test => new ZeRunner(builder.Runners()).Run(test, factory)));
+                    .Select(test => new ZeRunner(builder.Runners()).Run(test, factory)));
             }
             catch (Exception ex)
             {

@@ -4,13 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.1.1-alpha</Version>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.1.2-alpha</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lamar" Version="7.0.0" />
+    <PackageReference Include="Lamar" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>

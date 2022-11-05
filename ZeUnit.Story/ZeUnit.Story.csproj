@@ -4,13 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.1.1-alpha</Version>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>0.1.2-alpha</Version>    
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>    
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Handlebars.Net" Version="2.0.10" />
+    <PackageReference Include="Handlebars.Net" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>

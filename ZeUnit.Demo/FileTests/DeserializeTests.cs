@@ -2,7 +2,7 @@
 {
     public class DeserializeTests
     {
-        [LoadFile("FileTests/tes2t.xml")]
+        [LoadFile("FileTests/test.xml")]
         public ZeResult LoadFileSerializedXMLObject(SomePocoType actual)
         {
             return Ze.Is.Equal("test", actual.Text);

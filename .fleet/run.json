@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "type": "dotnet",
+            "name": "run",
+            "projectPath": "ZeUnit.Demo/",
+            "exePath": "dotnet",
+            "args": [],
+        },
+
+    ]
+}

@@ -12,23 +12,21 @@ public class ZeRunner
         this.runners = testRunners;
     }
 
-    public IEnumerable<IObservable<(ZeTest, ZeResult)>> Run(ZeTest test, ZeClassInstanceFactory factory)
+    public IObservable<(ZeTest, ZeResult)> Run(ZeTest test, ZeClassInstanceFactory factory)
     {                               
-        foreach (var arguments in test.MethdoActivator.Get(test.Method))
-        {
-            IObservable<(ZeTest, ZeResult)> result;
-            try
-            {
-                var instance = factory.Create();
-                var runner = runners.First(n => n.SupportType == test.Method.ReturnType);
-                result = runner.Run(test, instance, arguments);
-            }
-            catch (Exception ex)
-            {                
-                result = new ZeTestException(test, ex); 
-            }
-            yield return result;
-        }               
+        // foreach (var arguments in test.MethdoActivator.Get(test.Method))
+               
+        try
+        {                
+            var runner = runners.First(n => n.SupportType == test.Method.ReturnType);
+            return runner.Run(test, factory, test.Arguments());
+        }
+        catch (Exception ex)
+        {                
+            return new ZeTestException(test, ex); 
+        }
+       
+                       
     }
 }
 
