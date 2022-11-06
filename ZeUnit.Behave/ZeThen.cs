@@ -9,6 +9,7 @@
 
         public string Message { get; }
 
+        [ZeIgnore]
         public abstract ZeResult Do(TState state);
     }    
 }
