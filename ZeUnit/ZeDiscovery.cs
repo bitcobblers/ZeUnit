@@ -49,7 +49,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
             .GetTypes()
             .SelectMany(type => (type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
             .Where(m => supportedTypes.Contains(m.ReturnType)))
-            .Where(m => m.GetCustomAttributes().All(a=> a.GetType() != typeof(ZeIgnoreAttribute))))
+            .Where(m => m.GetCustomAttributes().All(a=> a?.GetType() != typeof(ZeIgnoreAttribute))))
         {
             var classType = method.DeclaringType.GetTypeInfo();
             var activators = this.ClassFactory.Get(classType);
