@@ -4,9 +4,12 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>0.1.2-alpha</Version>		
+		<Version>0.2.0-alpha</Version>		
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>		
-		<Platforms>AnyCPU</Platforms>
+		<Platforms>AnyCPU</Platforms>		
+		<OutputType>Library</OutputType>		
+		<IncludeSymbols>False</IncludeSymbols>		
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>

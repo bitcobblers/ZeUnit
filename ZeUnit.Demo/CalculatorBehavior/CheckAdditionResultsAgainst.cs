@@ -11,7 +11,7 @@ namespace ZeUnit.Demo.CalculatorBehavior
         {
             this.expected = expected;
         }
-
+        
         public override ZeResult Do(CalculatorState state)
         {
             return Ze.Is.Equal(expected, state.result);
