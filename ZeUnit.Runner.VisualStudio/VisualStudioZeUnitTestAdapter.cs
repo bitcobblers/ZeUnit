@@ -69,6 +69,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                     var result = new TestResult(testCase);
                     if (zeTest == null)
                     {
+                        result.Duration = TimeSpan.Zero;
                         result.Outcome = TestOutcome.Skipped;
                         frameworkHandle.RecordResult(result);
                         frameworkHandle.RecordEnd(testCase, result.Outcome);
@@ -78,6 +79,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                     executionList.Add(runner.Run(zeTest, factory).Select(pair =>
                     {
                         var (zeTest, zeResult) = pair;
+                        result.Duration = zeResult.Duration;
                         result.Outcome = zeResult.Any() && zeResult.All(x => x.Status == ZeStatus.Passed) ? TestOutcome.Passed : TestOutcome.Failed;
                         frameworkHandle.RecordResult(result);
                         frameworkHandle.RecordEnd(testCase, result.Outcome);
