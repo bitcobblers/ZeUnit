@@ -14,6 +14,7 @@ Getting started with ZeUnit is simple, include the latest nuget packages for the
 ```
 Install-Package ZeUnit -Version 0.2.0-alpha
 Install-Package ZeUnit.TestAdapter -Version 0.2.0-alpha
+Install-Package Microsoft.NET.Test.Sdk -Version 17.3.2
 ```
 
 Inlcude you first test:
