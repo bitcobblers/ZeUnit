@@ -7,6 +7,8 @@ public class ZeResult : IEnumerable<ZeAssert>
     {        
     }
 
+    public TimeSpan Duration { get; set; } = TimeSpan.FromSeconds(0);
+
     public ZeResult(IEnumerable<ZeAssert> assertions)
     {
         this.assertions.AddRange(assertions);
