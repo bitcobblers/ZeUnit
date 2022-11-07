@@ -7,6 +7,29 @@ How Google Tests Software (link to the book) talks about a system of test clasif
 
 ZeUnit aims to fit as a bridge between these two worlds, allowing developer centric unit and integration testing to be written with one framework and with out the necessary ceremony of creating wiki file bindings.  
 
+## Quick Start
+
+Getting started with ZeUnit is simple, include the latest nuget packages for the main library as well as the ZeUnit.TestAdapter library.
+
+```
+Install-Package ZeUnit -Version 0.2.0-alpha
+Install-Package ZeUnit.TestAdapter -Version 0.2.0-alpha
+```
+
+Inlcude you first test:
+
+```csharp
+public class MyFirstTest
+{
+    public ZeResult ThisIsATest()
+    {
+        return Ze.Is.True(true);
+    }
+}
+
+```
+Running all tests in the solution should now display your unit test in the Test Explorer.
+
 ## What gives ZeUnit its power?
 
 ZeUnit was conceived as am idea for preloading state into XUnit because when a colleague asked for an Integration Testing framework recommendation, I couldn't give him one.  This led me down a rabbit hole of looking at XUnit code, and after some thinking I had an answer to my integration testing framework.  What if we give Test classes dependency injection?
