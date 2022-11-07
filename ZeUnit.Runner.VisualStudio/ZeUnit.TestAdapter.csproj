@@ -6,12 +6,14 @@
 		<Nullable>enable</Nullable>
 		<Version>0.2.0-alpha</Version>		
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>		
-		<Platforms>AnyCPU</Platforms>
+		<Platforms>AnyCPU</Platforms>		
+		<OutputType>Library</OutputType>		
+		<IncludeSymbols>False</IncludeSymbols>		
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.2" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
 	</ItemGroup>
 
 	<ItemGroup>

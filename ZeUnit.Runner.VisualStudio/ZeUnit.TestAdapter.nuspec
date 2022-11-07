@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>ZeUnit.TestAdapter</id>
+    <version>0.2.0-alpha</version>
+    <authors>ZeUnit.TestAdapter</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="ZeUnit" version="0.2.0-alpha" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.TestPlatform.ObjectModel" version="17.3.2" exclude="Build,Analyzers" />
+	  <dependency id="Microsoft.NET.Test.Sdk" version="17.3.2" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
