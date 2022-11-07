@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Lamar" Version="8.0.1" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
   </ItemGroup>
 
   <ItemGroup>
