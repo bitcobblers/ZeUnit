@@ -12,8 +12,8 @@ ZeUnit aims to fit as a bridge between these two worlds, allowing developer cent
 Getting started with ZeUnit is simple, include the latest nuget packages for the main library as well as the ZeUnit.TestAdapter library.
 
 ```
-Install-Package ZeUnit -Version 0.2.0-alpha
-Install-Package ZeUnit.TestAdapter -Version 0.2.0-alpha
+Install-Package ZeUnit -Version 0.2.1-alpha
+Install-Package ZeUnit.TestAdapter -Version 0.2.1-alpha
 Install-Package Microsoft.NET.Test.Sdk -Version 17.3.2
 ```
 
