@@ -14,9 +14,9 @@ namespace ZeUnit.Demo.CalculatorBehavior
     [LamarContainer(typeof(CalculatorRegistry))]
     public class CalculatorStateBehavior : ZeStateBehavior<CalculatorState>
     {
-        private readonly Calculator calulator;
+        private readonly ICalculator calulator;
 
-        public CalculatorStateBehavior(Calculator calulator)
+        public CalculatorStateBehavior(ICalculator calulator)
         {
             this.calulator = calulator;
         }
