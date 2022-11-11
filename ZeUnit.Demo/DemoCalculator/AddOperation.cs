@@ -4,7 +4,7 @@
     {
         public double Apply(double[] args)
         {
-            return args.Aggregate(0d, (sum, current) => sum + current);
+            return (args ?? Array.Empty<double>()).Aggregate(0d, (sum, current) => sum + current);
         }
     }
 }
