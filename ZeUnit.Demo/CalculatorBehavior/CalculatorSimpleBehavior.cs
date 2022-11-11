@@ -1,13 +1,15 @@
-﻿using ZeUnit.Behave;
+﻿using System;
+using ZeUnit.Behave;
+using ZeUnit.Demo.DemoCalculator;
 
 namespace ZeUnit.Demo.CalculatorBehavior
-{
-    [LamarContainer()]
+{    
+    [LamarContainer(typeof(CalculatorRegistry))]
     public class CalculatorSimpleBehavior : ZeSimpleBehavior
     {
-        private readonly Calculator calulator;
+        private readonly ICalculator calulator;
 
-        public CalculatorSimpleBehavior(Calculator calulator)
+        public CalculatorSimpleBehavior(ICalculator calulator)
         {            
             this.calulator = calulator;
         }
@@ -17,10 +19,10 @@ namespace ZeUnit.Demo.CalculatorBehavior
         [InlineData(3, 4, 7)]
         [InlineData(4, 5, 9)]
         [InlineData(5, 6, 11)]
-        public IEnumerable<ZeResult> Addition(int a, int b, int expected)
+        public IEnumerable<ZeResult> Addition(double a, double b, double expected)
         {
             // Context is the variables defined in this scope.
-            int result = 0;
+            double result = 0;
             
             // these could also have an action, but by default it is empty.
             // Given in this case is mostly a reporting too, while the method injection actually

@@ -1,12 +1,13 @@
 ﻿using ZeUnit.Behave;
+using ZeUnit.Demo.DemoCalculator;
 
 namespace ZeUnit.Demo.CalculatorBehavior
 {
     public class ApplyAddition : ZeWhen<CalculatorState>
     {
-        private readonly Calculator cal;        
+        private readonly ICalculator cal;        
 
-        public ApplyAddition(Calculator cal) : base("Number are added")
+        public ApplyAddition(ICalculator cal) : base("Number are added")
         {
             this.cal = cal;            
         }
