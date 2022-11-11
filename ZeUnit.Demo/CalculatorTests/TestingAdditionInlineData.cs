@@ -1,6 +1,4 @@
-﻿using Lamar.IoC.Instances;
-using ZeUnit.Demo.DemoCalculator;
-using ZeUnit.Demo.DemoCalculator.Operations;
+﻿using ZeUnit.Demo.DemoCalculator.Operations;
 
 namespace ZeUnit.Demo.CalculatorTests
 {
