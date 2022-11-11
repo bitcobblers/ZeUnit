@@ -10,14 +10,19 @@ namespace ZeUnit.Demo.DemoCalculator
 
         public ICalculator Register(ICalculatorOperation operation)
         {
-            this.operations.AddOrUpdate(operation.GetType(), operation);
+            this.operations.Upsert(operation.GetType(), operation);
             return this;
         }
 
         public ICalculator Apply<TOperation>(params double[] args)
             where TOperation : ICalculatorOperation
         {
-            this.Value = this.operations.TryGetValue(typeof(TOperation), out var operation)
+            return this.Apply(typeof(TOperation), args);            
+        }
+
+        public ICalculator Apply(Type operationType, params double[] args)
+        {            
+            this.Value = this.operations.TryGetValue(operationType, out var operation)
                 ? operation.Apply(this.Value, args)
                 : null;
 

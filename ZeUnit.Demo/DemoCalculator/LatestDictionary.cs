@@ -2,7 +2,7 @@
 {
     public class DictionarySetter<TKey, TValue> : Dictionary<TKey, TValue>
     {
-        public DictionarySetter<TKey, TValue> AddOrUpdate(TKey key, TValue value)
+        public DictionarySetter<TKey, TValue> Upsert(TKey key, TValue value)
         {
             if (!this.ContainsKey(key))
             {
