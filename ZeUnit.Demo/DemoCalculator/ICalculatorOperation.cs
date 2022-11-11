@@ -2,6 +2,6 @@
 {
     public interface ICalculatorOperation
     {
-        double Apply(double[] args);
+        double? Apply(double? current, double[] args);
     }
 }

@@ -1,4 +1,6 @@
-﻿using ZeUnit.Demo.DemoCalculator;
+﻿using Lamar.IoC.Instances;
+using ZeUnit.Demo.DemoCalculator;
+using ZeUnit.Demo.DemoCalculator.Operations;
 
 namespace ZeUnit.Demo.CalculatorTests
 {
@@ -11,7 +13,7 @@ namespace ZeUnit.Demo.CalculatorTests
         public ZeResult AdditionHarness(double[] values, double expected)
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(expected, addition.Apply(values));
+            return Ze.Is.Equal(expected, addition.Apply(0,values).Value);
         }
     }
 }

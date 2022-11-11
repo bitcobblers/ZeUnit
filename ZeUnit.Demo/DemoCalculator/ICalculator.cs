@@ -2,7 +2,10 @@
 {
     public interface ICalculator
     {
-        double? Apply<TOperation>(params double[] args) where TOperation : ICalculatorOperation;
-        Calculator Register(ICalculatorOperation operation);
+        ICalculator Register(ICalculatorOperation operation);
+
+        ICalculator Apply<TOperation>(params double[] args) where TOperation : ICalculatorOperation;        
+
+        double? Value { get; }
     }
 }

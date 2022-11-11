@@ -1,8 +1,8 @@
-﻿namespace ZeUnit.Demo.DemoCalculator
+﻿namespace ZeUnit.Demo.DemoCalculator.Operations
 {
-    public class LatestDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    public class DictionarySetter<TKey, TValue> : Dictionary<TKey, TValue>
     {
-        public LatestDictionary<TKey, TValue> AddOrUpdate(TKey key, TValue value)
+        public DictionarySetter<TKey, TValue> AddOrUpdate(TKey key, TValue value)
         {
             if (!this.ContainsKey(key))
             {

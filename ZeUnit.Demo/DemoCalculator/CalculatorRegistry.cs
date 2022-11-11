@@ -1,4 +1,6 @@
-﻿namespace ZeUnit.Demo.DemoCalculator
+﻿using ZeUnit.Demo.DemoCalculator.Operations;
+
+namespace ZeUnit.Demo.DemoCalculator
 {
     public class CalculatorRegistry : ServiceRegistry
     {

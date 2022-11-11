@@ -1,5 +1,6 @@
 ﻿using ZeUnit.Behave;
 using ZeUnit.Demo.DemoCalculator;
+using ZeUnit.Demo.DemoCalculator.Operations;
 
 namespace ZeUnit.Demo.CalculatorBehavior
 {
@@ -14,7 +15,7 @@ namespace ZeUnit.Demo.CalculatorBehavior
 
         public override void Do(CalculatorState state)
         {
-            state.result = cal.Add(state.a, state.b);
-        }        
+            state.result = cal.Apply<AddOperation>(state.a, state.b).Value ?? 0;
+        }
     }
 }
