@@ -1,13 +1,16 @@
-﻿using ZeUnit.Behave;
+﻿using System;
+using ZeUnit.Behave;
+using ZeUnit.Demo.DemoCalculator;
+using ZeUnit.Demo.DemoCalculator.Operations;
 
 namespace ZeUnit.Demo.CalculatorBehavior
 {
-    [LamarContainer()]
+    [LamarContainer(typeof(CalculatorRegistry))]
     public class CalculatorSimpleBehavior : ZeSimpleBehavior
     {
-        private readonly Calculator calulator;
+        private readonly ICalculator calulator;
 
-        public CalculatorSimpleBehavior(Calculator calulator)
+        public CalculatorSimpleBehavior(ICalculator calulator)
         {            
             this.calulator = calulator;
         }
@@ -17,23 +20,26 @@ namespace ZeUnit.Demo.CalculatorBehavior
         [InlineData(3, 4, 7)]
         [InlineData(4, 5, 9)]
         [InlineData(5, 6, 11)]
-        public IEnumerable<ZeResult> Addition(int a, int b, int expected)
+        public IEnumerable<ZeResult> Addition(double a, double b, double expected)
         {
             // Context is the variables defined in this scope.
-            int result = 0;
-            
-            // these could also have an action, but by default it is empty.
-            // Given in this case is mostly a reporting too, while the method injection actually
-            // passes the "given" values
-            yield return Given($"Set first number to {a}.");           
-            yield return Given($"Set the second number to {b}", () => { Console.WriteLine("Some Action"); });
+            double result = 0;
 
-            // When fuctions effect the state of the variables defined in this function.
-            // In this example result is set to the returned sum.
-            yield return When("Number are added", () => { result = calulator.Add(a, b); });
+            // these could also have an action, but by default it is empty.            
+            return new[] {
+                
+                // Given in this case is mostly a reporting too, while the method injection actually
+                // passes the "given" values
+                Given($"Set first number to {a}."),
+                Given($"Set the second number to {b}", () => { Console.WriteLine("Some Action"); }),
 
-            // Finally Then is the test method, so a ZeResult is expected.
-            yield return Then($"Expect {result} to be {expected}", () => Ze.Is.Equal(result, expected));
+                // When fuctions effect the state of the variables defined in this function.
+                // In this example result is set to the returned sum.
+                When("Number are added", () => { result = calulator.Apply<AddOperation>(a, b).Value ?? 0; }),
+
+                // Finally Then is the test method, so a ZeResult is expected.
+                Then($"Expect {result} to be {expected}", () => Ze.Is.Equal(result, expected))
+            };
         }
     }
 }

@@ -1,21 +1,22 @@
 ﻿using ZeUnit.Behave;
+using ZeUnit.Demo.DemoCalculator;
 
 namespace ZeUnit.Demo.CalculatorBehavior
 {
     public class CalculatorState
     {
-        public int a { get; set; }
-        public int b { get; set; }
-        public int result { get; set; }
+        public double a { get; set; }
+        public double b { get; set; }
+        public double result { get; set; }
 
     }
 
-    [LamarContainer()]
+    [LamarContainer(typeof(CalculatorRegistry))]
     public class CalculatorStateBehavior : ZeStateBehavior<CalculatorState>
     {
-        private readonly Calculator calulator;
+        private readonly ICalculator calulator;
 
-        public CalculatorStateBehavior(Calculator calulator)
+        public CalculatorStateBehavior(ICalculator calulator)
         {
             this.calulator = calulator;
         }
@@ -25,7 +26,7 @@ namespace ZeUnit.Demo.CalculatorBehavior
         [InlineData(3, 4, 7)]
         [InlineData(4, 5, 9)]
         [InlineData(5, 6, 11)]
-        public IEnumerable<ZeResult> Addition(int a, int b, int expected)
+        public IEnumerable<ZeResult> Addition(double a, double b, double expected)
         {
             yield return this.Given(new SetFirstAdderForCalculator(a));
             yield return this.Given(new SetSecondAdderForCalculator(b));

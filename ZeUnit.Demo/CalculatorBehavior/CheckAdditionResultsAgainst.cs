@@ -4,9 +4,9 @@ namespace ZeUnit.Demo.CalculatorBehavior
 {
     public class CheckAdditionResultsAgainst : ZeThen<CalculatorState>
     {
-        private readonly int expected;
+        private readonly double expected;
 
-        public CheckAdditionResultsAgainst(int expected) 
+        public CheckAdditionResultsAgainst(double expected) 
             : base($"Expect to be {expected}")
         {
             this.expected = expected;

@@ -4,9 +4,9 @@ namespace ZeUnit.Demo.CalculatorBehavior
 {
     public class SetFirstAdderForCalculator : ZeGiven<CalculatorState>
     {
-        private readonly int adder;
+        private readonly double adder;
 
-        public SetFirstAdderForCalculator(int adder)
+        public SetFirstAdderForCalculator(double adder)
             : base($"Added the first adder with value of '{adder}'.")
         {
             this.adder = adder;
