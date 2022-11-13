@@ -1,14 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System.IO.Enumeration;
 
 namespace ZeUnit.Composers;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class LoadFileAttribute : ZeComposerAttribute
 {
-    public LoadFileAttribute(params string[] fileName)
+    public LoadFileAttribute(params string[] fileNames) 
         : base(typeof(LoadFileMethodComposer))
-    {
-        FileNames = fileName;
+    {    
+        this.FileNames =  fileNames;
     }
 
     public string[] FileNames { get; }
