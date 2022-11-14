@@ -2,23 +2,28 @@
 {
     public class DirectoryInjectionTests
     {
-        [LoadDirectory("FileTests/test/")]
-        public ZeResult LoadedFromDirectory(string value)
+        [LoadFiles("FileTests/test/")]
+        public ZeResult LoadedFromDirectory(string fileString)
         {
-            return Ze.Is.NotEmpty(value);
+            return Ze.Is.NotEmpty(fileString);
         }
 
-        [LoadDirectory("FileTests/test/", "sample.txt")]
-        public ZeResult LoadedFromDirectoryWithExtension(string value)
+        [LoadFiles("FileTests/test/")]
+        public ZeResult LoadedFromDirectoryWithExtension(
+            [ExtensionFilter(".sample.txt")] string fileString)
         {
-            return Ze.Is.NotEmpty(value);
+            return Ze.Is.NotEmpty(fileString);
         }
+    }
 
-        [LoadDirectory("FileTests/test/", "test.txt", "result.txt")]
-        public ZeResult LoadedFromDirectoryWithMultipleExtension(string value, string result)
+    public class DirectoryFileSetsInejctionTests 
+    { 
+        [LoadFileGroups("FileTests/test/")]
+        public ZeResult LoadedFromDirectoryWithMultipleExtension(
+            [ExtensionFilter(".test.txt")]string test, 
+            [ExtensionFilter(".result.txt")]string result)
         {
-            return Ze.Is.Equal(result, value);
+            return Ze.Is.Equal(result, test);
         }
-
     }
 }
