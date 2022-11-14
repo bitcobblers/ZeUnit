@@ -8,14 +8,17 @@
             return Ze.Is.NotEmpty(value);
         }
 
-        [LoadDirectory("FileTests/test/", "sample.txt")]
-        public ZeResult LoadedFromDirectoryWithExtension(string value)
+        [LoadDirectory("FileTests/test/")]
+        public ZeResult LoadedFromDirectoryWithExtension(
+            [ExtensionFilter("sample.txt")]string value)
         {
             return Ze.Is.NotEmpty(value);
         }
 
-        [LoadDirectory("FileTests/test/", "test.txt", "result.txt")]
-        public ZeResult LoadedFromDirectoryWithMultipleExtension(string value, string result)
+        [LoadDirectory("FileTests/test/")]
+        public ZeResult LoadedFromDirectoryWithMultipleExtension(
+            [ExtensionFilter("test.txt")]string value, 
+            [ExtensionFilter("result.txt")]string result)
         {
             return Ze.Is.Equal(result, value);
         }

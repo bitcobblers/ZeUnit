@@ -7,13 +7,22 @@ namespace ZeUnit.Composers;
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class LoadDirectoryAttribute : ZeComposerAttribute
 {
-    public LoadDirectoryAttribute(string directory, params string[] extentions) 
+    public LoadDirectoryAttribute(string directory) 
         : base(typeof(LoadDirectoryMethodComposer))
     {
-        this.Directory = directory;
-        this.Extentions = extentions.Length > 0 ? extentions : new[] { string.Empty };
+        this.Directory = directory;        
     }
 
-    public string Directory { get; }
-    public string[] Extentions { get; }
+    public string Directory { get; }    
+}
+
+[AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
+public class ExtensionFilterAttribute : Attribute
+{
+    public ExtensionFilterAttribute(string filter)
+    {
+        Filter = filter;
+    }
+
+    public string Filter { get; }
 }
