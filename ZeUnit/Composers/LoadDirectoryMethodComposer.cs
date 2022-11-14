@@ -2,22 +2,25 @@
 
 namespace ZeUnit.Composers;
 
-public class LoadDirectoryMethodComposer : IZeMethodComposer
+public class LoadDirectoryMethodComposer<TFileMapper> : IZeMethodComposer
+    where TFileMapper : ILoadDirectoryMethodFileMapper, new()
 {
     private readonly string directory;
     private bool disposedValue;
 
     public LoadDirectoryMethodComposer(ZeComposerAttribute attribute)
     {
-        this.directory = Path.GetFullPath(((LoadDirectoryAttribute)attribute).Directory);
+        this.directory = Path.GetFullPath(((ILoadFilesAttribute)attribute).Directory);
     }
 
     public IEnumerable<object[]> Get(MethodInfo method)
     {
         var result = new List<object[]>();
         var fileProvider = new PhysicalFileProvider(this.directory);
-        var parsor = new LoadDirectoryMethodFileMapper();                
-        var binders = parsor.Bind(method, fileProvider.GetDirectoryContents(string.Empty));
+        var parsor = new TFileMapper();
+        
+        var args = new LoadDirectoryExtensionFilterBinder(method); 
+        var binders = parsor.Bind(fileProvider.GetDirectoryContents(string.Empty), args.Extensions);
                                               
         foreach ( var fileSet in binders)
         {
