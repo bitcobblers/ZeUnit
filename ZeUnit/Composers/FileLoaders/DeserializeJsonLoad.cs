@@ -11,7 +11,6 @@ public class DeserializeJsonLoad : IZeFileLoader
     public object Load(Type type, FileInfo file)
     {
         var text = file.OpenText().ReadToEnd();
-        return JsonSerializer.Deserialize(text, type, new JsonSerializerOptions());
-
+        return JsonSerializer.Deserialize(text, type, new JsonSerializerOptions())!;
     }
 }

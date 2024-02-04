@@ -51,7 +51,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
             .Where(m => supportedTypes.Contains(m.ReturnType)))
             .Where(m => m.GetCustomAttributes().All(a=> a?.GetType() != typeof(ZeIgnoreAttribute))))
         {
-            var classType = method.DeclaringType.GetTypeInfo();
+            var classType = method.DeclaringType!.GetTypeInfo();
             var activators = this.ClassFactory.Get(classType);
             foreach (var activator in activators) 
             {
@@ -77,7 +77,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
     }    
 
     public IEnumerator<ZeTest> GetEnumerator() => tests
-        .Where(test => conditions.Aggregate(true, (sum, n) => n(test.Class) && sum))
+        .Where(test => conditions.Aggregate(true, (sum, n) => n(test.Class!) && sum))
         .GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();

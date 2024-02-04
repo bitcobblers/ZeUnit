@@ -9,7 +9,7 @@ public class EnumerableTestRunner : ZeTestRunner<IEnumerable<ZeResult>>
     {
         var instance = factory.Create();
         var subject = new AsyncSubject<(ZeTest, ZeResult)>();
-        foreach (var result in (IEnumerable<ZeResult>)test.Method.Invoke(instance, arguments.Any() ? arguments : null))
+        foreach (var result in (IEnumerable<ZeResult>)test.Method!.Invoke(instance, arguments.Any() ? arguments : null)!)
         {
             subject.OnNext((test, result));
         }

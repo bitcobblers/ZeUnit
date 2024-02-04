@@ -9,7 +9,7 @@ public class CoreClassComposer : IZeClassComposer
 
     public object Get(TypeInfo @class)
     {
-        return Activator.CreateInstance(@class);
+        return Activator.CreateInstance(@class)!;
     }
 
     protected virtual void Dispose(bool disposing)

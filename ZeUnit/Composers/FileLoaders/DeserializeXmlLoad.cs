@@ -11,6 +11,6 @@ public class DeserializeXmlLoad : IZeFileLoader
     {
         var serializer = new XmlSerializer(type);
         using var reader = file.OpenRead();
-        return serializer.Deserialize(reader);
+        return serializer.Deserialize(reader)!;
     }
 }

@@ -28,7 +28,7 @@ public class LoadFileGroupsFromDirectoryFileMapper : ILoadDirectoryMethodFileMap
                 continue;
             }
 
-            yield return groupFiles;
+            yield return groupFiles!;
         }
     }
 }

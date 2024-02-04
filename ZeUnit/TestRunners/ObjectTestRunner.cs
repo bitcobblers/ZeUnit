@@ -9,7 +9,7 @@ public class ObjectTestRunner : ZeTestRunner<ZeResult>
     {
         var instance = factory.Create();
         var subject = new AsyncSubject<(ZeTest, ZeResult)>();
-        subject.OnNext((test, (ZeResult)test.Method.Invoke(instance, arguments.Any() ? arguments : null)));
+        subject.OnNext((test, (ZeResult)test.Method!.Invoke(instance, arguments.Any() ? arguments : null)!));
         subject.OnCompleted();
         return subject;
     }

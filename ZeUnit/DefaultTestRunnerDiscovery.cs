@@ -11,7 +11,7 @@ public class DefaultTestRunnerDiscovery : ZeTestRunnerDiscovery
 
         foreach (var type in types)
         {
-            this.zeTestRunners.Add((ZeTestRunner)Activator.CreateInstance(type));
+            this.zeTestRunners.Add((ZeTestRunner)Activator.CreateInstance(type)!);
         }
     }
 }

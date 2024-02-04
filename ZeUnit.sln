@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.TestAdapter", "ZeUni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Story", "ZeUnit.Story\ZeUnit.Story.csproj", "{57285F62-48EF-4559-B00A-5B924AFB502D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeUnit.Behave", "ZeUnit.Behave\ZeUnit.Behave.csproj", "{F07AADEC-75CD-4A15-B779-8629CB47BD81}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -7,6 +7,10 @@ public class DirectoryExtensionFileMapFromBinding : DirectoryExtensionFileMap
     public DirectoryExtensionFileMapFromBinding(IFileInfo file, string[] extensions)
     {
         var match = extensions.FirstOrDefault(ex => file.Name.EndsWith(ex));
+        if (match == null)
+        {
+            return;
+        }
         
         this.FileName = file.PhysicalPath;
         this.MatchedExtension = match;

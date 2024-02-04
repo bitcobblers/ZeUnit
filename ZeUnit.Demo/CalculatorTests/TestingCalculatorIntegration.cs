@@ -13,14 +13,13 @@ namespace ZeUnit.Demo.CalculatorTests
             this.calculator = calculator;
         }
 
-        [InlineData(null, 0)]
+        [InlineData(null!, 0)]
         [InlineData(new[] { 1d }, 1)]
         [InlineData(new[] { 1d, 2d }, 3)]
         [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
         public ZeResult AdditionHarness(double[] values, double expected)
         {            
-            return Ze.Is.Equal(expected, this.calculator.Apply<AddOperation>(values).Value.Value);
+            return Ze.Is.Equal(expected, this.calculator.Apply<AddOperation>(values)!.Value!.Value);
         }
-
     }
 }
