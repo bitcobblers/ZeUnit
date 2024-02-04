@@ -17,14 +17,15 @@ using System.Reflection;
 //[ExtensionUri(Constants.ExecutorUri)]
 public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 {
-    private readonly ZeTestRunnerDiscovery testRunnerDiscovery;    
+    private readonly ZeTestRunnerDiscovery testRunnerDiscovery;
 
     public VisualStudioZeUnitTestAdapter()
     {
-       this.testRunnerDiscovery = new DefaultTestRunnerDiscovery();
+        this.testRunnerDiscovery = new DefaultTestRunnerDiscovery();
     }
 
-    public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
+    public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger,
+        ITestCaseDiscoverySink discoverySink)
     {
         logger.SendMessage(TestMessageLevel.Informational, "Attempting Discovery");
         foreach (var source in sources)
@@ -53,10 +54,10 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
             var discovery = new ZeDiscovery(testRunnerDiscovery.SupportedTypes())
                 .FromAssembly(source.Key);
 
-            var classes = source.Select(n=> (discovery.FirstOrDefault(z=>z.Name == n.FullyQualifiedName), n))                
+            var classes = source.Select(n => (discovery.FirstOrDefault(z => z.Name == n.FullyQualifiedName), n))
                 .GroupBy(pair => (pair.Item1?.Class, pair.Item1?.ClassActivator));
-            
-            foreach(var classPair in classes)
+
+            foreach (var classPair in classes)
             {
                 var (@class, composer) = classPair.Key;
                 var lifeCycle = @class?
@@ -80,14 +81,16 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                     {
                         var (zeTest, zeResult) = pair;
                         result.Duration = zeResult.Duration;
-                        result.Outcome = zeResult.Any() && zeResult.All(x => x.Status == ZeStatus.Passed) ? TestOutcome.Passed : TestOutcome.Failed;
+                        result.Outcome = zeResult.Any() && zeResult.All(x => x.Status == ZeStatus.Passed)
+                            ? TestOutcome.Passed
+                            : TestOutcome.Failed;
                         frameworkHandle.RecordResult(result);
                         frameworkHandle.RecordEnd(testCase, result.Outcome);
                         return zeResult;
                     }).ToTask());
                 }
             }
-        }        
+        }
 
         Task.WhenAll(executionList).Wait();
     }
@@ -95,15 +98,18 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
     public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
     {
         frameworkHandle.SendMessage(TestMessageLevel.Informational, "Starting Tests");
-        foreach (var source in sources)
-        {
-            var testBuilder = new TestCaseBuilder(source);
 
-            
+        var testCases =
+            (from source in sources
+                let builder = new TestCaseBuilder(source)
+                let discoverer = new ZeDiscovery(testRunnerDiscovery.SupportedTypes()).FromAssembly(source)
+                from test in discoverer
+                select builder.Build(test))
+            .ToArray();
 
-        }
-
+        RunTests(testCases, runContext, frameworkHandle);
     }
+
     public void Cancel()
     {
 
