@@ -6,7 +6,7 @@ public class NullFileLoader : IZeFileLoader
 {
     public object Load(Type type, FileInfo file)
     {
-        return null;
+        return null!;
     }
 
     public bool Match(Type type, FileInfo file) => true;

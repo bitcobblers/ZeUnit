@@ -42,10 +42,10 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
         }
     }
 
-    public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
+    public void RunTests(IEnumerable<TestCase>? tests, IRunContext? runContext, IFrameworkHandle? frameworkHandle)
     {
-        frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Running {tests.Count()}");
-        var sources = tests.GroupBy(n => n.Source);
+        frameworkHandle!.SendMessage(TestMessageLevel.Informational, $"Running {tests!.Count()}");
+        var sources = tests!.GroupBy(n => n.Source);
         var executionList = new List<Task>();
         var runner = new ZeRunner(testRunnerDiscovery.Runners());
 
@@ -63,7 +63,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                 var lifeCycle = @class?
                     .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
 
-                var factory = lifeCycle.GetFactory(composer, @class);
+                var factory = lifeCycle.GetFactory(composer!, @class!);
 
                 foreach (var (zeTest, testCase) in classPair)
                 {
@@ -95,9 +95,9 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
         Task.WhenAll(executionList).Wait();
     }
 
-    public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
+    public void RunTests(IEnumerable<string>? sources, IRunContext? runContext, IFrameworkHandle? frameworkHandle)
     {
-        frameworkHandle.SendMessage(TestMessageLevel.Informational, "Starting Tests");
+        frameworkHandle!.SendMessage(TestMessageLevel.Informational, "Starting Tests");
 
         var testCases =
             (from source in sources
@@ -107,7 +107,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                 select builder.Build(test))
             .ToArray();
 
-        RunTests(testCases, runContext, frameworkHandle);
+        RunTests(testCases, runContext!, frameworkHandle!);
     }
 
     public void Cancel()

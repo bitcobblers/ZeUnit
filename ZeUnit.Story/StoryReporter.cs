@@ -6,7 +6,7 @@ namespace ZeUnit.Story
     public class StoryReporter : IZeReporter
     {
         private readonly string fileName;
-        private readonly new List<(ZeTest, ZeResult)> tests = new List<(ZeTest, ZeResult)>();
+        private readonly List<(ZeTest, ZeResult)> tests = new List<(ZeTest, ZeResult)>();
 
         public StoryReporter(string fileName = "story.html")
         {
@@ -35,11 +35,11 @@ namespace ZeUnit.Story
             // build the js and Css content,
             foreach (var group in tests.GroupBy(n => n.Item1.Class, n => n))
             {
-                report.Append(headerTemplate.ToHtml(new { name = group.Key.FullName }));
+                report.Append(headerTemplate.ToHtml(new { name = group.Key!.FullName }));
                 foreach (var item in group)
                 {
                     report.Append(testTemplate.ToHtml(new {
-                        name = item.Item1.Method.Name,
+                        name = item.Item1.Method!.Name,
                         status = item.Item2.State == ZeStatus.Passed ? "success" : "danger",
                         messages = item.Item2.Select(m => new { message = m.Message }).ToArray()
                     }));

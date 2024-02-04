@@ -20,8 +20,8 @@ public class ZeRunner
         var startTime = DateTime.Now;
         try
         {                
-            var runner = runners.First(n => n.SupportType == test.Method.ReturnType);            
-            return runner.Run(test, factory, test.Arguments()).Select(n =>
+            var runner = runners.First(n => n.SupportType == test.Method!.ReturnType);            
+            return runner.Run(test, factory, test.Arguments?.Invoke() ?? new object[0]).Select(n =>
             {
                 n.Item2.Duration = DateTime.Now - startTime;
                 return n;
@@ -35,8 +35,6 @@ public class ZeRunner
                 return n;
             });
         }
-       
-                       
     }
 }
 

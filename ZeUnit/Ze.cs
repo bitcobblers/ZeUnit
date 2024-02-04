@@ -63,11 +63,11 @@ public static class Ze
         foreach (var classActivation in discovery)
         {
             var (@class, composer) = classActivation.Key;            
-            var lifeCycle = @class
+            var lifeCycle = @class!
                 .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
             try
             {
-                var factory = lifeCycle.GetFactory(composer, @class);
+                var factory = lifeCycle.GetFactory(composer!, @class!);
 
                 classRuns.AddRange(classActivation
                     .Select(test => new ZeRunner(builder.Runners()).Run(test, factory)));

@@ -1,6 +1,7 @@
 ﻿namespace ZeUnit.Demo.DemoCalculator.Operations
 {
     public class DictionarySetter<TKey, TValue> : Dictionary<TKey, TValue>
+        where TKey : notnull
     {
         public DictionarySetter<TKey, TValue> Upsert(TKey key, TValue value)
         {

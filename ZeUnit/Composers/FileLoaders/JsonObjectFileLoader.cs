@@ -8,6 +8,6 @@ public class JsonObjectFileLoader : ZeTypeFileLoader<JsonObject>
 {
     public override object Load(Type type, FileInfo file)
     {
-        return JsonObject.Parse(file.OpenText().ReadToEnd());
+        return JsonObject.Parse(file.OpenText()?.ReadToEnd() ?? "{}")!;
     }
 }

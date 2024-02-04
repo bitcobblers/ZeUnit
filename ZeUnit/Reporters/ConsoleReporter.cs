@@ -36,7 +36,7 @@ public class ConsoleReporter : IZeReporter
     public void OnNext((ZeTest, ZeResult) value)
     {
         var (test, result) = value;
-        Console.WriteLine($"[{test.Class.FullName}]::{test.Method.Name} - {result.State}");
+        Console.WriteLine($"[{test.Class!.FullName}]::{test.Method!.Name} - {result.State}");
         foreach (var assertion in result)
         {
             Console.WriteLine($" -- {assertion.Message}");

@@ -17,7 +17,7 @@ public class TestCaseBuilder
                     new Uri(Constants.ExecutorUri),
                     this.source)
         {
-            CodeFilePath = test.Class.FullName,
+            CodeFilePath = test.Class!.FullName,
             DisplayName = test.Name,
             LineNumber = 1,
         };

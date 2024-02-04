@@ -2,9 +2,9 @@
 
 public class DirectoryExtensionFileMap
 {
-    public string FileName { get; set; }
+    public string FileName { get; set; } = string.Empty;
     
-    public string MatchedExtension { get; set; }
+    public string MatchedExtension { get; set; } = string.Empty;
 
-    public string GroupName { get; set; }
+    public string GroupName { get; set; } = string.Empty;
 } 
