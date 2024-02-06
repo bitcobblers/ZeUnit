@@ -1,0 +1,43 @@
+﻿name: CodeQL
+
+on:
+  workflow_call:
+  schedule:
+    - cron: '34 19 * * 2'
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+          fetch-depth: 0
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: csharp
+          config-file: .github/codeql-config.yml
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            6.0.x
+            7.0.x
+
+      - name: Build Solution
+        env:
+          DOTNET_NOLOGO: true
+        run: dotnet build --configuration Debug
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
