@@ -8,10 +8,5 @@
     <TreatWarningsAsErrors Condition=" '$(Configuration)' == 'Release' ">true</TreatWarningsAsErrors>
     <Authors>BitCobblers</Authors>
     <Company>BitCobblers</Company>
-  </PropertyGroup>
-
-  <PropertyGroup Label="Signing">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)DrillSergeant.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+  </PropertyGroup>  
 </Project>
