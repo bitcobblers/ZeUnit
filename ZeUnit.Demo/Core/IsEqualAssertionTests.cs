@@ -4,25 +4,21 @@ public class IsEqualAssertionTests
 {
     public ZeResult ApplyingAnAssertionOnZeResultCreatesAnEnumerable()
     {
-        var result = Ze.Is.Equal("test", "test");
-
-        return Ze.Is
-            .NotEmpty(result);
+        var result = "test".Is("test");
+        return result.IsNotEmpty();
     }
 
     public ZeResult SuccessfulResultIsReturnedOnMatch()
     {
-        var result = Ze.Is.Equal("test", "test");
+        var result = "test".Is("test");
 
-        return Ze.Is
-            .Type<AssertPassed>(result.First());
+        return result.First().IsType<AssertPassed>();
     }
 
     public ZeResult FailedResultIsReturnedOnFailedMatch()
     {
-        var result = Ze.Is.Equal("test", "test-failed");
+        var result = "test".Is("test-failed");
 
-        return Ze.Is
-            .Type<AssertFailed>(result.First());
+        return result.First().IsType<AssertFailed>();
     }
 }

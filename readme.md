@@ -1,6 +1,6 @@
 ### ZeUnit 
 
-- [Quick Start Guide](https://github.com/bitcobblers/ZeUnit/wiki/Quick-Start-Guide)
+- [Quick Start Guide](https://bitcobblers.github.io/ZeUnit/)
 
 ## Why ZeUnit
 XUnit and NUnit are both battle hardened frameworks that are running countless tests in the wild.  Our tools and work seamlessly with the existing frameworks that is seems like dark wizadry not worthy to mess around with.  

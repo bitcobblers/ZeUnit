@@ -6,8 +6,7 @@
         [InlineData("test2", 2)]
         public ZeResult InlineInjectionForMethodWorks(string method, int expected)
         {
-            return Ze.Is
-                .Equal($"test{expected}", method);
+            return $"test{expected}".Is(method);
         }
     }
 }

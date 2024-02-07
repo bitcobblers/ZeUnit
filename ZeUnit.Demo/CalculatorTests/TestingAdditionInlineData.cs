@@ -11,7 +11,8 @@ namespace ZeUnit.Demo.CalculatorTests
         public ZeResult AdditionHarness(double[] values, double expected)
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(expected, addition.Apply(0,values)!.Value);
+            var result = addition.Apply(0, values)!.Value;
+            return result.Is(expected);
         }
     }
 }

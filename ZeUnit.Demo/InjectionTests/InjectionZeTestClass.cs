@@ -12,8 +12,8 @@ public class InjectionZeTestClass
 
     public ZeResult ConstructorInjectionTestMethodThatPasses()
     {
-        return Ze.Is  
-            .NotNull(this.service);
+        return new ZeResult(this.service)  
+            .IsNotNull();
 
     }
 }

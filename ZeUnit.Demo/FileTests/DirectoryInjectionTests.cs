@@ -1,18 +1,20 @@
-﻿namespace ZeUnit.Demo.FileTests
+﻿using ZeUnit.Assertions;
+
+namespace ZeUnit.Demo.FileTests
 {
     public class DirectoryInjectionTests
     {
         [LoadFiles("FileTests/test/")]
         public ZeResult LoadedFromDirectory(string fileString)
         {
-            return Ze.Is.NotEmpty(fileString);
+            return fileString.IsNotEmpty();
         }
 
         [LoadFiles("FileTests/test/")]
         public ZeResult LoadedFromDirectoryWithExtension(
             [ExtensionFilter(".sample.txt")] string fileString)
         {
-            return Ze.Is.NotEmpty(fileString);
+            return fileString.IsNotEmpty();
         }
     }
 
@@ -23,7 +25,7 @@
             [ExtensionFilter(".test.txt")]string test, 
             [ExtensionFilter(".result.txt")]string result)
         {
-            return Ze.Is.Equal(result, test);
+            return test.Is(result);
         }
     }
 }

@@ -8,25 +8,25 @@ namespace ZeUnit.Demo.CalculatorTests
         public ZeResult PassingNullValueWillResultInZero()
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(0, addition.Apply(0, null!)!.Value);
+            return addition.Apply(0, null!)!.Value.Is(0);
         }
 
         public ZeResult PassingSingleValueResultWithTheValue()
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(1d, addition.Apply(0, new[] { 1d })!.Value);
+            return addition.Apply(0, new[] { 1d })!.Value.Is(1d);
         }
 
         public ZeResult PassingTwoValuesResultWithTheSum()
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(3d, addition.Apply(0, new[] { 1d, 2d })!.Value);
+            return addition.Apply(0, new[] { 1d, 2d })!.Value.Is(3d);
         }
 
         public ZeResult PassingManyValuesResultWithTheSum()
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(10d, addition.Apply(0, new[] { 1d, 2d, 3d, 4d })!.Value);
+            return addition.Apply(0, new[] { 1d, 2d, 3d, 4d })!.Value.Is(10d);
         }
     }
 }

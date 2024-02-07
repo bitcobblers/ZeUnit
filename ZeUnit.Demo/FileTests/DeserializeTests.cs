@@ -5,13 +5,13 @@
         [LoadFile("FileTests/test.xml")]
         public ZeResult LoadFileSerializedXMLObject(SomePocoType actual)
         {
-            return Ze.Is.Equal("test", actual.Text);
+            return actual.Text.Is("test");
         }
 
         [LoadFile("FileTests/test.json")]
         public ZeResult LoadFileSerializedJsonObject(SomePocoType actual)
         {
-            return Ze.Is.Equal("test", actual.Text);
+            return actual.Text.Is("test");
         }
     }
 }
