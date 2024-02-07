@@ -1,4 +1,4 @@
-Now that you are set up to run test in your application and you have executed [Your First Test](https://github.com/SergeiGolos/ZeUnit/wiki/Your-First-Test), lets get into the tests how testing works and tackle the elephant in the room.  
+Now that you are set up to run test in your application and you have executed [Your First Test](Your-First-Test), lets get into the tests how testing works and tackle the elephant in the room.  
 
 > WHERE IS MY ASSERT !?!?!?!?!?!?!
 

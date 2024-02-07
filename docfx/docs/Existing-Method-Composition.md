@@ -1,4 +1,4 @@
-Method composition is your path to injecting test data into your test methods.  In the previous section [Testing A Calculator](https://github.com/bitcobblers/ZeUnit/wiki/Testing-A-Calculator), we saw `InlineData` attributes being used to push data into a single test method.  While this is useful in many unit tests scenarios, scaling this to integration testing becomes tedious especially with the dotnet limitations on primitive types as arguments for Attributes.  To bridge the gap into integration testing ZeUnit comes equipped with tools to help you work with test data.  
+Method composition is your path to injecting test data into your test methods.  In the previous section [Testing A Calculator](https://bitcobblers.github.io/ZeUnit/docs/Testing-A-Calculator.html), we saw `InlineData` attributes being used to push data into a single test method.  While this is useful in many unit tests scenarios, scaling this to integration testing becomes tedious especially with the dotnet limitations on primitive types as arguments for Attributes.  To bridge the gap into integration testing ZeUnit comes equipped with tools to help you work with test data.  
 
 This is a common trend of integration frameworks, the idea of a detached data state that doesn't require the test code to be modified for additional test cases to run. 
 - Fittness: it a wiki files and commonly xml/json data files the wikis point to
@@ -100,7 +100,7 @@ ZeUnit steps this up one more notch with the introduction of the `LoadFileGroups
     }
 ```
 
-The method composition system is open to be extension by writing additional method composers.  More information about building custom method composers can be found in here: [Custom Method Composition](https://github.com/bitcobblers/ZeUnit/wiki/Custom-Method-Composition)
+The method composition system is open to be extension by writing additional method composers.  More information about building custom method composers can be found in here: [Custom Method Composition](https://bitcobblers.github.io/ZeUnit/docs/Custom-Method-Composition.html)
 
 ***
-Next Section [Existing Class Composition](https://github.com/bitcobblers/ZeUnit/wiki/Existing-Class-Composition)
+Next Section [Existing Class Composition](https://bitcobblers.github.io/ZeUnit/docs/Custom-Class-Composition.html)
