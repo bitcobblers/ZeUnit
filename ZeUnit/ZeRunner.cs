@@ -51,7 +51,7 @@ public class ZeTestException : IObservable<(ZeTest, ZeResult)>
 
     public IDisposable Subscribe(IObserver<(ZeTest, ZeResult)> observer)
     {
-        var errorResult = new ZeResult()
+        var errorResult = new ZeResult(null!)
                     .Assert(new AssertError(ex));
         var errorSubject = new AsyncSubject<(ZeTest, ZeResult)>();
         errorSubject.OnNext((test, errorResult));

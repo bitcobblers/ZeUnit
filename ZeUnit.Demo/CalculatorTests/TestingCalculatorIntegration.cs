@@ -19,7 +19,7 @@ namespace ZeUnit.Demo.CalculatorTests
         [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
         public ZeResult AdditionHarness(double[] values, double expected)
         {            
-            return Ze.Is.Equal(expected, this.calculator.Apply<AddOperation>(values)!.Value!.Value);
+            return this.calculator.Apply<AddOperation>(values)!.Value!.Value.ShouldBe(expected);
         }
     }
 }

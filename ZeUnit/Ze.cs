@@ -3,6 +3,7 @@
 using System.Reactive.Linq;
 using System.Reactive;
 using ZeUnit.Reporters;
+using ZeUnit.Assertions;
 
 public class ZeBuilder
 {
@@ -48,9 +49,7 @@ public class ZeBuilder
 }
 
 public static class Ze
-{    
-    public static ZeResult Is => new ZeResult();
-
+{        
     public static Dictionary<string, object> Global = new();
 
     public static IObservable<(ZeTest, ZeResult)> Unit(ZeBuilder builder)   
