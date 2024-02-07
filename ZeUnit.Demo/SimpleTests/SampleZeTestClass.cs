@@ -8,12 +8,5 @@ public class SampleZeTestClass
         return result
             .Is(4)
             .IsType<int>();
-    }
-
-    //public ZeResult SimpleTestMethodThatFailes()
-    //{
-    //    var result = 2 + 2;
-    //    return Ze.Is            
-    //        .Equal(5, result);
-    //}
+    }    
 }

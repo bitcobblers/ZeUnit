@@ -19,22 +19,22 @@ public class FileInjectionTests
     public ZeResult LoadFileStream(FileStream stream)
     {
         using var reader = new StreamReader(stream);
-        return Ze.Is.Equal("test", reader.ReadToEnd());
+        return reader.ReadToEnd().Is("test");
     }
 
     [LoadFile("FileTests/test.txt")]
     public ZeResult LoadFileText(string actual)
     {            
-        return Ze.Is.Equal("test", actual);
+        return actual.Is("test");
     }
 
     [LoadFile("FileTests/test.txt")]
     public ZeResult LoadFileByteArray(byte[] actual)
     {        
         var expected = Encoding.ASCII.GetBytes("test");            
-        return Ze.Is                                
-            // skip(3) ignores the BOM (EF BB BF in hex)
-            .True(expected.SequenceEqual(actual.Skip(3)));
+        // skip(3) ignores the BOM (EF BB BF in hex)
+        var actual = expected.SequenceEqual(actual.Skip(3));
+        return actual.True();
     }
 }
 ```
@@ -49,13 +49,13 @@ public class DeserializeTests
     [LoadFile("FileTests/test.xml")]
     public ZeResult LoadFileSerializedXMLObject(SerializedType actual)
     {
-        return Ze.Is.Equal("test", actual.Text);
+        return actual.Text.Is("test");
     }
 
     [LoadFile("FileTests/test.json")]
     public ZeResult LoadFileSerializedJsonObject(SerializedType actual)
     {
-        return Ze.Is.Equal("test", actual.Text);
+        return actual.Text.Is("test");
     }
 }
 
@@ -71,14 +71,14 @@ The examples so far still fail to meet the needs of integrations testing at scal
         [LoadFiles("FileTests/test/")]
         public ZeResult LoadedFromDirectory(string fileString)
         {
-            return Ze.Is.NotEmpty(fileString);
+            return fileString.IsNotEmpty();
         }
 
         [LoadFiles("FileTests/test/")]
         public ZeResult LoadedFromDirectoryWithExtension(
             [ExtensionFilter(".sample.txt")] string fileString)
         {
-            return Ze.Is.NotEmpty(fileString);
+            return fileString.IsNotEmpty();
         }
     }
 ```
@@ -95,7 +95,7 @@ ZeUnit steps this up one more notch with the introduction of the `LoadFileGroups
             [ExtensionFilter(".test.txt")]string test, 
             [ExtensionFilter(".result.txt")]string result)
         {
-            return Ze.Is.Equal(result, test);
+            return test.Is(result);
         }
     }
 ```

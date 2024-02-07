@@ -21,16 +21,15 @@ public class SampleZeUnitClass
     public ZeResult SimpleTestMethodThatPasses() 
     {            
         var result = 2 + 2;
-        return Ze.Is
-            .Type<int>(result)
-            .Equal(4, result);
+        return result
+            .Is(4)            
+            .IsType<int>();
     }
 
     public async Task<ZeResult> SimpleAsyncTestMethodThatFails()
     {
         var result = 2 + 2;
-        return Ze.Is            
-            .Equal(5, result);
+        return result.Is(5);            
     }
 }
 ```
@@ -40,7 +39,7 @@ Open up the Test Explorer window in Visual studio, and kick off the tests.  It w
 ## Functional Approach to Tests
 
 Developers familiar with existing testing frameworks like XUnit and NUnit will notices some key differences.
- - The familiar `Assert` has been replaced by `Ze.Is`, which is just short hand for writing `new ZeResult()`.  
+ - The familiar `Assert` has been replaced by `new ZeResult()` or a collection of shouldly style assertion helpers.  
  - Test methods return `ZeResult` in the case of single synchronous test result and `Task<ZeResult>` when the single result is asynchronous. 
 
 ZeUnit brows a lot from functional programing, and requires that functions return results. In our case the `ZeResult` object which can have 0 or more assertions like `Equal` or `Type` in the code example above.   Labeling the test function with resulting type as defined in the table bellow allows you to expressly define the execution timeline of your test(s) and how the `ZeResult` object(s) is/are being returned.

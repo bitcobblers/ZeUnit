@@ -9,31 +9,35 @@ The `SampleZeUnitClass` test in the previous [section](https://github.com/bitcob
 The calculator code being tested here can be found here: [/ZeUnit.Demo/DemoCalculator](https://github.com/bitcobblers/ZeUnit/tree/master/ZeUnit.Demo/DemoCalculator). 
 
 ## Different, but Kind of the Same
-We are hardy SOLID programmers, and as a result we can focus on a single responsibility at a time.  Lets take a closer look at what it means to add different number of arguments on the calculator.  The tests bellow are written in a format that should feel familiar to developers already doing testing in dotnet.  What is noticeably different here from the existing frameworks is that tests return a results, which is analogous to a call against the Assert class in traditional unit testing frameworks.  The only syntax sugar you see here is the use of the public static property `Ze.Is` which is short hand for creating a new `ZeResult` object.
+We are hardy SOLID programmers, and as a result we can focus on a single responsibility at a time.  Lets take a closer look at what it means to add different number of arguments on the calculator.  The tests bellow are written in a format that should feel familiar to developers already doing testing in dotnet.  What is noticeably different here from the existing frameworks is that tests return a results, which is analogous to a call against the Assert class in traditional unit testing frameworks. 
 
 ```csharp
         public ZeResult PassingNullValueWillResultInZero()
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(0, addition.Apply(0, null).Value);
+            var actual = addition.Apply(0, null).Value;
+            return actual.Is(0);
         }
 
         public ZeResult PassingSingleValueResultWithTheValue()
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(1d, addition.Apply(0, new[] { 1d }).Value);
+            var actual = addition.Apply(0, new[] { 1d }).Value;
+            return actual.Is(1d);
         }
 
         public ZeResult PassingTwoValuesResultWithTheSum()
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(3d, addition.Apply(0, new[] { 1d, 2d }).Value);
+            var actual = addition.Apply(0, new[] { 1d, 2d }).Value;
+            return actual.Is(3d);
         }
 
         public ZeResult PassingManyValuesResultWithTheSum()
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(10d, addition.Apply(0, new[] { 1d, 2d, 3d, 4d }).Value);
+            var actual = addition.Apply(0, new[] { 1d, 2d, 3d, 4d }).Value;
+            return actual.Is(10d);
         }
 ```
 
@@ -50,7 +54,8 @@ The code above is verbose, and "I pity the fool" who has to deal with all the co
         public ZeResult AdditionHarness(double[] values, double expected)
         {
             var addition = new AddOperation();
-            return Ze.Is.Equal(expected, addition.Apply(0,values).Value);
+            var actual = addition.Apply(0,values).Value;
+            return actual.Is(expected);
         }
     }
 ```
@@ -80,7 +85,8 @@ Lets take a look at what that looks like with ZeUnit.
         [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
         public ZeResult AdditionHarness(double[] values, double expected)
         {            
-            return Ze.Is.Equal(expected, this.calculator.Apply<AddOperation>(values).Value.Value);
+            var actual = this.calculator.Apply<AddOperation>(values).Value.Value;
+            return actual.Is(expected);
         }
 
     }
