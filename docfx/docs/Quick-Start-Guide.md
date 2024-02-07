@@ -52,4 +52,4 @@ ZeUnit brows a lot from functional programing, and requires that functions retur
 
 ***
 
-Next Section: [Testing A Calculator](https://github.com/bitcobblers/ZeUnit/wiki/Testing-A-Calculator)
+Next Section: [Testing A Calculator](https://bitcobblers.github.io/ZeUnit/docs/Testing-A-Calculator.html)
