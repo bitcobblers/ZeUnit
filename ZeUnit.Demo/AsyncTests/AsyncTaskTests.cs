@@ -5,7 +5,7 @@
         public async Task<ZeResult> AsyncTestRun()
         {
             await Task.Delay(1000);
-            return 1.ShouldBe(1);
+            return 1.Is(1);
         }
     }
 }

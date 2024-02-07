@@ -12,7 +12,7 @@ namespace ZeUnit.Demo.CalculatorTests
         {
             var addition = new AddOperation();
             var result = addition.Apply(0, values)!.Value;
-            return result.ShouldBe(expected);
+            return result.Is(expected);
         }
     }
 }

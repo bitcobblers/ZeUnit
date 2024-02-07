@@ -10,13 +10,13 @@ namespace ZeUnit.Demo.FileTests
         public ZeResult LoadFileStream(FileStream stream)
         {
             using var reader = new StreamReader(stream);
-            return reader.ReadToEnd().ShouldBe("test");
+            return reader.ReadToEnd().Is("test");
         }
 
         [LoadFile("FileTests/test.txt")]
         public ZeResult LoadFileText(string actual)
         {            
-            return actual.ShouldBe("test");
+            return actual.Is("test");
         }
 
         [LoadFile("FileTests/test.txt")]
@@ -31,15 +31,15 @@ namespace ZeUnit.Demo.FileTests
         public ZeResult LoadMultipleFileText(string actual1, string actual2)
         {
             return "test"
-                .ShouldBe(actual1)
-                .ShouldBe(actual2);
+                .Is(actual1)
+                .Is(actual2);
         }
 
         [LoadFile("FileTests/test.txt")]
         [LoadFile("FileTests/test.txt")]
         public ZeResult LoadFileTextWithMultipleActivations(string actual)
         {
-            return actual.ShouldBe("test");
+            return actual.Is("test");
         }        
     }
 }

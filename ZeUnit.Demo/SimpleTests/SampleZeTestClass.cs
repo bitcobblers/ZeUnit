@@ -6,8 +6,8 @@ public class SampleZeTestClass
     {            
         var result = 2 + 2;
         return result
-            .ShouldBe(4)
-            .Type<int>();
+            .Is(4)
+            .IsType<int>();
     }
 
     //public ZeResult SimpleTestMethodThatFailes()

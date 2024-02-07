@@ -4,7 +4,7 @@
     {
         public IEnumerable<ZeResult> EnumerableTestRun()
         {
-            return Enumerable.Range(1, 5).Select(i => i.ShouldBe(i));
+            return Enumerable.Range(1, 5).Select(i => i.Is(i));
         }
     }
 }

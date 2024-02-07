@@ -7,14 +7,14 @@ namespace ZeUnit.Demo.FileTests
         [LoadFiles("FileTests/test/")]
         public ZeResult LoadedFromDirectory(string fileString)
         {
-            return fileString.NotEmpty();
+            return fileString.IsNotEmpty();
         }
 
         [LoadFiles("FileTests/test/")]
         public ZeResult LoadedFromDirectoryWithExtension(
             [ExtensionFilter(".sample.txt")] string fileString)
         {
-            return fileString.NotEmpty();
+            return fileString.IsNotEmpty();
         }
     }
 
@@ -25,7 +25,7 @@ namespace ZeUnit.Demo.FileTests
             [ExtensionFilter(".test.txt")]string test, 
             [ExtensionFilter(".result.txt")]string result)
         {
-            return test.ShouldBe(result);
+            return test.Is(result);
         }
     }
 }

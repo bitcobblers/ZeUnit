@@ -5,6 +5,6 @@ public class TestResultTests
 {
     public ZeResult CanCreateATestResult()
     {
-        return new ZeResult(new { }).NotNull();
+        return new ZeResult(new { }).IsNotNull();
     }
 }

@@ -2,7 +2,7 @@
 
 public static class EqualsEnumerable
 {
-    public static ZeResult NotEmpty<TType>(this IEnumerable<TType> enumerable)        
+    public static ZeResult IsNotEmpty<TType>(this IEnumerable<TType> enumerable)        
     {        
         return new ZeResult<IEnumerable<TType>>(enumerable).Assert(enumerable.Any()
             ? new AssertPassed($"Enumerable contains items.")
