@@ -1,4 +1,5 @@
-﻿namespace ZeUnit;
+﻿using ZeUnit.Assertions;
+namespace ZeUnit;
 
 public class ZeResult<TType> : ZeResult
 {
@@ -38,4 +39,8 @@ public class ZeResult : IEnumerable<ZeAssert>
     public IEnumerator<ZeAssert> GetEnumerator() => assertions.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => assertions.GetEnumerator();
+
+    public static implicit operator ZeResult(bool outcome) => new ZeResult<bool>(outcome).True();
+    public static implicit operator ZeResult((bool, string) outcome) => new ZeResult<bool>(outcome.Item1).True(outcome.Item2);
+
 }

@@ -9,4 +9,17 @@ public class SampleZeTestClass
             .Is(4)
             .IsType<int>();
     }    
+
+    public ZeResult UsingInplicitCasting() 
+    {            
+        var result = 2 + 2;
+        return result == 4;
+    }    
+
+    
+    public ZeResult UsingInplicitCastingCustomMessage() 
+    {            
+        var result = 2 + 2;
+        return (result == 4, "2 + 2 should be 4");
+    }    
 }
