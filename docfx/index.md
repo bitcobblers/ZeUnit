@@ -15,6 +15,47 @@ Taking this "pure" function approach to testing allows some interesting windfall
 - Different class life-cycles
 - Test middleware
 
+## Traditional Test
+
+```csharp
+[Fact]
+public void WhatYouTest()
+{
+    // Act
+    var actual = someWork();
+    // Assert
+    Assert.Equal(actual, "expected");
+}
+```
+
+## ZeUnit Test
+
+At the heart a test is binary, it passes or fails, so giving a `bool` as a response will be implicity converted to a `ZeResult` as good stratagy for coders that use descriptive unit tests names.
+
+```csharp
+public ZeResult WhatYouTestSimpleAssertion()
+{
+    // Act
+    var actual = someWork();
+    // Assert
+    return actual == "expected";
+}
+```
+
+Optionally, the more expressive Shouldly inspired assertion syntax can be used to create instance of `ZeResult` with additional message feedback and knowledge about the values and the assertion being made.  The example bellow would generate automated message to show the difference between the outcomes, while the example above would flag the test as pass or fail.
+
+```csharp
+public ZeResult WhatYouTestBetterAssertion()
+{
+    // Act
+    var actual = someWork();
+    // Assert
+    return actual.Is("expected");
+}
+
+Dig in..
+
+```
 ### ZeUnit Basics
 * [Quick Start Guide](https://bitcobblers.github.io/ZeUnit/docs/Quick-Start-Guide.html):
 
