@@ -1,3 +1,5 @@
+- name: Quick Start Guide
+  href: Quick-Start-Guide.md
 - name: Building a Simple Test
   href: Building-a-Simple-Test.md
 - name: Class Composition and Systems at Test
@@ -22,7 +24,5 @@
   href: Lamar-Dependency-Injection.md
 - name: Method Composition for Test Data
   href: Method-Composition-for-Test-Data.md
-- name: Quick Start Guide
-  href: Quick-Start-Guide.md
 - name: Testing a Calculator
   href: Testing-A-Calculator.md
