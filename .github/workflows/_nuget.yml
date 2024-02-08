@@ -52,7 +52,7 @@ jobs:
           dotnet pack @packArgs
 
       - name: Push Packages
-        if: false
+        if: true
         shell: pwsh
         env:
           NUGET_SOURCE: https://api.nuget.org/v3/index.json
@@ -61,7 +61,7 @@ jobs:
               $pushArgs = @(
               $_.FullName,
               '--source', '${{ env.NUGET_SOURCE }}',
-              '--api-key', '${{ secrets.NUGET_API_KEY }}',
+              '--api-key', '${{ secrets.NUGETPUBLISH }}',
               '--skip-duplicate'
               )
 
