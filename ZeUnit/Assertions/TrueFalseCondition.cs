@@ -2,26 +2,26 @@
 
 public static class TrueFalseCondition
 {
-    public static ZeResult<bool> True(this bool result, string? message = null)
+    public static Ze<bool> True(this bool result, string? message = null)
     {
-        return new ZeResult<bool>(result).True(message);
+        return new Ze<bool>(result).True(message);
     }
 
-    public static ZeResult<bool> True(this ZeResult<bool> result, string? message = null)
+    public static Ze<bool> True(this Ze<bool> result, string? message = null)
     {
-        return (ZeResult<bool>)result.Assert(result.Value
+        return (Ze<bool>)result.Assert(result.Value
             ? new AssertPassed(message ?? $"Condition satisfied.")
             : new AssertFailed(message ?? $"Expected 'true' but got 'false'"));
     }
 
-    public static ZeResult<bool> False(this bool result)
+    public static Ze<bool> False(this bool result)
     {
-        return new ZeResult<bool>(result).False();
+        return new Ze<bool>(result).False();
     }
 
-    public static ZeResult<bool> False(this ZeResult<bool> result)
+    public static Ze<bool> False(this Ze<bool> result)
     {
-        return (ZeResult<bool>)result.Assert(result.Value
+        return (Ze<bool>)result.Assert(result.Value
             ? new AssertPassed($"Condition satisfied.")
             : new AssertFailed($"Expected 'false' but got 'true'"));
     }

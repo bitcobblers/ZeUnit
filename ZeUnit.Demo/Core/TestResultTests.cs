@@ -3,8 +3,8 @@ namespace ZeUnit.Demo.Core;
 [Transient]
 public class TestResultTests
 {
-    public ZeResult CanCreateATestResult()
+    public Ze CanCreateATestResult()
     {
-        return new ZeResult(new { }).IsNotNull();
+        return new Ze(new { }).IsNotNull();
     }
 }

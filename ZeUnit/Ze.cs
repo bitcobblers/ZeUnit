@@ -1,84 +1,46 @@
-﻿namespace ZeUnit;
+﻿using ZeUnit.Assertions;
+namespace ZeUnit;
 
-using System.Reactive.Linq;
-using System.Reactive;
-using ZeUnit.Reporters;
-using ZeUnit.Assertions;
-
-public class ZeBuilder
+public class Ze<TType> : Ze
 {
-    private List<Func<ZeDiscovery, ZeDiscovery>> configs = new();
-    private List<IZeReporter> reporters = new();
-    private IZeTestRunnerDiscovery runnerDiscovery;    
+    public Ze(TType actual) : base(actual) { }
 
-    public ZeBuilder() : this(new DefaultTestRunnerDiscovery())
-    {        
-    }
-    public ZeBuilder(IZeTestRunnerDiscovery runnerDiscovery)
-    {
-        this.runnerDiscovery = runnerDiscovery;       
-    }
-
-    public ZeBuilder With(Func<ZeDiscovery, ZeDiscovery> configFn)
-    {
-        this.configs.Add(configFn);
-        return this;
-    }
-
-    public ZeBuilder With(params IZeReporter[] reporters)
-    {
-        this.reporters.AddRange(reporters);
-        return this;
-    }            
-
-    public ZeDiscovery GetDiscovery()
-    {
-        var discovery = new ZeDiscovery(runnerDiscovery.SupportedTypes());
-        return configs.Aggregate(discovery, (discovery, config) => config(discovery));        
-    }
-
-    public IZeReporter GetReporter()
-    {
-        return new CompoundReporter(this.reporters);
-    }
-
-    public IEnumerable<ZeTestRunner> Runners()
-    {
-        return runnerDiscovery.Runners();
-    }
+    public TType Value => (TType)Actual!;
 }
 
-public static class Ze
-{        
-    public static Dictionary<string, object> Global = new();
+public class Ze : IEnumerable<ZeAssert>
+{
+    private readonly List<ZeAssert> assertions = new();
 
-    public static IObservable<(ZeTest, ZeResult)> Unit(ZeBuilder builder)   
+    public Ze(object? actual)
     {
-        var classRuns = new List<IObservable<(ZeTest, ZeResult)>>();
-        var reporter = builder.GetReporter();
-        var discovery = builder.GetDiscovery()
-            .GroupBy(test => (test.Class, test.ClassActivator), test => test);
-        
-        foreach (var classActivation in discovery)
-        {
-            var (@class, composer) = classActivation.Key;            
-            var lifeCycle = @class!
-                .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
-            try
-            {
-                var factory = lifeCycle.GetFactory(composer!, @class!);
-
-                classRuns.AddRange(classActivation
-                    .Select(test => new ZeRunner(builder.Runners()).Run(test, factory)));
-            }
-            catch (Exception ex)
-            {
-                classRuns.AddRange(classActivation.Select(test => new ZeTestException(test, ex)));
-            }
-        }
-
-        return Observable.Merge(classRuns)
-            .Do(reporter);
-
+        Actual = actual;
     }
+
+    public TimeSpan Duration { get; set; } = TimeSpan.FromSeconds(0);
+
+    public Ze(IEnumerable<ZeAssert> assertions)
+    {
+        this.assertions.AddRange(assertions);
+    }
+
+    public ZeStatus State => this.Aggregate(
+        ZeStatus.Passed,
+        (sum, current) => current.Status == ZeStatus.Failed ? ZeStatus.Failed : sum);
+
+    public object? Actual { get; }
+
+    public Ze Assert(ZeAssert assertion)
+    {
+        assertions.Add(assertion);
+        return this;
+    }
+
+    public IEnumerator<ZeAssert> GetEnumerator() => assertions.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() => assertions.GetEnumerator();
+
+    public static implicit operator Ze(bool outcome) => new Ze<bool>(outcome).True();
+    public static implicit operator Ze((bool, string) outcome) => new Ze<bool>(outcome.Item1).True(outcome.Item2);
+
 }

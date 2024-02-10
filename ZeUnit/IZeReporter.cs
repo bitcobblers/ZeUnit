@@ -2,6 +2,6 @@
 
 namespace ZeUnit;
 
-public interface IZeReporter : IObserver<(ZeTest, ZeResult)>
+public interface IZeReporter : IObserver<(ZeTest, Ze)>
 {
 }

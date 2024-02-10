@@ -2,7 +2,7 @@
 
 public class SampleZeTestClass
 {
-    public ZeResult SimpleTestMethodThatPasses() 
+    public Ze SimpleTestMethodThatPasses() 
     {            
         var result = 2 + 2;
         return result
@@ -10,14 +10,14 @@ public class SampleZeTestClass
             .IsType<int>();
     }    
 
-    public ZeResult UsingInplicitCasting() 
+    public Ze UsingInplicitCasting() 
     {            
         var result = 2 + 2;
         return result == 4;
     }    
 
     
-    public ZeResult UsingInplicitCastingCustomMessage() 
+    public Ze UsingInplicitCastingCustomMessage() 
     {            
         var result = 2 + 2;
         return (result == 4, "2 + 2 should be 4");

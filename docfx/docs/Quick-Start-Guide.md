@@ -18,7 +18,7 @@ Paste the `SimpleZeUnitClass` to replace implemntation in `Class1.cs` file that 
 ```csharp
 public class SampleZeUnitClass
 {
-    public ZeResult SimpleTestMethodThatPasses() 
+    public Ze SimpleTestMethodThatPasses() 
     {            
         var result = 2 + 2;
         return result
@@ -26,7 +26,7 @@ public class SampleZeUnitClass
             .IsType<int>();
     }
 
-    public async Task<ZeResult> SimpleAsyncTestMethodThatFails()
+    public async Task<Ze> SimpleAsyncTestMethodThatFails()
     {
         var result = 2 + 2;
         return result.Is(5);            
