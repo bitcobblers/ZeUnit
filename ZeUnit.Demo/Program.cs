@@ -7,5 +7,5 @@ var builder = new ZeBuilder()
     .With(new ConsoleReporter(),
             new StoryReporter());
 
-await Ze.Unit(builder).LastAsync();
+await ZeGlobal.Unit(builder).LastAsync();
 return 0;

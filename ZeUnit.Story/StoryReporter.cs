@@ -6,14 +6,14 @@ namespace ZeUnit.Story
     public class StoryReporter : IZeReporter
     {
         private readonly string fileName;
-        private readonly List<(ZeTest, ZeResult)> tests = new List<(ZeTest, ZeResult)>();
+        private readonly List<(ZeTest, Ze)> tests = new List<(ZeTest, Ze)>();
 
         public StoryReporter(string fileName = "story.html")
         {
             this.fileName = fileName;            
         }
 
-        public void OnNext((ZeTest, ZeResult) value)
+        public void OnNext((ZeTest, Ze) value)
         {
             this.tests.Add(value);
         }

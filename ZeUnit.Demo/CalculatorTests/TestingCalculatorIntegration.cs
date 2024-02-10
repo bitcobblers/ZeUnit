@@ -17,7 +17,7 @@ namespace ZeUnit.Demo.CalculatorTests
         [InlineData(new[] { 1d }, 1)]
         [InlineData(new[] { 1d, 2d }, 3)]
         [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
-        public ZeResult AdditionHarness(double[] values, double expected)
+        public Ze AdditionHarness(double[] values, double expected)
         {            
             return this.calculator.Apply<AddOperation>(values)!.Value!.Value.Is(expected);
         }

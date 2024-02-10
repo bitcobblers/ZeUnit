@@ -3,13 +3,13 @@
     public class DeserializeTests
     {
         [LoadFile("FileTests/test.xml")]
-        public ZeResult LoadFileSerializedXMLObject(SomePocoType actual)
+        public Ze LoadFileSerializedXMLObject(SomePocoType actual)
         {
             return actual.Text.Is("test");
         }
 
         [LoadFile("FileTests/test.json")]
-        public ZeResult LoadFileSerializedJsonObject(SomePocoType actual)
+        public Ze LoadFileSerializedJsonObject(SomePocoType actual)
         {
             return actual.Text.Is("test");
         }

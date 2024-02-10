@@ -3,7 +3,7 @@
 //public class HtmlFileReporter : IZeReporter
 //{
 
-//    public void Report(ZeTest test, ZeResult result)
+//    public void Report(ZeTest test, Ze result)
 //    {
 //        Console.WriteLine("new html file?");
 //    }
