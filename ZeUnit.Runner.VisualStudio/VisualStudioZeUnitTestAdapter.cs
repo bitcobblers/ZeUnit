@@ -79,14 +79,14 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
                     executionList.Add(runner.Run(zeTest, factory).Select(pair =>
                     {
-                        var (zeTest, zeResult) = pair;
-                        result.Duration = zeResult.Duration;
-                        result.Outcome = zeResult.Any() && zeResult.All(x => x.Status == ZeStatus.Passed)
+                        var (zeTest, Ze) = pair;
+                        result.Duration = Ze.Duration;
+                        result.Outcome = Ze.Any() && Ze.All(x => x.Status == ZeStatus.Passed)
                             ? TestOutcome.Passed
                             : TestOutcome.Failed;
                         frameworkHandle.RecordResult(result);
                         frameworkHandle.RecordEnd(testCase, result.Outcome);
-                        return zeResult;
+                        return Ze;
                     }).ToTask());
                 }
             }

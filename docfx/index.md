@@ -30,10 +30,10 @@ public void WhatYouTest()
 
 ## ZeUnit Test
 
-At the heart a test is binary, it passes or fails, so giving a `bool` as a response will be implicity converted to a `ZeResult` as good stratagy for coders that use descriptive unit tests names.
+At the heart a test is binary, it passes or fails, so giving a `bool` as a response will be implicity converted to a `Ze` as good stratagy for coders that use descriptive unit tests names.
 
 ```csharp
-public ZeResult WhatYouTestSimpleAssertion()
+public Ze WhatYouTestSimpleAssertion()
 {
     // Act
     var actual = someWork();
@@ -42,10 +42,10 @@ public ZeResult WhatYouTestSimpleAssertion()
 }
 ```
 
-Optionally, the more expressive Shouldly inspired assertion syntax can be used to create instance of `ZeResult` with additional message feedback and knowledge about the values and the assertion being made.  The example bellow would generate automated message to show the difference between the outcomes, while the example above would flag the test as pass or fail.
+Optionally, the more expressive Shouldly inspired assertion syntax can be used to create instance of `Ze` with additional message feedback and knowledge about the values and the assertion being made.  The example bellow would generate automated message to show the difference between the outcomes, while the example above would flag the test as pass or fail.
 
 ```csharp
-public ZeResult WhatYouTestBetterAssertion()
+public Ze WhatYouTestBetterAssertion()
 {
     // Act
     var actual = someWork();

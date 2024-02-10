@@ -28,8 +28,8 @@ public class SampleZeUnitClass
 
     public async Task<Ze> SimpleAsyncTestMethodThatFails()
     {
-        var result = 2 + 2;
-        return result.Is(5);            
+        var result = await GetFiveLater();
+        return result == 5;            
     }
 }
 ```
@@ -39,15 +39,15 @@ Open up the Test Explorer window in Visual studio, and kick off the tests.  It w
 ## Functional Approach to Tests
 
 Developers familiar with existing testing frameworks like XUnit and NUnit will notices some key differences.
- - The familiar `Assert` has been replaced by `new ZeResult()` or a collection of shouldly style assertion helpers.  
- - Test methods return `ZeResult` in the case of single synchronous test result and `Task<ZeResult>` when the single result is asynchronous. 
+ - The familiar `Assert` has been replaced by `new Ze()` or a collection of shouldly style assertion helpers.  
+ - Test methods return `Ze` in the case of single synchronous test result and `Task<Ze>` when the single result is asynchronous. 
 
-ZeUnit brows a lot from functional programing, and requires that functions return results. In our case the `ZeResult` object which can have 0 or more assertions like `Equal` or `Type` in the code example above.   Labeling the test function with resulting type as defined in the table bellow allows you to expressly define the execution timeline of your test(s) and how the `ZeResult` object(s) is/are being returned.
+ZeUnit brows a lot from functional programing, and requires that functions return results. In our case the `Ze` object which can have 0 or more assertions like `Equal` or `Type` in the code example above.   Labeling the test function with resulting type as defined in the table bellow allows you to expressly define the execution timeline of your test(s) and how the `Ze` object(s) is/are being returned.
 
 |  Test Results   | **One**          |  **Many**               |
 | --------------- | ---------------- | ----------------------- |
-| **Now**         | `ZeResult`       | `IEnumerable<ZeResult>` |
-| **Later**       | `Task<ZeResult>` | `IObservable<ZeResult>` |
+| **Now**         | `Ze`       | `IEnumerable<Ze>` |
+| **Later**       | `Task<Ze>` | `IObservable<Ze>` |
 
 
 ***

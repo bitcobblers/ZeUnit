@@ -2,7 +2,7 @@
 
 public class IsEqualAssertionTests
 {
-    public Ze ApplyingAnAssertionOnZeResultCreatesAnEnumerable()
+    public Ze ApplyingAnAssertionOnZeCreatesAnEnumerable()
     {
         var result = "test".Is("test");
         return result.IsNotEmpty();
