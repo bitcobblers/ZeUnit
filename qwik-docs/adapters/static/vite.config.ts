@@ -12,8 +12,8 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       staticAdapter({
-        origin: "https://bitcobblers.github.io/ZeUnit/",
-        base: "./ZeUnit/build" 
+        origin: "https://bitcobblers.github.io/",
+        base: "ZeUnit"
       }),
     ],
   };
