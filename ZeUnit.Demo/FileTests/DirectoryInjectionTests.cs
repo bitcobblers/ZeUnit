@@ -5,13 +5,13 @@ namespace ZeUnit.Demo.FileTests
     public class DirectoryInjectionTests
     {
         [LoadFiles("FileTests/test/")]
-        public Ze LoadedFromDirectory(string fileString)
+        public Fact LoadedFromDirectory(string fileString)
         {
             return fileString.IsNotEmpty();
         }
 
         [LoadFiles("FileTests/test/")]
-        public Ze LoadedFromDirectoryWithExtension(
+        public Fact LoadedFromDirectoryWithExtension(
             [ExtensionFilter(".sample.txt")] string fileString)
         {
             return fileString.IsNotEmpty();
@@ -21,7 +21,7 @@ namespace ZeUnit.Demo.FileTests
     public class DirectoryFileSetsInejctionTests 
     { 
         [LoadFileGroups("FileTests/test/")]
-        public Ze LoadedFromDirectoryWithMultipleExtension(
+        public Fact LoadedFromDirectoryWithMultipleExtension(
             [ExtensionFilter(".test.txt")]string test, 
             [ExtensionFilter(".result.txt")]string result)
         {

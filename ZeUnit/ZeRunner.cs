@@ -13,7 +13,7 @@ public class ZeRunner
         this.runners = testRunners;
     }
 
-    public IObservable<(ZeTest, Ze)> Run(ZeTest test, ZeClassInstanceFactory factory)
+    public IObservable<(ZeTest, Fact)> Run(ZeTest test, ZeClassInstanceFactory factory)
     {
         // foreach (var arguments in test.MethdoActivator.Get(test.Method))
 
@@ -38,7 +38,7 @@ public class ZeRunner
     }
 }
 
-public class ZeTestException : IObservable<(ZeTest, Ze)>
+public class ZeTestException : IObservable<(ZeTest, Fact)>
 {
     private ZeTest test;
     private Exception ex;
@@ -49,11 +49,11 @@ public class ZeTestException : IObservable<(ZeTest, Ze)>
         this.ex = ex;
     }
 
-    public IDisposable Subscribe(IObserver<(ZeTest, Ze)> observer)
+    public IDisposable Subscribe(IObserver<(ZeTest, Fact)> observer)
     {
-        var errorResult = new Ze(null!)
+        var errorResult = new Fact(null!)
                     .Assert(new AssertError(ex));
-        var errorSubject = new AsyncSubject<(ZeTest, Ze)>();
+        var errorSubject = new AsyncSubject<(ZeTest, Fact)>();
         errorSubject.OnNext((test, errorResult));
         errorSubject.OnCompleted();
         return errorSubject.Subscribe(observer);

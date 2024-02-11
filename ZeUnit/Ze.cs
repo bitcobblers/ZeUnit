@@ -1,25 +1,25 @@
 ﻿using ZeUnit.Assertions;
 namespace ZeUnit;
 
-public class Ze<TType> : Ze
+public class Fact<TType> : Fact
 {
-    public Ze(TType actual) : base(actual) { }
+    public Fact(TType actual) : base(actual) { }
 
     public TType Value => (TType)Actual!;
 }
 
-public class Ze : IEnumerable<ZeAssert>
+public class Fact : IEnumerable<ZeAssert>
 {
     private readonly List<ZeAssert> assertions = new();
 
-    public Ze(object? actual)
+    public Fact(object? actual)
     {
         Actual = actual;
     }
 
     public TimeSpan Duration { get; set; } = TimeSpan.FromSeconds(0);
 
-    public Ze(IEnumerable<ZeAssert> assertions)
+    public Fact(IEnumerable<ZeAssert> assertions)
     {
         this.assertions.AddRange(assertions);
     }
@@ -30,7 +30,7 @@ public class Ze : IEnumerable<ZeAssert>
 
     public object? Actual { get; }
 
-    public Ze Assert(ZeAssert assertion)
+    public Fact Assert(ZeAssert assertion)
     {
         assertions.Add(assertion);
         return this;
@@ -40,7 +40,7 @@ public class Ze : IEnumerable<ZeAssert>
 
     IEnumerator IEnumerable.GetEnumerator() => assertions.GetEnumerator();
 
-    public static implicit operator Ze(bool outcome) => new Ze<bool>(outcome).True();
-    public static implicit operator Ze((bool, string) outcome) => new Ze<bool>(outcome.Item1).True(outcome.Item2);
+    public static implicit operator Fact(bool outcome) => new Fact<bool>(outcome).True();
+    public static implicit operator Fact((bool, string) outcome) => new Fact<bool>(outcome.Item1).True(outcome.Item2);
 
 }

@@ -3,13 +3,13 @@ using System.Reactive.Subjects;
 
 namespace ZeUnit.TestRunners;
 
-public class EnumerableTestRunner : ZeTestRunner<IEnumerable<Ze>>
+public class EnumerableTestRunner : ZeTestRunner<IEnumerable<Fact>>
 {
-    public override IObservable<(ZeTest, Ze)> Run(ZeTest test, ZeClassInstanceFactory factory, object[] arguments)
+    public override IObservable<(ZeTest, Fact)> Run(ZeTest test, ZeClassInstanceFactory factory, object[] arguments)
     {
         var instance = factory.Create();
-        var subject = new AsyncSubject<(ZeTest, Ze)>();
-        foreach (var result in (IEnumerable<Ze>)test.Method!.Invoke(instance, arguments.Any() ? arguments : null)!)
+        var subject = new AsyncSubject<(ZeTest, Fact)>();
+        foreach (var result in (IEnumerable<Fact>)test.Method!.Invoke(instance, arguments.Any() ? arguments : null)!)
         {
             subject.OnNext((test, result));
         }

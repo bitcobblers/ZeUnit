@@ -2,7 +2,7 @@
 {
     public class EnumerableTests
     {
-        public IEnumerable<Ze> EnumerableTestRun()
+        public IEnumerable<Fact> EnumerableTestRun()
         {
             return Enumerable.Range(1, 5).Select(i => i.Is(i));
         }

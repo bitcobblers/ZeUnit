@@ -4,7 +4,7 @@ namespace ZeUnit.Reporters;
 
 public class TeamCityReporter : IZeReporter
 {
-    public void OnNext((ZeTest, Ze) value)
+    public void OnNext((ZeTest, Fact) value)
     {
         var (test, result) = value;
         Console.WriteLine($"TeamCity::[{test.Class?.FullName}]::{test.Method?.Name} - {result.State}");

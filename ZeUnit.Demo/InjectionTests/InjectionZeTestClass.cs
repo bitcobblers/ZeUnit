@@ -10,9 +10,9 @@ public class InjectionZeTestClass
         this.service = service;
     }
 
-    public Ze ConstructorInjectionTestMethodThatPasses()
+    public Fact ConstructorInjectionTestMethodThatPasses()
     {
-        return new Ze(this.service)  
+        return new Fact(this.service)  
             .IsNotNull();
 
     }

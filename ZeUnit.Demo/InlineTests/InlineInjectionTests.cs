@@ -4,7 +4,7 @@
     {      
         [InlineData("test1", 1)]
         [InlineData("test2", 2)]
-        public Ze InlineInjectionForMethodWorks(string method, int expected)
+        public Fact InlineInjectionForMethodWorks(string method, int expected)
         {
             return $"test{expected}".Is(method);
         }

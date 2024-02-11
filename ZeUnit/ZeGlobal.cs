@@ -4,9 +4,9 @@ using System.Reactive.Linq;
 
 public static class ZeGlobal
 {        
-    public static IObservable<(ZeTest, Ze)> Unit(ZeBuilder builder)   
+    public static IObservable<(ZeTest, Fact)> Unit(ZeBuilder builder)   
     {
-        var classRuns = new List<IObservable<(ZeTest, Ze)>>();
+        var classRuns = new List<IObservable<(ZeTest, Fact)>>();
         var reporter = builder.GetReporter();
         var discovery = builder.GetDiscovery()
             .GroupBy(test => (test.Class, test.ClassActivator), test => test);
