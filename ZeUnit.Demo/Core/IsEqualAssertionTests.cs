@@ -2,20 +2,20 @@
 
 public class IsEqualAssertionTests
 {
-    public Ze ApplyingAnAssertionOnZeCreatesAnEnumerable()
+    public Fact ApplyingAnAssertionOnZeCreatesAnEnumerable()
     {
         var result = "test".Is("test");
         return result.IsNotEmpty();
     }
 
-    public Ze SuccessfulResultIsReturnedOnMatch()
+    public Fact SuccessfulResultIsReturnedOnMatch()
     {
         var result = "test".Is("test");
 
         return result.First().IsType<AssertPassed>();
     }
 
-    public Ze FailedResultIsReturnedOnFailedMatch()
+    public Fact FailedResultIsReturnedOnFailedMatch()
     {
         var result = "test".Is("test-failed");
 
