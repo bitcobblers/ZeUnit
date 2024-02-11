@@ -4,11 +4,10 @@ import blurIndigoImage from '/images/blur-indigo.png'
 import { Link } from "@builder.io/qwik-city"
 import HeroBackground from "./hero-background"
 import Highlight from "./highlight"
-
  const codeLanguage = 'csharp'
- const code = `public class TestSuiteName
+ const code = `public class Suite
  {
-    public Test ActualValueIsExpected()
+    public Fact ActualIsExpected()
     {
         var actual = doSomething();
         return actual == expected;
@@ -17,7 +16,7 @@ import Highlight from "./highlight"
  `
 
 const tabs = [
-   { name: 'SimpleTest.cs', isActive: true }   
+   { name: 'ZeUnitTest.cs', isActive: true }   
 ]
 
 const TrafficLightsIcon = component$((props: any) => {
@@ -31,7 +30,8 @@ const TrafficLightsIcon = component$((props: any) => {
 });
 
 export function Hero() {
-  return (
+ 
+    return (
     <div class="overflow-hidden bg-slate-900 dark:-mb-32 dark:mt-[-4.75rem] dark:pb-32 dark:pt-[4.75rem]">
       <div class="py-16 sm:px-2 lg:relative lg:px-0 lg:py-20">
         <div class="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 lg:max-w-8xl lg:grid-cols-2 lg:px-8 xl:gap-x-16 xl:px-12">

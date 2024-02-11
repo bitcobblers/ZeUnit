@@ -4,6 +4,7 @@ import type { RequestHandler } from "@builder.io/qwik-city";
 
 
 import styles from "./styles.css?inline";
+import prism from "prismjs/themes/prism-tomorrow.css?inline"
 import Header from "~/components/template/header";
 import { Hero } from "~/components/template/hero";
 import Navigation from "~/components/template/navigation";
@@ -27,6 +28,7 @@ export const useServerTimeLoader = routeLoader$(() => {
 
 export default component$(() => {
   useStyles$(styles);
+  useStyles$(prism);
   const current = useLocation();
   const isHome = current.url.pathname == "/";
   return (

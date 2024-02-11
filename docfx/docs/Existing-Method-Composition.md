@@ -16,20 +16,20 @@ In the example bellow, we can see the same test.txt file being loading different
 public class FileInjectionTests
 {
     [LoadFile("FileTests/test.txt")]
-    public Ze LoadFileStream(FileStream stream)
+    public Fact LoadFileStream(FileStream stream)
     {
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd().Is("test");
     }
 
     [LoadFile("FileTests/test.txt")]
-    public Ze LoadFileText(string actual)
+    public Fact LoadFileText(string actual)
     {            
         return actual.Is("test");
     }
 
     [LoadFile("FileTests/test.txt")]
-    public Ze LoadFileByteArray(byte[] actual)
+    public Fact LoadFileByteArray(byte[] actual)
     {        
         var expected = Encoding.ASCII.GetBytes("test");            
         // skip(3) ignores the BOM (EF BB BF in hex)
@@ -47,13 +47,13 @@ While loading raw files is some time useful, chances are the test data being loa
 public class DeserializeTests
 {
     [LoadFile("FileTests/test.xml")]
-    public Ze LoadFileSerializedXMLObject(SerializedType actual)
+    public Fact LoadFileSerializedXMLObject(SerializedType actual)
     {
         return actual.Text.Is("test");
     }
 
     [LoadFile("FileTests/test.json")]
-    public Ze LoadFileSerializedJsonObject(SerializedType actual)
+    public Fact LoadFileSerializedJsonObject(SerializedType actual)
     {
         return actual.Text.Is("test");
     }
@@ -69,13 +69,13 @@ The examples so far still fail to meet the needs of integrations testing at scal
     public class DirectoryInjectionTests
     {
         [LoadFiles("FileTests/test/")]
-        public Ze LoadedFromDirectory(string fileString)
+        public Fact LoadedFromDirectory(string fileString)
         {
             return fileString.IsNotEmpty();
         }
 
         [LoadFiles("FileTests/test/")]
-        public Ze LoadedFromDirectoryWithExtension(
+        public Fact LoadedFromDirectoryWithExtension(
             [ExtensionFilter(".sample.txt")] string fileString)
         {
             return fileString.IsNotEmpty();
@@ -91,7 +91,7 @@ ZeUnit steps this up one more notch with the introduction of the `LoadFileGroups
    public class DirectoryFileSetsInejctionTests 
     { 
         [LoadFileGroups("FileTests/test/")]
-        public Ze LoadedFromDirectoryWithMultipleExtension(
+        public Fact LoadedFromDirectoryWithMultipleExtension(
             [ExtensionFilter(".test.txt")]string test, 
             [ExtensionFilter(".result.txt")]string result)
         {

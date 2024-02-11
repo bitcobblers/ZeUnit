@@ -12,28 +12,28 @@ The calculator code being tested here can be found here: [/ZeUnit.Demo/DemoCalcu
 We are hardy SOLID programmers, and as a result we can focus on a single responsibility at a time.  Lets take a closer look at what it means to add different number of arguments on the calculator.  The tests bellow are written in a format that should feel familiar to developers already doing testing in dotnet.  What is noticeably different here from the existing frameworks is that tests return a results, which is analogous to a call against the Assert class in traditional unit testing frameworks. 
 
 ```csharp
-        public Ze PassingNullValueWillResultInZero()
+        public Fact PassingNullValueWillResultInZero()
         {
             var addition = new AddOperation();
             var actual = addition.Apply(0, null).Value;
             return actual.Is(0);
         }
 
-        public Ze PassingSingleValueResultWithTheValue()
+        public Fact PassingSingleValueResultWithTheValue()
         {
             var addition = new AddOperation();
             var actual = addition.Apply(0, new[] { 1d }).Value;
             return actual.Is(1d);
         }
 
-        public Ze PassingTwoValuesResultWithTheSum()
+        public Fact PassingTwoValuesResultWithTheSum()
         {
             var addition = new AddOperation();
             var actual = addition.Apply(0, new[] { 1d, 2d }).Value;
             return actual.Is(3d);
         }
 
-        public Ze PassingManyValuesResultWithTheSum()
+        public Fact PassingManyValuesResultWithTheSum()
         {
             var addition = new AddOperation();
             var actual = addition.Apply(0, new[] { 1d, 2d, 3d, 4d }).Value;
@@ -51,7 +51,7 @@ The code above is verbose, and "I pity the fool" who has to deal with all the co
         [InlineData(new[] { 1d }, 1)]
         [InlineData(new[] { 1d, 2d }, 3)]
         [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
-        public Ze AdditionHarness(double[] values, double expected)
+        public Fact AdditionHarness(double[] values, double expected)
         {
             var addition = new AddOperation();
             var actual = addition.Apply(0,values).Value;
@@ -83,7 +83,7 @@ Lets take a look at what that looks like with ZeUnit.
         [InlineData(new[] { 1d }, 1)]
         [InlineData(new[] { 1d, 2d }, 3)]
         [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
-        public Ze AdditionHarness(double[] values, double expected)
+        public Fact AdditionHarness(double[] values, double expected)
         {            
             var actual = this.calculator.Apply<AddOperation>(values).Value.Value;
             return actual.Is(expected);

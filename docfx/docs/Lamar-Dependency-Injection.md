@@ -11,7 +11,7 @@ public class InjectionZeUnitClass
         this.service = service;
     }
 
-    public Ze ConstructorInjectionTestMethodThatPasses()
+    public Fact ConstructorInjectionTestMethodThatPasses()
     {
         return this.service.IsNotNull();
 
