@@ -18,8 +18,8 @@ jobs:
     uses: ./.github/workflows/_codeql.yml
 
   docfx:
-    # if: ${{ github.ref_type=='tag' || github.ref_name=='main' }}
-    # needs: [test, codeql]
+    if: ${{ github.ref_type=='tag' || github.ref_name=='main' }}
+    needs: [test, codeql]
     uses: ./.github/workflows/_docfx.yml
     secrets: inherit
 
