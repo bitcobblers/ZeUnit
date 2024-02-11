@@ -17,6 +17,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,16 +26,18 @@ jobs:
           show-progress: false
           fetch-depth: 0
 
-      - name: docs dir
-        run: cd qwik-docs
-
-      - name: Install DocFX
+      - name: Install Qwik
         run: npm install
+        working-directory: ./qwik-docs
+
+      - name: Install Qwik
+        run: npm run build
+        working-directory: ./qwik-docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: qwik-docs/dist
+          path: .qwik-docs/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
