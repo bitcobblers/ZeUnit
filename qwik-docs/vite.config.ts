@@ -8,7 +8,7 @@ import { join } from "path";
 export default defineConfig((): UserConfig => {
   return {
     plugins: [
-      qwikCity(),
+      qwikCity({basePathname: "/ZeUnit/"}),
       qwikVite(),
       tsconfigPaths(),
       partytownVite({ dest: join(__dirname, "dist", "~partytown") }),
