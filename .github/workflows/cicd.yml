@@ -18,7 +18,6 @@ jobs:
     uses: ./.github/workflows/_codeql.yml
 
   docfx:
-    needs: [test, codeql]
     uses: ./.github/workflows/_docfx.yml
     secrets: inherit
 
