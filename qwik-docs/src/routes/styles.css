@@ -29,17 +29,17 @@ body {
 h1,
 h2,
 h3 {
-  color: white;
+  color: slategray;
+  font-weight: 600;
   margin: 0;
 }
 
 h1 {
   font-size: 3.2rem;
-  text-align: center;
 }
 h1 .highlight,
 h3 .highlight {
-  color: var(--qwik-light-blue);
+  color: slategray;
 }
 
 h2 {
@@ -95,9 +95,9 @@ ul {
   background: var(--qwik-dark-background);
   color: var(--qwik-dark-text);
 }
-.container.container-center {
+/* .container.container-center {
   text-align: center;
-}
+} */
 .container.container-flex {
   /* does nothing on mobile */
 }

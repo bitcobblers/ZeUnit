@@ -16,9 +16,9 @@ export default component$(({
       <ul role="list" class="space-y-9">
         {navigation.map((section) => (
           <li key={section.title}>
-            <h2 class="font-display font-medium text-slate-900 dark:text-white">
+            <h4 class="font-display font-medium text-slate-900 dark:text-white">
               {section.title}
-            </h2>
+            </h4>
             <ul
               role="list"
               class="mt-2 space-y-2 border-l-2 border-slate-100 lg:mt-4 lg:space-y-4 lg:border-slate-200 dark:border-slate-800"
