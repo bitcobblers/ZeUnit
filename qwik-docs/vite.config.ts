@@ -9,7 +9,7 @@ export default defineConfig((): UserConfig => {
   return {
     base: "/ZeUnit/",
     plugins: [
-      qwikCity(),
+      qwikCity({basePathname: "/ZeUnit/"} as any),
       qwikVite(),
       tsconfigPaths(),
       partytownVite({ dest: join(__dirname, "dist", "~partytown") }),
