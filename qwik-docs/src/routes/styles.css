@@ -114,7 +114,7 @@ article > ul {
   }
 }
 
-pre {
+article > pre {
   background: var(--qwik-dark-background);
   border-radius: 8px;
   color: var(--qwik-dark-text);

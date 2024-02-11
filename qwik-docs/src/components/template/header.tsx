@@ -19,7 +19,11 @@ export default component$(() => {
 
   return (
     <header
-      class="sticky top-0 z-50 flex flex-none flex-wrap items-center justify-between bg-white px-4 py-5 shadow-md shadow-slate-900/5 transition duration-500 sm:px-6 lg:px-8 dark:shadow-none dark:bg-transparent">
+      class="sticky top-0 z-50 flex flex-none flex-wrap items-center justify-between bg-white px-4 py-5 
+      shadow-md shadow-slate-900/5 transition duration-500 sm:px-6 lg:px-8 dark:shadow-none dark:bg-transparent
+      
+       mx-auto  w-full max-w-8xl justify-center sm:px-2 lg:px-8 xl:px-12
+      ">
       <div class="mr-6 flex lg:hidden">
         <MobileNavigation />
       </div>
