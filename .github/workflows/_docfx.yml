@@ -5,19 +5,18 @@ on:
 
 permissions:
   actions: read
-#  pages: write
-#  id-token: write
+  pages: write
+  id-token: write
 
-# concurrency:
-#   group: "pages"
-#   cancel-in-progress: false
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
-jobs:
-   building-docs:
-  # publish-docs:
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
+jobs:   
+  publish-docs:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
       
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +35,7 @@ jobs:
         working-directory: ./qwik-docs
 
       - name: Find and Replace (/build/ -> ZeUnit/build/)        
-        run: find ./qwik-docs/dist/**.html -type f -exec sed -i 's,/build/,/ZeUnit/build/,g' {} \;
+        run: find ./qwik-docs/dist/**.html -type f -exec sed -i 's,/build/,/ZeUnit/build/,g' {} \;        
           
       - name: Find and Replace (/docs/ -> ZeUnit/docs/)
         run: find ./qwik-docs/dist/**.html -type f -exec sed -i 's,/docs/,/ZeUnit/docs/,g' {} \;       
@@ -49,6 +48,6 @@ jobs:
         with:
           path: ./qwik-docs/dist
 
-      # - name: Deploy to GitHub Pages
-      #   id: deployment
-      #   uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
