@@ -10,8 +10,8 @@ const codeLanguage = 'csharp'
  <span class="token punctuation">{</span>
      <span class="token keyword">public</span> <span class="token return-type class-name">Fact</span> <span class="token function">GetExpectedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
      <span class="token punctuation">{</span>   
-         <span class="token class-name"><span class="token keyword">var</span></span> <span class="token keyword">value</span> <span class="token operator">=</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    
-         <span class="token keyword">return</span> <span class="token keyword">value</span> <span class="token operator">==</span> expected<span class="token punctuation">;</span>
+         <span class="token class-name"><span class="token keyword">var</span></span> value <span class="token operator">=</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+         <span class="token keyword">return</span> value <span class="token operator">==</span> <span class="token string">"expected"</span><span class="token punctuation">;</span>
      <span class="token punctuation">}</span>
  <span class="token punctuation">}</span>
  `
