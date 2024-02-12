@@ -1,7 +1,8 @@
 import { component$ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import GitHubIcon from "./git-hub-icon";
-import { Logo, Logomark } from "./logo";
+import { Logo } from "./logo";
+// import { Logomark } from "./logo";
 import MobileNavigation from "./mobile-navigation";
 export default component$(() => {
 //   let [isScrolled, setIsScrolled] = useState(false)
@@ -27,7 +28,7 @@ export default component$(() => {
         </div>
         <div class="relative flex flex-grow basis-0 items-center">
             <Link href="/" aria-label="Home page">
-            <Logomark class="h-9 w-9 lg:hidden" />          
+            {/* <Logomark class="h-9 w-9 lg:hidden" />           */}
             <Logo class="hidden h-9 w-auto fill-slate-700 lg:block dark:fill-sky-100 text-2xl" />
             </Link>
         </div>

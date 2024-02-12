@@ -17,20 +17,20 @@ const MenuIcon = component$((props: any) => {
     )
   })
   
-const CloseIcon = component$((props: any) => {
-    return (
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        fill="none"
-        strokeWidth="2"
-        strokeLinecap="round"
-        {...props}
-      >
-        <path d="M5 5l14 14M19 5l-14 14" />
-      </svg>
-    )
-  });
+// const CloseIcon = component$((props: any) => {
+//     return (
+//       <svg
+//         aria-hidden="true"
+//         viewBox="0 0 24 24"
+//         fill="none"
+//         strokeWidth="2"
+//         strokeLinecap="round"
+//         {...props}
+//       >
+//         <path d="M5 5l14 14M19 5l-14 14" />
+//       </svg>
+//     )
+//   });
   
   // eslint-disable-next-line no-empty-pattern
 //   const CloseOnNavigation = component$(({ }: { close?: () => void }) => {
@@ -69,7 +69,7 @@ const CloseIcon = component$((props: any) => {
           <MenuIcon class="h-6 w-6 stroke-slate-500" />
         </button>        
           {/* <CloseOnNavigation close={close$} />         */}
-          <CloseIcon class="h-6 w-6 stroke-slate-500" />
+          {/* <CloseIcon class="h-6 w-6 stroke-slate-500" /> */}
         {/* <Dialog
           open={isOpen}
           onClose={() => close()}
