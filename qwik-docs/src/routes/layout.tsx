@@ -30,7 +30,7 @@ export default component$(() => {
   useStyles$(styles);
   useStyles$(prism);
   const current = useLocation();
-  const isHome = current.url.pathname == "/";
+  const isHome = current.url.pathname == "/ZeUnit/";
   return (
     <>      
       <main class="flex min-h-full bg-white dark:bg-slate-900">
