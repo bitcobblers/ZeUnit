@@ -12,7 +12,7 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-jobs:
+jobs:   
   publish-docs:
     environment:
       name: github-pages
@@ -34,30 +34,15 @@ jobs:
         run: npm run build
         working-directory: ./qwik-docs
 
-      - name: Find and Replace (/build/ -> ZeUnit/build/)
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          find: "/build/"
-          replace: "/ZeUnit/build/"
-          regex: false
-          include: "qwik-docs/dist/**/*.*"
-
+      - name: Find and Replace (/build/ -> ZeUnit/build/)        
+        run: find ./qwik-docs/dist/**.html -type f -exec sed -i 's,/build/,/ZeUnit/build/,g' {} \;        
+          
       - name: Find and Replace (/docs/ -> ZeUnit/docs/)
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          find: "/docs/"
-          replace: "/ZeUnit/docs/"
-          regex: false
-          include: "qwik-docs/dist/**/*.*"
+        run: find ./qwik-docs/dist/**.html -type f -exec sed -i 's,/docs/,/ZeUnit/docs/,g' {} \;       
 
       - name: Find and Replace (/manifest.json -> ZeUnit/manifest.json)
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          find: "manifest.json"
-          replace: "/ZeUnit/manifest.json"
-          regex: false
-          include: "qwik-docs/dist/**/*.*"
-
+        run: find ./qwik-docs/dist/**.html -type f -exec sed -i 's,/manifest.json,/ZeUnit/manifest.json,g' {} \;
+        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
