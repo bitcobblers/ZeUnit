@@ -42,6 +42,9 @@ jobs:
 
       - name: Find and Replace (/manifest.json -> ZeUnit/manifest.json)
         run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,/manifest.json,/ZeUnit/manifest.json,g' {} \;
+
+      - name: Find and Replace (/qwik-docs/ -> ZeUnit/qwik-docs/)
+        run: find ./qwik-docs/dist/sitemap.xml -type f -exec sed -i 's,https://bitcobblers.github.io/,https://bitcobblers.github.io/ZeUnit/,g' {} \;
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
