@@ -6,13 +6,14 @@ import HeroBackground from "./hero-background"
 import Highlight from "./highlight"
  
 const codeLanguage = 'csharp'
- const code = `<span class="token keyword" >public</span> <span class="token keyword" >class</span> <span class="token class-name" >Suite</span>
- <span class="token punctuation" >{</span>
-     <span class="token keyword" >public</span> <span class="token return-type class-name" >Fact</span> <span class="token function" >ActualIsExpected</span><span class="token punctuation" >(</span><span class="token punctuation" >)</span>
-     <span class="token punctuation" >{</span>        
-         <span class="token keyword" >return</span> <span class="token function" >doSomething</span><span class="token punctuation" >(</span><span class="token punctuation" >)</span> <span class="token operator" >==</span> expected<span class="token punctuation" >;</span>
-     <span class="token punctuation" >}</span>
- <span class="token punctuation" >}</span>
+ const code = `<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Suite</span>
+ <span class="token punctuation">{</span>
+     <span class="token keyword">public</span> <span class="token return-type class-name">Fact</span> <span class="token function">GetExpectedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+     <span class="token punctuation">{</span>   
+         <span class="token class-name"><span class="token keyword">var</span></span> <span class="token keyword">value</span> <span class="token operator">=</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    
+         <span class="token keyword">return</span> <span class="token keyword">value</span> <span class="token operator">==</span> expected<span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
  `
 
 const tabs = [
