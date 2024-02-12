@@ -5,8 +5,8 @@ on:
 
 permissions:
   actions: read
-  pages: write
-  id-token: write
+#  pages: write
+#  id-token: write
 
 concurrency:
   group: "pages"
