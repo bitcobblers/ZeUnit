@@ -4,7 +4,8 @@ import blurIndigoImage from '../../../public/images/blur-indigo.png'
 import { Link } from "@builder.io/qwik-city"
 import HeroBackground from "./hero-background"
 import Highlight from "./highlight"
- const codeLanguage = 'csharp'
+ 
+const codeLanguage = 'csharp'
  const code = `public class Suite
  {
     public Fact ActualIsExpected()
