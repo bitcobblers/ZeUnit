@@ -37,8 +37,8 @@ jobs:
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@v3
         with:
-          find: "/builder/"
-          replace: "/ZeUnit/builder/"
+          find: "/build/"
+          replace: "/ZeUnit/build/"
           regex: false
           include: "qwik-docs/dist/**/*.*"
 
