@@ -34,11 +34,27 @@ jobs:
         run: npm run build
         working-directory: ./qwik-docs
 
-      - name: Find and Replace
+      - name: Find and Replace (/build/ -> ZeUnit/build/)
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "/build/"
           replace: "/ZeUnit/build/"
+          regex: false
+          include: "qwik-docs/dist/**/*.*"
+
+      - name: Find and Replace (/docs/ -> ZeUnit/docs/)
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "/docs/"
+          replace: "/ZeUnit/docs/"
+          regex: false
+          include: "qwik-docs/dist/**/*.*"
+
+      - name: Find and Replace (/manifest.json -> ZeUnit/manifest.json)
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "manifest.json"
+          replace: "/ZeUnit/manifest.json"
           regex: false
           include: "qwik-docs/dist/**/*.*"
 

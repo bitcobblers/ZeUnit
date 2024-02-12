@@ -6,14 +6,13 @@ import HeroBackground from "./hero-background"
 import Highlight from "./highlight"
  
 const codeLanguage = 'csharp'
- const code = `public class Suite
- {
-    public Fact ActualIsExpected()
-    {
-        var actual = doSomething();
-        return actual == expected;
-    }
-}
+ const code = `<span class="token keyword" >public</span> <span class="token keyword" >class</span> <span class="token class-name" >Suite</span>
+ <span class="token punctuation" >{</span>
+     <span class="token keyword" >public</span> <span class="token return-type class-name" >Fact</span> <span class="token function" >ActualIsExpected</span><span class="token punctuation" >(</span><span class="token punctuation" >)</span>
+     <span class="token punctuation" >{</span>        
+         <span class="token keyword" >return</span> <span class="token function" >doSomething</span><span class="token punctuation" >(</span><span class="token punctuation" >)</span> <span class="token operator" >==</span> expected<span class="token punctuation" >;</span>
+     <span class="token punctuation" >}</span>
+ <span class="token punctuation" >}</span>
  `
 
 const tabs = [
