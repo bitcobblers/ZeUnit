@@ -6,12 +6,12 @@ import HeroBackground from "./hero-background"
 import Highlight from "./highlight"
  
 const codeLanguage = 'csharp'
- const code = `<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Suite</span>
+ const code = `<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BarebondesSuite</span>
  <span class="token punctuation">{</span>
      <span class="token keyword">public</span> <span class="token return-type class-name">Fact</span> <span class="token function">GetExpectedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
      <span class="token punctuation">{</span>   
-         <span class="token class-name"><span class="token keyword">var</span></span> value <span class="token operator">=</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
-         <span class="token keyword">return</span> value <span class="token operator">==</span> <span class="token string">"expected"</span><span class="token punctuation">;</span>
+         <span class="token class-name"><span class="token keyword">var</span></span> actual <span class="token operator">=</span> <span class="token function">GetSomeString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+         <span class="token keyword">return</span> actual <span class="token operator">==</span> <span class="token string">"expected"</span><span class="token punctuation">;</span>
      <span class="token punctuation">}</span>
  <span class="token punctuation">}</span>
  `
@@ -46,10 +46,10 @@ export function Hero() {
             />
             <div class="relative">
               <p class="inline bg-gradient-to-r from-indigo-200 via-sky-400 to-indigo-200 bg-clip-text font-display text-5xl tracking-tight text-transparent">
-                Functional Unit Testing 
+                ZeUnit Testing Framework
               </p>
               <p class="mt-3 text-2xl tracking-tight text-slate-400">
-                From barebones to the full kitchen sink and everything in between. <span class="text-sky-400 ">ZeUnit</span> garantees writing tests isn't a bottleneck.
+                    From <span class="text-sky-400 ">barebones</span> to the full <span class="text-sky-400">kitchen sink</span> and everything in between. <span class="text-sky-400 ">ZeUnit</span> garantees writing tests isn't a bottleneck.
               </p>
               <div class="mt-8 flex gap-4 md:justify-center lg:justify-start">
                 <Link type="button" href="/docs/getting-started" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Get started</Link>

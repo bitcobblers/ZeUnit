@@ -69,25 +69,24 @@ Assuming all the `ICalculatorOperation` are well tested, can we be sure that eve
 Lets take a look at what that looks like with ZeUnit.
 
 ```csharp
-    [LamarContainer(typeof(CalculatorRegistry))]
-    public class TestingCalculatorIntegration
+[LamarContainer(typeof(CalculatorRegistry))]
+public class TestingCalculatorIntegration
+{
+    private readonly ICalculator calculator;
+
+    public TestingCalculatorIntegration(ICalculator calculator)
     {
-        private readonly ICalculator calculator;
-
-        public TestingCalculatorIntegration(ICalculator calculator)
-        {
-            this.calculator = calculator;
-        }
-
-        [InlineData(null, 0)]
-        [InlineData(new[] { 1d }, 1)]
-        [InlineData(new[] { 1d, 2d }, 3)]
-        [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
-        public Fact AdditionHarness(double[] values, double expected)
-        {            
-            var actual = this.calculator.Apply<AddOperation>(values).Value.Value;
-            return actual.Is(expected);
-        }
-
+        this.calculator = calculator;
     }
+
+    [InlineData(null, 0)]
+    [InlineData(new[] { 1d }, 1)]
+    [InlineData(new[] { 1d, 2d }, 3)]
+    [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
+    public Fact AdditionHarness(double[] values, double expected)
+    {            
+        var actual = this.calculator.Apply<AddOperation>(values);
+        return actual.Is(expected);
+    }
+}
 ```
