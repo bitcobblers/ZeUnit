@@ -1,6 +1,10 @@
 /* THIS FILE IS JUST FOR EXAMPLES, DELETE IT IF YOU DON'T NEED IT */
 
-
+.language-mermaid {  
+  border-radius: 8px;
+  color: var(--qwik-light-text);
+  color: lightgray
+}
 
 body {
   background: var(--qwik-dark-background);

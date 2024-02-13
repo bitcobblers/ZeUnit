@@ -2,63 +2,71 @@
 slug: getting-started
 ---
 
-# ZeUnit Testing Framework
+# Functional Unit Testing 
 
-At the heart of ZeUnit sits a simple principle, functional programing is cleaner.  
+At the heart of ZeUnit sits a simple principle. A test is a function; and functions return result(s). `Fact` in the case of ZeUnit.  The benfits?   
 
-- Tests should be functions.
-- Functions should have all the necessary dependencies.
-- Functions should return a consistent results
+- Control over the life-cycle
+- Custom class and method level activations
+- Test middleware for wrapping test execution and reporting
 
-Taking this "pure" function approach to testing allows some interesting windfall effects that can super charge your testing experience.
-
-- Custom test activation at the class and method level
-- Different class life-cycles
-- Test middleware
-
-## Traditional Test
-
-```csharp
-[Fact]
-public void WhatYouTest()
-{
-    // Act
-    var actual = someWork();
-    // Assert
-    Assert.Equal(actual, "expected");
-}
+```note
+NOTE: To follow allong walk though the [Getting Started](/docs/getting-started/) guide.
 ```
 
-## ZeUnit Test
+## Barebones Test
 
-At the heart a test is binary, it passes or fails, so giving a `bool` as a response will be implicity converted to a `Fact` as good stratagy for coders that use descriptive unit tests names.
+The example above `BarebonesSuite`, is the most basic form that a test swuite can take.  The example has no dependecies on the class or method level activators, no middleware like a global bag, special reporting or suite lifecycles.  At the very low level, this test defaults to single test activation on a transient instace of the the test class.  More over the test itself is uing the default notation `return value == "expected";` which is like saying `return true;` and `true` is not exactly a `Fact` that is being loaded.  With the magic of [implicit type operators](link needed) the `bool` is converted to a `Fact` allowing the code to compile and under the hood doing a `.True(string? message = null)` assertion on the value we are implicity converting into a `Fact<bool>`.  A secondary implicit convertion operator is also created on `Tuple<bool, string>` to suppor custom test messages in this barebones mode of the library to populate the optional `message` argument in a `True()` assertion. 
 
-```csharp
-public Fact WhatYouTest()
-{
-    // Act
-    var actual = someWork();
-    // Assert
-    return actual == "expected";
-}
-```
+## Adding Assertions
 
-Optionally, the more expressive Shouldly inspired assertion syntax can be used to create instance of `Fact` with additional message feedback and knowledge about the values and the assertion being made.  The example bellow would generate automated message to show the difference between the outcomes, while the example above would flag the test as pass or fail.
+While the shortand `bool` and `(bool, string)` are useful for quick and dirty tests, this isn't enough for real world testing.  What is missing? 
+
+- automatic rich messages
+- multi assertion messages
+- test specific behvaiors
+
+Techinally, the function can return `new Fact(object actual)` with specific calls to assertion to attach messgaes, and in some very special cases it might be the way to go, but as it is combusrome and instead ZeUnit borrow from shoudly and fluient assertions for syntax like `Is(expected)` and `IsType<TType>()` shortands for creating `Fact` objects but also automatically generate rich messages on failure when the conditions are met.  
 
 ```csharp
-public Fact WhatYouTestBetterAssertion()
-{
-    // Act
-    var actual = someWork();
-    // Assert
-    return actual.Is("expected");
-}
+public class AssertionSuite
+ {
+     public Fact GetExpectedValue()
+     {   
+         var actual = GetSomeString();    
+         return actual
+            .IsNotNull()
+            .IsType<string>()
+            .Is("expected");
+     }
+ }
 ``` 
 
-Dig in..
+## The Kittche Sink
 
+```csharp
+[LamarContainer(typeof(CalculatorRegistry))]
+public class TestingCalculatorIntegration : SingletonSuite
+{
+    private readonly ICalculator calculator;
+
+    public TestingCalculatorIntegration(ICalculator calculator)
+    {
+        this.calculator = calculator;
+    }
+
+    [InlineData(null, 0)]
+    [InlineData(new[] { 1d }, 1)]
+    [InlineData(new[] { 1d, 2d }, 3)]
+    [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
+    public Fact AdditionHarness(double[] values, double expected)
+    {            
+        var actual = this.calculator.Apply<AddOperation>(values);
+        return (actual == expected, $"Expected {expected} but got {actual}");
+    }
+}
+```
 
 ---
 
-
-Next Section: [Getting Started](/docs/getting-started/)
+Next Section: [Testing a Calculator](/docs/testing-a-calculator/)
