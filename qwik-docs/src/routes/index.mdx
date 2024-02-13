@@ -1,8 +1,8 @@
 ---
 slug: getting-started
 ---
-
-# Functional Unit Testing 
+import Notes from '~/components/template/notes'
+import Warning from '~/components/template/warning'
 
 At the heart of ZeUnit sits a simple principle. A test is a function; and functions return result(s). `Fact` in the case of ZeUnit.  The benfits?   
 
@@ -10,13 +10,14 @@ At the heart of ZeUnit sits a simple principle. A test is a function; and functi
 - Custom class and method level activations
 - Test middleware for wrapping test execution and reporting
 
-```note
-NOTE: To follow allong walk though the [Getting Started](/docs/getting-started/) guide.
-```
+<Notes title="Follow Allong">
+Jump into the [Getting Started](/docs/getting-started/) guide to follow allong on your local computer.
+</Notes>
+
 
 ## Barebones Test
 
-The example above `BarebonesSuite`, is the most basic form that a test swuite can take.  The example has no dependecies on the class or method level activators, no middleware like a global bag, special reporting or suite lifecycles.  At the very low level, this test defaults to single test activation on a transient instace of the the test class.  More over the test itself is uing the default notation `return value == "expected";` which is like saying `return true;` and `true` is not exactly a `Fact` that is being loaded.  With the magic of [implicit type operators](link needed) the `bool` is converted to a `Fact` allowing the code to compile and under the hood doing a `.True(string? message = null)` assertion on the value we are implicity converting into a `Fact<bool>`.  A secondary implicit convertion operator is also created on `Tuple<bool, string>` to suppor custom test messages in this barebones mode of the library to populate the optional `message` argument in a `True()` assertion. 
+The example above `BarebonesSuite`, is the most basic form that a test suite can take.  The example has no dependecies on the class or method level activators, no middleware like a global bag, special reporting or suite lifecycles.  At the very low level, this test defaults to single test activation on a transient instace of the the test class.  More over the test itself is uing the default notation `return value == "expected";` which is like saying `return true;` and `true` is not exactly a `Fact` that is being loaded.  With the magic of [implicit type operators](link needed) the `bool` is converted to a `Fact` allowing the code to compile and under the hood doing a `.True(string? message = null)` assertion on the value we are implicity converting into a `Fact<bool>`.  A secondary implicit convertion operator is also created on `Tuple<bool, string>` to suppor custom test messages in this barebones mode of the library to populate the optional `message` argument in a `True()` assertion. 
 
 ## Adding Assertions
 
@@ -44,6 +45,9 @@ public class AssertionSuite
 
 ## The Kittche Sink
 
+<Warning title="Experemental Code">
+The following code is experemental and not yet supported in the current version of ZeUnit.  It is a preview of what is to come in the next version of the library.
+</Warning>
 ```csharp
 [LamarContainer(typeof(CalculatorRegistry))]
 public class TestingCalculatorIntegration : SingletonSuite
