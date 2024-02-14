@@ -2,15 +2,17 @@ export const navigation = [
   {
     title: 'Introduction',
     links: [
+      { title: 'Overview', href: '/'},
       { title: 'Getting Started', href: '/docs/getting-started' },
       { title: 'Test Execution', href: '/docs/test-execution' },
+      { title: 'Testing a Calculator', href: '/docs/testing-a-calculator'}
     ],
   },
   {
     title: 'Core Concepts',
     links: [
       { title: 'Class Activation', href: '/docs/core-class-activation' },
-      { title: 'Method Binding', href: '/docs/core-method-binding' },
+      { title: 'Method Binders', href: '/docs/core-method-binders' },
       { title: 'Reporting', href: '/docs/core-reporting' },
       { title: 'Test Suites & Lifecycles', href: '/docs/test-suites-lifecylces' },
     ],
