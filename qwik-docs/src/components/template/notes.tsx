@@ -8,10 +8,10 @@ export default component$(({title }: { title: string }) => {
         </svg>
 
         <div class="ml-4 flex-auto">
-          <p class="m-0 font-display text-xl text-sky-900 dark:text-sky-400'">
+          <p class={`m-0 mb-2.5 font-display text-xl text-sky-900 dark:text-sky-400 ${!title && "hidden"}`}>
             {title}
           </p>
-          <div class="prose mt-2.5 text-sky-800 [--tw-prose-background:theme(colors.sky.50)] prose-a:text-sky-900 prose-code:text-sky-900 dark:text-slate-300 dark:prose-code:text-slate-300">
+          <div class="text-sky-800 [--tw-prose-background:theme(colors.sky.50)] prose-a:text-sky-900 prose-code:text-sky-900 dark:text-slate-300 dark:prose-code:text-slate-300">
             <Slot />
           </div>
         </div>
