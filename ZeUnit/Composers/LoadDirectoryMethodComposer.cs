@@ -2,7 +2,7 @@
 
 namespace ZeUnit.Composers;
 
-public class LoadDirectoryMethodComposer<TFileMapper> : IZeMethodComposer
+public class LoadDirectoryMethodComposer<TFileMapper> : IZeMethodBinder
     where TFileMapper : ILoadDirectoryMethodFileMapper, new()
 {
     private readonly string directory;

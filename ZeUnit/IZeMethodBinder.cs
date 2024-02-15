@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 namespace ZeUnit;
 
-public interface IZeMethodComposer : IDisposable
+public interface IZeMethodBinder : IDisposable
 {    
     IEnumerable<object[]> Get(MethodInfo method);
 }

@@ -2,7 +2,7 @@
 
 using ZeUnit.Composers.FileLoaders;
 
-public class LoadFileMethodComposer : IZeMethodComposer
+public class LoadFileMethodComposer : IZeMethodBinder
 {
     private bool disposedValue;
     private readonly LoadFileAttribute attribute;    

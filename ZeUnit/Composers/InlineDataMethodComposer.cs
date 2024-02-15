@@ -2,7 +2,7 @@
 
 namespace ZeUnit.Composers;
 
-public class InlineDataMethodComposer : IZeMethodComposer
+public class InlineDataMethodComposer : IZeMethodBinder
 {
     private readonly InlineDataAttribute attribute;
     private bool disposedValue;

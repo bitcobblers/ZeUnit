@@ -1,6 +1,6 @@
 ﻿namespace ZeUnit.Composers;
 
-public class CoreMethodComposer : IZeMethodComposer
+public class CoreMethodComposer : IZeMethodBinder
 {
     private bool disposedValue;
 

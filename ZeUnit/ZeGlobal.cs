@@ -13,13 +13,13 @@ public static class ZeGlobal
         
         foreach (var classActivation in discovery)
         {
-            var (@class, composer) = classActivation.Key;            
-            var lifeCycle = @class!
-                .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
+            var (@class, composer) = classActivation.Key;
+            var lifeCycle = @class!.ImplementedInterfaces.Contains(typeof(IZeLifecycle));           
+               // .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
             try
             {
-                var factory = lifeCycle.GetFactory(composer!, @class!);
-
+                //var factory = lifeCycle.GetFactory(composer!, @class!);
+                var factory = new TransientInstanceFactory();
                 classRuns.AddRange(classActivation
                     .Select(test => new ZeRunner(builder.Runners()).Run(test, factory)));
             }

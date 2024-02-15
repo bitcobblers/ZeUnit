@@ -4,9 +4,9 @@ using ZeUnit.Composers;
 
 namespace ZeUnit;
 
-public class ComposerMethodFactory : BaseComposerFactory<IZeMethodComposer, CoreMethodComposer>
+public class ComposerMethodFactory : BaseComposerFactory<IZeMethodBinder, CoreMethodComposer>
 {
-    public IEnumerable<IZeMethodComposer> Get(MethodInfo method)
+    public IEnumerable<IZeMethodBinder> Get(MethodInfo method)
     {
         return Get(method.GetCustomAttributes());
     }
