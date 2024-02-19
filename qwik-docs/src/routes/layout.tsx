@@ -1,13 +1,13 @@
-import { component$, Slot, useStyles$ } from "@builder.io/qwik";
+import { component$, Slot, useStyles$, $, useOnDocument } from "@builder.io/qwik";
 import { routeLoader$, useLocation } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
-
 
 import styles from "./styles.css?inline";
 import prism from "prismjs/themes/prism-tomorrow.css?inline"
 import Header from "~/components/template/header";
 import { Hero } from "~/components/template/hero";
 import Navigation from "~/components/template/navigation";
+import mermaid from "mermaid";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -29,6 +29,24 @@ export const useServerTimeLoader = routeLoader$(() => {
 export default component$(() => {
   useStyles$(styles);
   useStyles$(prism);
+  useOnDocument("DOMContentLoaded", $((event) => {    
+    console.log(event);    
+    mermaid.initialize({ startOnLoad: false, 
+      theme: 'base',
+      'themeVariables': {
+        'primaryColor': '#BB2528',
+        'primaryTextColor': '#fff',
+        'primaryBorderColor': '#7C0000',
+        'lineColor': '#F8B229',
+        'secondaryColor': '#006100',
+        'tertiaryColor': '#fff'
+      }
+ });
+        mermaid.run({
+          querySelector: '.language-mermaid'          
+    });  
+  }));
+
   const current = useLocation();
   const isHome = current.url.pathname == "/ZeUnit/" || current.url.pathname == "/";
   return (

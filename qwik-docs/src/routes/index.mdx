@@ -1,64 +1,116 @@
 ---
 slug: getting-started
 ---
+import Notes from '~/components/template/notes'
+import Warning from '~/components/template/warning'
 
-# ZeUnit Testing Framework
+At the heart of ZeUnit sits a design simple principle; a test is a function and functions return result(s). For ZeUnit that result is a `Fact` which reports back to the test runner.  The benfits?   
 
-At the heart of ZeUnit sits a simple principle, functional programing is cleaner.  
+- Control over the life-cycle
+- Class activation for DI
+- Method activations & custom binding
+- Test reporting & result sinks 
 
-- Tests should be functions.
-- Functions should have all the necessary dependencies.
-- Functions should return a consistent results
+<Notes title="Follow Allong">
+Jump into the [Getting Started](/docs/getting-started/) guide to follow allong on your local computer.
+</Notes>
 
-Taking this "pure" function approach to testing allows some interesting windfall effects that can super charge your testing experience.
 
-- Custom test activation
-- Different class life-cycles
-- Test middleware
+## Barebones Test
 
-## Traditional Test
+The example above in the `BarebonesSuite`, is the most basic form that of a test in ZeUnit.  There is no constructor injection or custom method bindings as a result it defaults to transient suite lifecycle.  
+
+At the very low level, the test boils down to a simple assertion: `return value == "expected";`.   With the magic of [implicit type operators](link needed) the `bool` being returned from that assertion is magically  converted to a `Fact<bool>` allowing the code to compile. 
+
+<Notes>
+A secondary implicit convertion operator is also created on `Tuple<bool, string>` to suppor custom messages.
+</Notes>
 
 ```csharp
-[Fact]
-public void WhatYouTest()
-{
-    // Act
-    var actual = someWork();
-    // Assert
-    Assert.Equal(actual, "expected");
-}
+public class BarebondesSuite
+ {
+     public Fact GetExpectedValueWithMessage()
+     {       
+         return (actual == "expected", $"Expected value does not match {actual}!!");
+     }
+ }
 ```
 
-## ZeUnit Test
+## Adding Assertions
 
-At the heart a test is binary, it passes or fails, so giving a `bool` as a response will be implicity converted to a `Ze` as good stratagy for coders that use descriptive unit tests names.
-
-```csharp
-public Fact WhatYouTestSimpleAssertion()
-{
-    // Act
-    var actual = someWork();
-    // Assert
-    return actual == "expected";
-}
-```
-
-Optionally, the more expressive Shouldly inspired assertion syntax can be used to create instance of `Ze` with additional message feedback and knowledge about the values and the assertion being made.  The example bellow would generate automated message to show the difference between the outcomes, while the example above would flag the test as pass or fail.
+While the shortand `bool` and `Tuple<bool, string>` are useful for quick and dirty tests, a simple pass and fail fials to give evough details for troubleshooting, and having to write out custom messages for every test would become very tedious.  This is where `ZeUnit.Assertions` namespace shines.  The [shoudly](link here) inspired collection of helper supercharge the testing process.
 
 ```csharp
-public Fact WhatYouTestBetterAssertion()
-{
-    // Act
-    var actual = someWork();
-    // Assert
-    return actual.Is("expected");
-}
+public class AssertionSuite
+ {
+     public Fact GetExpectedValue()
+     {   
+         var actual = GetSomeString();    
+         return actual
+            .IsNotNull()
+            .IsType<string>()
+            .Is("expected");
+     }
+ }
 ``` 
 
-Dig in..
+A similar test could be written using the `bool` but would require that is is broken into 3 seperate tests or that the test returns the type `IEnumerable<Fact>` allowing for `yield return` syntax for multiple assertions.
+
+The other added value in using the assertion library over the shorthand `bool` tests is the rich reporting on the objects under tests.  Somethign that is lost when implicity converting from `bool` to `Fact`.
+
+## The Kittche Sink
+
+<Warning title="Experemental Code">
+The following code is experemental and not yet supported or change in current or future versions of ZeUnit.
+</Warning>
+
+The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create many test with very few lines of code.  Lets glance over the code and dig into the details.
+
+```csharp
+[LamarContainer(typeof(CalculatorRegistry))]
+public class TheKitchenSinkSuite : SingletonSuite
+{
+    private readonly ICalculator calculator;
+
+    public TheKitchenSinkSuite(ICalculator calculator)
+    {
+        this.calculator = calculator;
+    }
+
+    [InlineData(null, 0)]
+    [InlineData(new[] { 1d }, 1)]
+    [InlineData(new[] { 1d, 2d }, 3)]
+    [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
+    public Fact AdditionHarness(double[] values, double expected)
+    {            
+        var actual = this.calculator.Apply<AddOperation>(values);
+        return actual.Is(expected);
+    }
+}
+```
+
+### Class Activation & DI
+
+Before a test can be executed, the class where the method resides must be instancieted by calling the class constryctor.  The default constructor for any class has no constructor argument and will default to a base activation like the test suites in the examples above, but the consturtor of our `TheKitchenSinkSuite` has a depedency `ICalculator` for our contrived example.  DI Containers to the resuce!!! 
+
+<Notes>
+[Lamar](link), the authors DI framework of choice when prototyping ZeUnit, all users of ZeUnit are encuraged [build their own activation](link) for types that are not already supported. 
+</Notes>
+
+[LamarContainer(typeof(CalculatorRegistry))]
+The `LamarContainerAttribute` in the case stands up a DI container and registers to the container the `CalculatorRegistry`, which per the name defines the registration of the calculator class we are testing. 
+
+When the test attempts to execute, the testing framework will look to the `LamarContainer` activator to populate the ICalculator depedency.
+
+### Test Lifecycle
+
+The default behavior of a ZeUnit test class is transient allowing for tests to run in parrallel without impacting each other, but that isn't always the behavior we want only one instance of the class to be created and to re-enter the class for each of the method execution.
+
+### Method bindings
+
+The most simple of the method bindings is the simple `InlineDataAttribute` that allows us to queue up multiple executions of the test.  There are however whole collection of prebuild bindings and a section on how to build your own business case specific binder.
 
 
 ---
 
-
-Next Section: [Getting Started](/docs/getting-started/)
+Next Section: [Testing a Calculator](/docs/testing-a-calculator/)

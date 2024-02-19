@@ -1,0 +1,17 @@
+## Functional Approach to Tests
+
+Developers familiar with existing testing frameworks like XUnit and NUnit will notices some key differences.
+ - The familiar `Assert` has been replaced by `new Fact()` or a collection of shouldly style assertion helpers.  
+ - Test methods return `Fact` in the case of single synchronous test result and `Task<Fact>` when the single result is asynchronous. 
+
+ZeUnit brows a lot from functional programing, and requires that functions return results. In our case the `Fact` object which can have 0 or more assertions like `Equal` or `Type` in the code example above.   Labeling the test function with resulting type as defined in the table bellow allows you to expressly define the execution timeline of your test(s) and how the `Fact` object(s) is/are being returned.
+
+|  Test Results   | **One**          |  **Many**               |
+| --------------- | ---------------- | ----------------------- |
+| **Now**         | `Fact`       | `IEnumerable<Fact>` |
+| **Later**       | `Task<Fact>` | `IObservable<Fact>` |
+
+
+***
+
+Next Section: [Testing A Calculator](/docs/testing-a-calculator/)
