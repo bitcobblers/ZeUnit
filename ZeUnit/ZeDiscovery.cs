@@ -1,13 +1,9 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using static System.Net.Mime.MediaTypeNames;
-using System.Linq;
-
-namespace ZeUnit;
+﻿namespace ZeUnit;
 
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
     private readonly List<ZeTest> tests = new();
-    private List<Type> supportedTypes = new List<Type>();
+    private readonly List<Type> supportedTypes = new List<Type>();
 
     public ZeDiscovery(IEnumerable<Type> supportedTypes)
     {
