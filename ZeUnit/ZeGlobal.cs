@@ -20,11 +20,9 @@ public static class ZeGlobal
            
             try
             {
-                var factory = (IZeLifeCycleFactory)Activator.CreateInstance(lifeCycle)!;
-                var instanceFactory = factory.GetFactory(composer!, @class!);
-                //var factory = new TransientLifeCycleFactory();
+                var factory = (IZeLifeCycleFactory)Activator.CreateInstance(lifeCycle, composer!, @class!)!;
                 classRuns.AddRange(classActivation
-                    .Select(test => new ZeRunner(builder.Runners()).Run(test, instanceFactory)));
+                    .Select(test => new ZeRunner(builder.Runners()).Run(test, factory)));
             }
             catch (Exception ex)
             {

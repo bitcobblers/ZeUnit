@@ -64,11 +64,11 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                 ? @class.ImplementedInterfaces.First(n => n.IsGenericType).GetGenericArguments().First()
                 : typeof(TransientLifeCycleFactory);
 
-                var factory = (IZeLifeCycleFactory)Activator.CreateInstance(lifeCycle)!;
-                var instanceFactory = factory.GetFactory(composer!, @class!);
+                var factory = (IZeLifeCycleFactory)Activator.CreateInstance(lifeCycle, composer!, @class!)!;
 
 
-                    foreach (var (zeTest, testCase) in classPair)
+
+                foreach (var (zeTest, testCase) in classPair)
                 {
                     var result = new TestResult(testCase);
                     if (zeTest == null)
@@ -80,7 +80,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                         continue;
                     }
 
-                    executionList.Add(runner.Run(zeTest, instanceFactory).Select(pair =>
+                    executionList.Add(runner.Run(zeTest, factory).Select(pair =>
                     {
                         var (zeTest, Ze) = pair;
                         result.Duration = Ze.Duration;
@@ -104,10 +104,10 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
         var testCases =
             (from source in sources
-                let builder = new TestCaseBuilder(source)
-                let discoverer = new ZeDiscovery(testRunnerDiscovery.SupportedTypes()).FromAssembly(source)
-                from test in discoverer
-                select builder.Build(test))
+             let builder = new TestCaseBuilder(source)
+             let discoverer = new ZeDiscovery(testRunnerDiscovery.SupportedTypes()).FromAssembly(source)
+             from test in discoverer
+             select builder.Build(test))
             .ToArray();
 
         RunTests(testCases, runContext!, frameworkHandle!);

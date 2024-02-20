@@ -5,7 +5,7 @@ namespace ZeUnit.TestRunners;
 
 public class EnumerableTestRunner : ZeTestRunner<IEnumerable<Fact>>
 {
-    public override IObservable<(ZeTest, Fact)> Run(ZeTest test, ZeClassInstanceFactory factory, object[] arguments)
+    public override IObservable<(ZeTest, Fact)> Run(ZeTest test, IZeLifeCycleFactory factory, object[] arguments)
     {
         var instance = factory.Create();
         var subject = new AsyncSubject<(ZeTest, Fact)>();

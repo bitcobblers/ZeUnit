@@ -5,7 +5,7 @@ namespace ZeUnit.TestRunners;
 
 public class TaskTestRunner : ZeTestRunner<Task<Fact>>
 {
-    public override IObservable<(ZeTest, Fact)> Run(ZeTest test, ZeClassInstanceFactory factory, object[] arguments)
+    public override IObservable<(ZeTest, Fact)> Run(ZeTest test, IZeLifeCycleFactory factory, object[] arguments)
     {
         var instance = factory.Create();
         return ((Task<Fact>)test.Method!.Invoke(instance, arguments.Any() ? arguments : null)!)

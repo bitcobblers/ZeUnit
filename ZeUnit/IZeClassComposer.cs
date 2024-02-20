@@ -16,31 +16,43 @@ public abstract class OrderedLifeCycle : IZeLifecycle<OrderedLifeCycleFactory>
 
 public class TransientLifeCycleFactory : IZeLifeCycleFactory
 {
-    public ZeClassInstanceFactory GetFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
+    public TransientLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
     {
-        return new TransientInstaceFactory();
+    }
+
+    public object Create()
+    {
+        return new();
     }
 }
 
 public class SingletonLifeCycleFactory : IZeLifeCycleFactory
 {
-    public ZeClassInstanceFactory GetFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
+    public SingletonLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
     {
-        return new TransientInstaceFactory();
+    }
+
+    public object Create()
+    {
+        return new();
     }
 }
 
 public class OrderedLifeCycleFactory : IZeLifeCycleFactory
 {
-    public ZeClassInstanceFactory GetFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
+    public OrderedLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
     {
-        return new TransientInstaceFactory();
+    }
+
+    public object Create()
+    {
+        return new();
     }
 }
 
 public interface IZeLifeCycleFactory
 {
-    ZeClassInstanceFactory GetFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo);
+    object Create();
 }
 
 
