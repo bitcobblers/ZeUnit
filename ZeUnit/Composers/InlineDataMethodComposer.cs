@@ -12,9 +12,9 @@ public class InlineDataMethodComposer : IZeMethodBinder
         this.attribute = (InlineDataAttribute)attribute;
     }
 
-    public IEnumerable<object[]> Get(MethodInfo method)
+    public IEnumerable<MethodBinderInfo> Get(MethodInfo method)
     {
-        yield return attribute.Args;
+        yield return new("Inline", attribute.Args);
     }
 
     protected virtual void Dispose(bool disposing)

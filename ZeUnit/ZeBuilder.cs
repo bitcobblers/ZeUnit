@@ -31,10 +31,10 @@ public class ZeBuilder
         return this;
     }            
 
-    public Task<ZeDiscovery> GetDiscovery()
+    public ZeDiscovery GetDiscovery()
     {
         var discovery = new ZeDiscovery(runnerDiscovery.SupportedTypes());
-        return Task.FromResult(configs.Aggregate(discovery, (discovery, config) => config(discovery)));        
+        return configs.Aggregate(discovery, (discovery, config) => config(discovery));        
     }
 
     public IZeReporter GetReporter()

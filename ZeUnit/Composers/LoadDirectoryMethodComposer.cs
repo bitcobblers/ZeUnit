@@ -13,9 +13,9 @@ public class LoadDirectoryMethodComposer<TFileMapper> : IZeMethodBinder
         this.directory = Path.GetFullPath(((ILoadFilesAttribute)attribute).Directory);
     }
 
-    public IEnumerable<object[]> Get(MethodInfo method)
+    public IEnumerable<MethodBinderInfo> Get(MethodInfo method)
     {
-        var result = new List<object[]>();
+        var result = new List<MethodBinderInfo>();
         var fileProvider = new PhysicalFileProvider(this.directory);
         var parsor = new TFileMapper();
         

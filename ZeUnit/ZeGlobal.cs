@@ -14,14 +14,17 @@ public static class ZeGlobal
         foreach (var classActivation in discovery)
         {
             var (@class, composer) = classActivation.Key;
-            var lifeCycle = @class!.ImplementedInterfaces.Contains(typeof(IZeLifecycle));           
-               // .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
+            var lifeCycle = @class!.ImplementedInterfaces.Contains(typeof(IZeLifecycle))
+                ? @class.ImplementedInterfaces.First(n => n.IsGenericType).GetGenericArguments().First()
+                : typeof(TransientLifeCycleFactory);
+           
             try
             {
-                //var factory = lifeCycle.GetFactory(composer!, @class!);
-                var factory = new TransientInstanceFactory();
+                var factory = (IZeLifeCycleFactory)Activator.CreateInstance(lifeCycle)!;
+                var instanceFactory = factory.GetFactory(composer!, @class!);
+                //var factory = new TransientLifeCycleFactory();
                 classRuns.AddRange(classActivation
-                    .Select(test => new ZeRunner(builder.Runners()).Run(test, factory)));
+                    .Select(test => new ZeRunner(builder.Runners()).Run(test, instanceFactory)));
             }
             catch (Exception ex)
             {

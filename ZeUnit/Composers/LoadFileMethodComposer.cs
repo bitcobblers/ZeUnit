@@ -23,20 +23,20 @@ public class LoadFileMethodComposer : IZeMethodBinder
         this.attribute = (LoadFileAttribute)attribute;
     }
 
-    public IEnumerable<object[]> Get(MethodInfo method)
+    public IEnumerable<MethodBinderInfo> Get(MethodInfo method)
     {
-        var paramters = method.GetParameters()
+        var parameters = method.GetParameters()
             .Select(n => n.ParameterType);
 
-        yield return attribute.FileNames
+        yield return new("FileName:???", attribute.FileNames
             .Select(f => new FileInfo(f))
-            .Zip(paramters)
+            .Zip(parameters)
             .Select(pair =>
             {
                 var loader = loaders.FirstOrDefault(n => n.Match(pair.Second, pair.First), new NullFileLoader());
                 return loader.Load(pair.Second, pair.First);
             })
-            .ToArray();
+            .ToArray());
     }
 
     protected virtual void Dispose(bool disposing)

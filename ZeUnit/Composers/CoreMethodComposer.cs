@@ -4,9 +4,9 @@ public class CoreMethodComposer : IZeMethodBinder
 {
     private bool disposedValue;
 
-    public IEnumerable<object[]> Get(MethodInfo method)
+    public IEnumerable<MethodBinderInfo> Get(MethodInfo method)
     {
-        yield return new object[0];
+        yield return new(method.Name, new object[0]);
     }
 
     protected virtual void Dispose(bool disposing)
