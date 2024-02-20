@@ -18,7 +18,7 @@ public class TransientLifeCycleFactory : IZeLifeCycleFactory
 {
     public ZeClassInstanceFactory GetFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
     {
-        throw new NotImplementedException();
+        return new TransientInstaceFactory();
     }
 }
 
@@ -26,7 +26,7 @@ public class SingletonLifeCycleFactory : IZeLifeCycleFactory
 {
     public ZeClassInstanceFactory GetFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
     {
-        throw new NotImplementedException();
+        return new TransientInstaceFactory();
     }
 }
 
@@ -34,7 +34,7 @@ public class OrderedLifeCycleFactory : IZeLifeCycleFactory
 {
     public ZeClassInstanceFactory GetFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
     {
-        throw new NotImplementedException();
+        return new TransientInstaceFactory();
     }
 }
 
