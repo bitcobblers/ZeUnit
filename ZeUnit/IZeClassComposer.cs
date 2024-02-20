@@ -14,37 +14,54 @@ public abstract class OrderedLifeCycle : IZeLifecycle<OrderedLifeCycleFactory>
 {
 }
 
-public class TransientLifeCycleFactory : IZeLifeCycleFactory
+public class TransientLifeCycleFactory : ZeLifeCycleFactory
 {
-    public TransientLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
+    public TransientLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo) 
+        : base(zeClassComposer, typeInfo)
     {
     }
 
-    public object Create()
+    public override object Create()
+    {
+        return this.ZeClassComposer.Get(TypeInfo);
+    }
+}
+
+public abstract class ZeLifeCycleFactory: IZeLifeCycleFactory
+{
+    protected ZeLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
+    {
+        ZeClassComposer = zeClassComposer;
+        TypeInfo = typeInfo;
+    }
+
+    protected IZeClassComposer ZeClassComposer { get; }
+    protected TypeInfo TypeInfo { get; }
+
+    public abstract object Create();
+}
+
+public class SingletonLifeCycleFactory : ZeLifeCycleFactory
+{
+    public SingletonLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo) 
+        : base(zeClassComposer, typeInfo)
+    {
+    }
+
+    public override object Create()
     {
         return new();
     }
 }
 
-public class SingletonLifeCycleFactory : IZeLifeCycleFactory
-{
-    public SingletonLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
-    {
-    }
-
-    public object Create()
-    {
-        return new();
-    }
-}
-
-public class OrderedLifeCycleFactory : IZeLifeCycleFactory
+public class OrderedLifeCycleFactory : ZeLifeCycleFactory
 {
     public OrderedLifeCycleFactory(IZeClassComposer zeClassComposer, TypeInfo typeInfo)
+        : base(zeClassComposer, typeInfo)
     {
     }
 
-    public object Create()
+    public override object Create()
     {
         return new();
     }
