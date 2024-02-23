@@ -1,5 +1,7 @@
 ﻿namespace ZeUnit;
 
-public interface IOrderedLifeCycle : IZeLifecycle<OrderedLifecycleFactory>
+public abstract class OrderedSuite 
+    : IZeLifecycle<SingletonLifecycleFactory>,
+      IZeDependencyOrder
 {
 }

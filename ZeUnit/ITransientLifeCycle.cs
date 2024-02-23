@@ -1,5 +1,5 @@
 ﻿namespace ZeUnit;
 
-public interface ITransientLifeCycle : IZeLifecycle<TransientLifecycleFactory>
+public abstract class TransientSuite : IZeLifecycle<TransientLifecycleFactory>
 {
 }

@@ -8,7 +8,7 @@ At the heart of ZeUnit sits a design simple principle; a test is a function and 
 
 - Control over the life-cycle
 - Class activation for DI
-- Method activations & custom binding
+- Custom method bindings
 - Test reporting & result sinks 
 
 <Notes title="Follow Allong">
@@ -68,7 +68,7 @@ The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create m
 
 ```csharp
 [LamarContainer(typeof(CalculatorRegistry))]
-public class TheKitchenSinkSuite : SingletonSuite
+public class TheKitchenSinkSuite : OrderedSuite
 {
     private readonly ICalculator calculator;
 

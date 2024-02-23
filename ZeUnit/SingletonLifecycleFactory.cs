@@ -1,8 +1,8 @@
 ﻿namespace ZeUnit;
 
-public class OrderedLifecycleFactory : IZeClassFactory
+public class SingletonLifecycleFactory : IZeClassFactory
 {
-    public OrderedLifecycleFactory(TypeInfo typeInfo)
+    public SingletonLifecycleFactory(TypeInfo typeInfo)
     {
     }
 
