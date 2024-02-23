@@ -8,7 +8,7 @@ At the heart of ZeUnit sits a design simple principle; a test is a function and 
 
 - Control over the life-cycle
 - Class activation for DI
-- Method activations & custom binding
+- Custom method bindings
 - Test reporting & result sinks 
 
 <Notes title="Follow Allong">
@@ -18,16 +18,16 @@ Jump into the [Getting Started](/docs/getting-started/) guide to follow allong o
 
 ## Barebones Test
 
-The example above in the `BarebonesSuite`, is the most basic form that of a test in ZeUnit.  There is no constructor injection or custom method bindings as a result it defaults to transient suite lifecycle.  
+The example above in the `BarebonesSuite`, is the most basic form that of a test in ZeUnit.  There is no constructor injection or custom method bindings as a result it defaults to `TransientSuite` with a `TransientLifecycleFactory` for the class lifecycle.
 
-At the very low level, the test boils down to a simple assertion: `return value == "expected";`.   With the magic of [implicit type operators](link needed) the `bool` being returned from that assertion is magically  converted to a `Fact<bool>` allowing the code to compile. 
+The test it self at the low level boils down to a simple assertion: `return value == "expected";`.   With little help from <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators" target="_blank">implicit type operators</a> magic the `bool` is converted to a `Fact<bool>` allowing the code to compile and the test to report results. 
 
 <Notes>
-A secondary implicit convertion operator is also created on `Tuple<bool, string>` to suppor custom messages.
+A secondary implicit convertion operator is also created on `Tuple<bool, string>` to suppor custom messages to be returned along with the tests status.
 </Notes>
 
 ```csharp
-public class BarebondesSuite
+public class BarebondesSuite : TransientSuite
  {
      public Fact GetExpectedValueWithMessage()
      {       
@@ -36,9 +36,13 @@ public class BarebondesSuite
  }
 ```
 
+<Notes>
+The example above explicitly definces the lifecycle by inheriting form the `TransietnSuite` class, this the defualt behavior for classes that don't inherit a Suite class.
+</Notes>
+
 ## Adding Assertions
 
-While the shortand `bool` and `Tuple<bool, string>` are useful for quick and dirty tests, a simple pass and fail fials to give evough details for troubleshooting, and having to write out custom messages for every test would become very tedious.  This is where `ZeUnit.Assertions` namespace shines.  The [shoudly](link here) inspired collection of helper supercharge the testing process.
+While the shortand `bool` and `Tuple<bool, string>` are useful for quick and dirty tests, a simple pass and fail fials to give evough details for troubleshooting, and having to write out custom messages for every test would become very tedious.  This is where `ZeUnit.Assertions` namespace shines.  The <a href="https://docs.shouldly.org/documentation/getting-started" target="_blank">shoudly</a> inspired collection of helper supercharge the testing process.
 
 ```csharp
 public class AssertionSuite
@@ -60,21 +64,27 @@ The other added value in using the assertion library over the shorthand `bool` t
 
 ## The Kittche Sink
 
-<Warning title="Experemental Code">
-The following code is experemental and not yet supported or change in current or future versions of ZeUnit.
-</Warning>
+The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create many test with very few lines of code.  Out the gate there are two attributes that define the attributes that are used for class composition to fill the test class dependecies.  
 
-The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create many test with very few lines of code.  Lets glance over the code and dig into the details.
+- The `Singleton` attribute creates a single instance of a value to be shared by all the test that inject the values.  More on this shortly.
+- The `LamarContainer` attribute creates a DI container and registers the `CalculatorRegistry` to the container allowing the `ICalculator` to be injected into the class.
+
+<Notes>
+These attributes are just a taste of what can be done before the test is executed by creating domain specific attributes unique to your project by overriding `ZeClassComposer` and ZeComposerAttribute` classes.  See more [Class Composers](/docs/core-class-composers/) or [Custom Class Composers](/docs/building-class-composers/).
+</Notes>
 
 ```csharp
+[Singleton(typeof(SingletonCounter))]
 [LamarContainer(typeof(CalculatorRegistry))]
-public class TheKitchenSinkSuite : SingletonSuite
+public class TheKitchenSinkSuite
 {
     private readonly ICalculator calculator;
+    private readonly SingletonCounter counter;
 
-    public TheKitchenSinkSuite(ICalculator calculator)
+    public TheKitchenSinkSuite(ICalculator calculator, SingletonCounter counter)
     {
         this.calculator = calculator;
+        this.counter = counter;
     }
 
     [InlineData(null, 0)]
@@ -84,31 +94,64 @@ public class TheKitchenSinkSuite : SingletonSuite
     public Fact AdditionHarness(double[] values, double expected)
     {            
         var actual = this.calculator.Apply<AddOperation>(values);
+        counter.Increment();
         return actual.Is(expected);
+    }    
+}
+```
+The `InlineData` is a familiar tool of existing unit testing frameworks, but just like the `ZeClassComposer` customizations ZeUnit focus on making custom method bindings easy to create.  More on this in the [Method Bindings](/docs/core-method-binders/) section.
+
+Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However building a testing framework on top of reactive IObservable classes, being able to build out depdeenciey chaines that for behavior becomes prety trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
+
+<Warning>
+The features around `IZeDependency` interface and `SuiteOrder` are not currently implemented in the current version of ZeUnit.  They are planned for a future release.
+</Warning>
+
+- `OrderedSuite` is doing some interesting work alloing us to define that some tests in the suite have to run before others
+- `IZeDependency<TheKitchenSinkSuite>` is a way to define that `NextKitchenSinkSuite` depends on `TheKitchenSinkSuite` to be run first 
+
+With all the order set, the tests that would usually be bad form can be garantied to run the correct order with minimal developer code at the test level. Overriding the `OrderRun` allows to wait for a specific test with in the class to run before the next test is executed.
+
+```csharp
+[Singleton(typeof(SingletonCounter))]
+public class NextKitchenSinkSuite 
+    : OrderedSuite
+    , IZeDependency<TheKitchenSinkSuite>
+{    
+    private readonly SingletonCounter counter;
+
+    public TheKitchenSinkSuite(SingletonCounter counter)
+    {        
+        this.counter = counter;
     }
+
+    protected override IEnumerable<Dependent<Fact>> Order()
+    {
+        yield return new Dependent<Fact>(this, "CheckTotalValue")
+            .DependsOn("AddOneMoreFirst");        
+    }
+
+    public Fact AddOneMoreFirst()
+    {            
+        counter.Increment();
+        return true;
+    }    
+
+    public Fact CheckTotalValue()
+    {                    
+        return counter.Value() == 5;
+    }    
 }
 ```
 
-### Class Activation & DI
+### Understanding The Lifecycle 
 
-Before a test can be executed, the class where the method resides must be instancieted by calling the class constryctor.  The default constructor for any class has no constructor argument and will default to a base activation like the test suites in the examples above, but the consturtor of our `TheKitchenSinkSuite` has a depedency `ICalculator` for our contrived example.  DI Containers to the resuce!!! 
+The outcome here is that `TheKitchenSinkSuite` is run first allowing each of the `InlineData` method binding to excute the `AdditionHarness` method.  This keeps incrementing the `SingletonCounter` and which is always the same dispite `TheKitchenSinkSuite` being transient for each instance of the method bidning.
 
-<Notes>
-[Lamar](link), the authors DI framework of choice when prototyping ZeUnit, all users of ZeUnit are encuraged [build their own activation](link) for types that are not already supported. 
-</Notes>
+Once all of tests in `TheKitchenSinkSuite` the dependecy defined on `NextKitchenSinkSuite` with the `IZeDependency<TheKitchenSinkSuite>` interface is satified and ZeUnit will pick up the Facts.  The lifecycle of this class however is modied by inheritence from the `OrderedSuite`.
 
-[LamarContainer(typeof(CalculatorRegistry))]
-The `LamarContainerAttribute` in the case stands up a DI container and registers to the container the `CalculatorRegistry`, which per the name defines the registration of the calculator class we are testing. 
+The `Order` override method has to return a collection of `Dependent<Fact>` classes that behind the scence would wrap some IObserables allowing tests to shake out dependecies as they complete.  The sudo code definition in the none functional example above would require that the Fact `AddOneMoreFirst` is run before `CheckTotalValue` is run.  This makes the Counter value 5 and the finaly test pass.
 
-When the test attempts to execute, the testing framework will look to the `LamarContainer` activator to populate the ICalculator depedency.
-
-### Test Lifecycle
-
-The default behavior of a ZeUnit test class is transient allowing for tests to run in parrallel without impacting each other, but that isn't always the behavior we want only one instance of the class to be created and to re-enter the class for each of the method execution.
-
-### Method bindings
-
-The most simple of the method bindings is the simple `InlineDataAttribute` that allows us to queue up multiple executions of the test.  There are however whole collection of prebuild bindings and a section on how to build your own business case specific binder.
 
 
 ---

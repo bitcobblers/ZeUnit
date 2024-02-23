@@ -1,7 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-namespace ZeUnit;
+﻿namespace ZeUnit;
 
-public interface IZeClassComposer : IDisposable
+public interface IZeClassComposer
 {
-    object Get(TypeInfo @class);
+    object? Get(Type args);
 }

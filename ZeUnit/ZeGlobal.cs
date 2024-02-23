@@ -9,19 +9,16 @@ public static class ZeGlobal
         var classRuns = new List<IObservable<(ZeTest, Fact)>>();
         var reporter = builder.GetReporter();
         var discovery = builder.GetDiscovery()
-            .GroupBy(test => (test.Class, test.ClassActivator), test => test);
-        
+            .GroupBy(test => (test.Class, test.ClassFactory) , test => test);
+              
         foreach (var classActivation in discovery)
         {
-            var (@class, composer) = classActivation.Key;            
-            var lifeCycle = @class!
-                .GetCustomAttribute<ZeLifeCycleAttribute>() ?? (ZeLifeCycleAttribute)new TransientAttribute();
+            var (@class, factory) = classActivation.Key;
+                                  
             try
-            {
-                var factory = lifeCycle.GetFactory(composer!, @class!);
-
+            {                                
                 classRuns.AddRange(classActivation
-                    .Select(test => new ZeRunner(builder.Runners()).Run(test, factory)));
+                    .Select(test => new ZeRunner(builder.Runners()).Run(test, factory!)));
             }
             catch (Exception ex)
             {

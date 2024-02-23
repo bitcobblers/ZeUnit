@@ -4,25 +4,25 @@ export const navigation = [
     links: [
       { title: 'Overview', href: '/'},
       { title: 'Getting Started', href: '/docs/getting-started/' },
-      { title: 'Test Execution', href: '/docs/test-execution/' },
+      { title: 'Test Execution & Dependecies', href: '/docs/test-execution/' },
       { title: 'Testing a Calculator', href: '/docs/testing-a-calculator/' }
     ],
   },
   {
     title: 'Core Concepts',
     links: [
-      { title: 'Class Activation', href: '/docs/core-class-activation/' },
-      { title: 'Method Binders', href: '/docs/core-method-binders/' },
-      { title: 'Reporting', href: '/docs/core-reporting/' },
+      { title: 'Class Composers', href: '/docs/core-class-composers/' },
+      { title: 'Method Binders', href: '/docs/core-method-binders/' },      
       { title: 'Test Suites & Lifecycles', href: '/docs/test-suites-lifecylces/' },
+      { title: 'Reporting', href: '/docs/core-reporting/' },
     ],
   },
   {
     title: 'Advanced Guides',
     links: [
-      { title: 'Building Class Activators', href: '/docs/building-class-activators/' },
+      { title: 'Building Class Composers', href: '/docs/building-class-composers/' },
       { title: 'Building Method Binders', href: '/docs/building-method-binders/' },
-      { title: 'Custom Suite Lifecycles', href: '/docs/custom-suite-lifecycles/' },
+      { title: 'Custom Test Lifecycles', href: '/docs/custom-suite-lifecycles/' },
       { title: 'Customizing Reporting', href: '/docs/customizing-reporting/' },
     ],
   },

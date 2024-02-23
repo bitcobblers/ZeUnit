@@ -5,9 +5,9 @@ namespace ZeUnit.TestRunners;
 
 public class TaskTestRunner : ZeTestRunner<Task<Fact>>
 {
-    public override IObservable<(ZeTest, Fact)> Run(ZeTest test, ZeClassInstanceFactory factory, object[] arguments)
+    public override IObservable<(ZeTest, Fact)> Run(ZeTest test, IZeClassFactory factory, object[] arguments)
     {
-        var instance = factory.Create();
+        var instance = factory.Get();
         return ((Task<Fact>)test.Method!.Invoke(instance, arguments.Any() ? arguments : null)!)
             .ToObservable()
             .Select(evnt => (test, evnt));

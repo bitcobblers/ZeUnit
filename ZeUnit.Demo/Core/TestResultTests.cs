@@ -1,6 +1,5 @@
 namespace ZeUnit.Demo.Core;
 
-[Transient]
 public class TestResultTests
 {
     public Fact CanCreateATestResult()

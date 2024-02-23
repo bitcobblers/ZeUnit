@@ -1,4 +1,11 @@
-## Coming Soon
+import Warning from '~/components/template/warning'
+
+# Coming Soon
+
+<Warning title="Under Consutrction" >
+    This page is under consutrction and may contain icomplete or incorrect information.
+</Warning>
+
 
 ```csharp
 [LamarContainer(typeof(SimpleServiceInjectionRegistry))]

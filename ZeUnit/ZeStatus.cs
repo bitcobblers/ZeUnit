@@ -2,5 +2,7 @@
 public enum ZeStatus
 {
     Passed,
-    Failed
+    Failed,
+    Skipped,
+    Deferred
 }

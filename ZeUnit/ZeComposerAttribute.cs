@@ -1,11 +1,12 @@
-﻿namespace ZeUnit;
+﻿using ZeUnit.Composers;
 
-public abstract class ZeComposerAttribute : Attribute
-{    
-    protected ZeComposerAttribute(Type type)
-    {
-        this.Activator = type;
+namespace ZeUnit;
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+public abstract class ZeComposerAttribute<TType> : ZeComposerAttribute
+    where TType : IZeClassComposer
+{
+    protected ZeComposerAttribute() : base(typeof(TType))
+    {        
     }
-
-    public Type Activator { get; }    
 }
