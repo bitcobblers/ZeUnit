@@ -107,15 +107,28 @@ Back to the single instance of `SingletonCounter` which might seem out of place 
 The features around `IZeDependency` interface and `SuiteOrder` are not currently implemented in the current version of ZeUnit.  They are planned for a future release.
 </Warning>
 
-- `OrderedSuite` is doing some interesting work alloing us to define that some tests in the suite have to run before others
+- `OrderedSuite<NextKitchenSinkOrder>` is doing some interesting work alloing us to define that some tests in the suite have to run before others by creating a `NextKitchenSinkOrder` class that inherits from `SuiteOrder<TheKitchenSinkSuite>`.  This allowis to report on method dependencies to figure out order of execution.
 - `IZeDependency<TheKitchenSinkSuite>` is a way to define that `NextKitchenSinkSuite` depends on `TheKitchenSinkSuite` to be run first 
 
 With all the order set, the tests that would usually be bad form can be garantied to run the correct order with minimal developer code at the test level. Overriding the `OrderRun` allows to wait for a specific test with in the class to run before the next test is executed.
 
+
 ```csharp
+public class NextKitchenSinkOrder : SuiteOrder<TheKitchenSinkSuite>
+{
+    public NextKitchenSinkOrder()
+    {
+        this.Fact(this, "CheckTotalValue").DependsOn("AddOneMoreFirst");        
+    }
+}
+```
+
+```csharp
+
+
 [Singleton(typeof(SingletonCounter))]
 public class NextKitchenSinkSuite 
-    : OrderedSuite
+    : OrderedSuite<NextKitchenSinkOrder>
     , IZeDependency<TheKitchenSinkSuite>
 {    
     private readonly SingletonCounter counter;
@@ -123,12 +136,6 @@ public class NextKitchenSinkSuite
     public TheKitchenSinkSuite(SingletonCounter counter)
     {        
         this.counter = counter;
-    }
-
-    protected override IEnumerable<Dependent<Fact>> Order()
-    {
-        yield return new Dependent<Fact>(this, "CheckTotalValue")
-            .DependsOn("AddOneMoreFirst");        
     }
 
     public Fact AddOneMoreFirst()
@@ -148,11 +155,9 @@ public class NextKitchenSinkSuite
 
 The outcome here is that `TheKitchenSinkSuite` is run first allowing each of the `InlineData` method binding to excute the `AdditionHarness` method.  This keeps incrementing the `SingletonCounter` and which is always the same dispite `TheKitchenSinkSuite` being transient for each instance of the method bidning.
 
-Once all of tests in `TheKitchenSinkSuite` the dependecy defined on `NextKitchenSinkSuite` with the `IZeDependency<TheKitchenSinkSuite>` interface is satified and ZeUnit will pick up the Facts.  The lifecycle of this class however is modied by inheritence from the `OrderedSuite`.
+Once all of tests in `TheKitchenSinkSuite` the dependecy defined on `NextKitchenSinkSuite` with the `IZeDependency<TheKitchenSinkSuite>` interface is satified and ZeUnit will pick up the Facts.  The lifecycle of this class however is modied by inheritence from the `OrderedSuite<NextKitchenSinkOrder>` which deffers figure out method fact depdeacies as a `SuiteOrder` class.
 
-The `Order` override method has to return a collection of `Dependent<Fact>` classes that behind the scence would wrap some IObserables allowing tests to shake out dependecies as they complete.  The sudo code definition in the none functional example above would require that the Fact `AddOneMoreFirst` is run before `CheckTotalValue` is run.  This makes the Counter value 5 and the finaly test pass.
-
-
+The `SuiteOrder` override method behind the scence wraps around some IObserables magic allowing tests to shake out dependecies as they complete.  The sudo code definition in the none functional example above would require that the Fact `AddOneMoreFirst` is run before `CheckTotalValue` is run.  This makes the Counter value 5 and the finaly test pass.
 
 ---
 
