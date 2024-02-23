@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using ZeUnit.Binders;
 using ZeUnit.Composers;
 
 namespace ZeUnit;
@@ -65,10 +66,10 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                 var index = tracker.IndexFor(classType.Name, method.Name);
                 tests.Add(new ZeTest()
                 {
-                    Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{activation.a.Key}::{index}",
+                    Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{activation.a.Key}::{index}",                    
                     Class = classType,
                     ClassFactory = factory,
-                    Method = method,
+                    Method = method,                   
                     Arguments = () => activation.a.Arguments,
                 });
             }
