@@ -13,7 +13,6 @@ public interface IOrderedLifeCycle : IZeLifecycle<OrderedLifecycleFactory>
 {
 }
 
-
 public interface ITransientLifeCycle : IZeLifecycle<TransientLifecycleFactory>
 {
 }
@@ -24,7 +23,7 @@ public interface IZeDependency
 }
 public class OrderedLifecycleFactory : IZeClassFactory
 {
-    public OrderedLifecycleFactory(IZeClassComposer[] zeClassComposer, TypeInfo typeInfo)
+    public OrderedLifecycleFactory(TypeInfo typeInfo)
     {
     }
 
@@ -42,12 +41,12 @@ public class OrderedLifecycleFactory : IZeClassFactory
 
 public class TransientLifecycleFactory : IZeClassFactory, IZeDependency
 {
-    private readonly IZeClassComposer[] zeClassComposer;
+    private readonly ComposerClassFactory zeClassComposer;
     private readonly TypeInfo typeInfo;
 
-    public TransientLifecycleFactory(IZeClassComposer[] zeClassComposer, TypeInfo typeInfo)
+    public TransientLifecycleFactory(TypeInfo typeInfo)
     {
-        this.zeClassComposer = zeClassComposer;
+        this.zeClassComposer = new ComposerClassFactory(typeInfo);
         this.typeInfo = typeInfo;
     }
     
@@ -56,15 +55,13 @@ public class TransientLifecycleFactory : IZeClassFactory, IZeDependency
         var constructors = typeInfo.GetConstructors()
             .Select(n =>new { ConstructorInfo = n, Args = n.GetParameters() })
             .OrderBy(n => n.Args.Length);
+
         foreach(var constuctor in constructors)
         {
             var values = new List<object>();
             foreach (var arg in constuctor.Args)
             {
-                var value = zeClassComposer
-                    .Select(n=>n.Get(arg.ParameterType))
-                    .FirstOrDefault();
-                
+                var value = zeClassComposer.Get(arg);
                 if (value == null)
                 {
                     break;

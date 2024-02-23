@@ -4,12 +4,12 @@ using ZeUnit.Composers;
 
 namespace ZeUnit;
 
-public class ComposerClassFactory 
+public class ComposerClassFactory : List<IZeClassComposer>
     // : BaseComposerFactory<IZeClassComposer, CoreClassComposer>
 {
-    public IEnumerable<IZeClassComposer> Get(Type type)
+    public ComposerClassFactory(Type @class)
     {
-        var attributes = type.GetCustomAttributes();
+        var attributes = @class.GetCustomAttributes();
 
         var activatorGroups = attributes
            .Where(n => n.GetType().IsAssignableTo(typeof(ZeInjectorAttribute)))
@@ -18,8 +18,7 @@ public class ComposerClassFactory
 
         if (!activatorGroups.Any())
         {
-            yield return new CoreClassComposer(type);
-            yield break;
+            return;            
         }
 
         foreach (var group in activatorGroups)
@@ -36,21 +35,20 @@ public class ComposerClassFactory
 
             if (args.Length == 0)
             {
-                yield return (IZeClassComposer)constructor.Invoke(null);
-                continue;
+                this.Add((IZeClassComposer)constructor.Invoke(null));                
             }
 
             if (args.Length == 1 && typeof(IEnumerable).IsAssignableFrom(args.First().ParameterType))
             {
-                yield return (IZeClassComposer)constructor.Invoke(new[] { group.ToArray() });
-                continue;
+                this.Add((IZeClassComposer)constructor.Invoke(new[] { group.ToArray() }));
+                break;
             }
 
             if (args.Length == 1 && typeof(ZeComposerAttribute) == args.First().ParameterType)
             {
                 foreach (var attribute in group)
                 {
-                    yield return (IZeClassComposer)constructor.Invoke(new object[] { attribute });
+                    this.Add((IZeClassComposer)constructor.Invoke(new object[] { attribute }));
                 }
 
                 continue;
@@ -59,4 +57,8 @@ public class ComposerClassFactory
             throw new ArgumentException("Could not create activator, constructor must be empty, take a single ZeActivatorAttribute or a IEnumerable<ZeActivationAttribute> to be valid.");
         }
     }
+
+    public object? Get(ParameterInfo arg) =>this.Select(n => n.Get(arg.ParameterType))
+        .FirstOrDefault();
+    
 }
