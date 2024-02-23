@@ -1,6 +1,6 @@
 ﻿namespace ZeUnit.Composers;
 
-public class SingletonComposer : ZeClassComposer<SingletonAttribute>
+public class SingletonComposer : ZeClassComposer<OnlyAttribute>
 {    
     public SingletonComposer(ZeComposerAttribute[] attributes) 
         : base(attributes)

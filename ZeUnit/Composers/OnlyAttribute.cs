@@ -3,9 +3,9 @@ using System;
 
 namespace ZeUnit.Composers;
 
-public class SingletonAttribute : ZeComposerAttribute<SingletonComposer>
+public class OnlyAttribute : ZeComposerAttribute<SingletonComposer>
 {
-    public SingletonAttribute(Type @class) 
+    public OnlyAttribute(Type @class) 
     {        
         this.Type = @class;     
     }

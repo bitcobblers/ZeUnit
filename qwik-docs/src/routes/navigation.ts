@@ -1,8 +1,13 @@
 export const navigation = [
   {
-    title: 'Introduction',
+    title: '',
     links: [
-      { title: 'Overview', href: '/'},
+      { title: 'Overview', href: '/'},      
+    ],
+  },
+  {
+    title: 'Introduction',
+    links: [      
       { title: 'Getting Started', href: '/docs/getting-started/' },
       { title: 'Test Execution & Dependecies', href: '/docs/test-execution/' },
       { title: 'Testing a Calculator', href: '/docs/testing-a-calculator/' }
