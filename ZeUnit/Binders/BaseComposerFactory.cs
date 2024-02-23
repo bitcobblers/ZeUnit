@@ -10,8 +10,8 @@ public abstract class BaseComposerFactory<TDefault>
     protected IEnumerable<IZeMethodBinder> Get(IEnumerable<Attribute> attributes)
     {
         var activatorGroups = attributes
-            .Where(n => n.GetType().IsAssignableTo(typeof(ZeComposerAttribute)))
-            .Select(n => (ZeComposerAttribute)n)
+            .Where(n => n.GetType().IsAssignableTo(typeof(ZeBinderAttribute)))
+            .Select(n => (ZeBinderAttribute)n)
             .GroupBy(n => n.Activator, n => n);
 
         if (!activatorGroups.Any())
@@ -44,7 +44,7 @@ public abstract class BaseComposerFactory<TDefault>
                 continue;
             }
 
-            if (args.Length == 1 && typeof(ZeComposerAttribute) == args.First().ParameterType)
+            if (args.Length == 1 && typeof(ZeBinderAttribute) == args.First().ParameterType)
             {
                 foreach (var attribute in group)
                 {

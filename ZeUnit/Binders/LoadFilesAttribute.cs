@@ -6,7 +6,7 @@
 namespace ZeUnit.Binders;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-public class LoadFilesAttribute : ZeComposerAttribute<LoadDirectoryMethodComposer<LoadSingleFileFromDirectoryFileMapper>>, ILoadFilesAttribute
+public class LoadFilesAttribute : ZeBinderAttribute<LoadDirectoryMethodComposer<LoadSingleFileFromDirectoryFileMapper>>, ILoadFilesAttribute
 {
     public LoadFilesAttribute(string directory)
     {

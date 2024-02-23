@@ -1,17 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-namespace ZeUnit.Composers;
+using ZeUnit.Composers;
+
+namespace ZeUnit;
 
 public class ComposerClassFactory : List<IZeClassComposer>
-// : BaseComposerFactory<IZeClassComposer, CoreClassComposer>
-{
+{ 
     public ComposerClassFactory(Type @class)
     {
         var attributes = @class.GetCustomAttributes();
 
         var activatorGroups = attributes
-           .Where(n => n.GetType().IsAssignableTo(typeof(ZeInjectorAttribute)))
-           .Select(n => (ZeInjectorAttribute)n)
+           .Where(n => n.GetType().IsAssignableTo(typeof(ZeComposerAttribute)))
+           .Select(n => (ZeComposerAttribute)n)
            .GroupBy(n => n.Activator, n => n);
 
         if (!activatorGroups.Any())
@@ -29,20 +30,19 @@ public class ComposerClassFactory : List<IZeClassComposer>
 
             var args = constructor.GetParameters();
 
-
-
             if (args.Length == 0)
             {
                 Add((IZeClassComposer)constructor.Invoke(null));
+                continue;
             }
 
             if (args.Length == 1 && typeof(IEnumerable).IsAssignableFrom(args.First().ParameterType))
             {
                 Add((IZeClassComposer)constructor.Invoke(new[] { group.ToArray() }));
-                break;
+                continue;
             }
 
-            if (args.Length == 1 && typeof(ZeComposerAttribute) == args.First().ParameterType)
+            if (args.Length == 1 && typeof(ZeBinderAttribute) == args.First().ParameterType)
             {
                 foreach (var attribute in group)
                 {
@@ -56,7 +56,8 @@ public class ComposerClassFactory : List<IZeClassComposer>
         }
     }
 
-    public object? Get(ParameterInfo arg) => this.Select(n => n.Get(arg.ParameterType))
-        .FirstOrDefault();
+    public object? Get(ParameterInfo arg) => this
+        .Select(n => n.Get(arg.ParameterType))
+        .FirstOrDefault(n=>n != null);
 
 }

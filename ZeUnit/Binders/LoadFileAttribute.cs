@@ -3,7 +3,7 @@
 namespace ZeUnit.Binders;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-public class LoadFileAttribute : ZeComposerAttribute<LoadFileMethodComposer>
+public class LoadFileAttribute : ZeBinderAttribute<LoadFileMethodComposer>
 {
     public LoadFileAttribute(params string[] fileNames)
     {

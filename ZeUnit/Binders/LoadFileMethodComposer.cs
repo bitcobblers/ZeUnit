@@ -18,7 +18,7 @@ public class LoadFileMethodComposer : IZeMethodBinder
         new DeserializeJsonLoad(),
     };
 
-    public LoadFileMethodComposer(ZeComposerAttribute attribute)
+    public LoadFileMethodComposer(ZeBinderAttribute attribute)
     {
         this.attribute = (LoadFileAttribute)attribute;
     }

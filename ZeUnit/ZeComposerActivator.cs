@@ -1,16 +1,16 @@
 ﻿namespace ZeUnit;
 
-public abstract class ZeComposerActivator
+public abstract class ZeBinderActivator
 {
-    protected ZeComposerActivator(ZeComposerAttribute attribute) 
+    protected ZeBinderActivator(ZeBinderAttribute attribute) 
         : this(new[] { attribute })
     {
     }
 
-    protected ZeComposerActivator(ZeComposerAttribute[] attribute)
+    protected ZeBinderActivator(ZeBinderAttribute[] attribute)
     {
         Attribute = attribute;
     }
 
-    public ZeComposerAttribute[] Attribute { get; }
+    public ZeBinderAttribute[] Attribute { get; }
 }

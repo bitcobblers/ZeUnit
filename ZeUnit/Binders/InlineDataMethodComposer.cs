@@ -10,7 +10,7 @@ public class InlineDataMethodComposer : IZeMethodBinder
     private readonly InlineDataAttribute attribute;
     private bool disposedValue;
 
-    public InlineDataMethodComposer(ZeComposerAttribute attribute)
+    public InlineDataMethodComposer(ZeBinderAttribute attribute)
     {
         this.attribute = (InlineDataAttribute)attribute;
     }

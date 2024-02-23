@@ -1,104 +1,28 @@
 ﻿using ZeUnit.Composers;
 
 namespace ZeUnit;
-public interface IZeLifecycle<TFactory> : IZeLifecycle
-    where TFactory : IZeClassFactory
-{
-}
-public interface IZeLifecycle
-{
-}
 
-public interface IOrderedLifeCycle : IZeLifecycle<OrderedLifecycleFactory>
-{
-}
-
-public interface ITransientLifeCycle : IZeLifecycle<TransientLifecycleFactory>
-{
-}
-
-public interface IZeDependency
-{
-
-}
-public class OrderedLifecycleFactory : IZeClassFactory
-{
-    public OrderedLifecycleFactory(TypeInfo typeInfo)
-    {
-    }
-
-    public void Dispose()
-    {
-        throw new NotImplementedException();
-    }
-
-    public object Get()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-
-public class TransientLifecycleFactory : IZeClassFactory, IZeDependency
-{
-    private readonly ComposerClassFactory zeClassComposer;
-    private readonly TypeInfo typeInfo;
-
-    public TransientLifecycleFactory(TypeInfo typeInfo)
-    {
-        this.zeClassComposer = new ComposerClassFactory(typeInfo);
-        this.typeInfo = typeInfo;
-    }
-    
-    public object Get()
-    {
-        var constructors = typeInfo.GetConstructors()
-            .Select(n =>new { ConstructorInfo = n, Args = n.GetParameters() })
-            .OrderBy(n => n.Args.Length);
-
-        foreach(var constuctor in constructors)
-        {
-            var values = new List<object>();
-            foreach (var arg in constuctor.Args)
-            {
-                var value = zeClassComposer.Get(arg);
-                if (value == null)
-                {
-                    break;
-                }
-
-                values.Add(value);
-            }
-            if (values.Count == constuctor.Args.Length)
-            {
-                if (constuctor.Args.Length == 0)
-                {
-                    return constuctor.ConstructorInfo.Invoke(null);                    
-                }
-
-                if (constuctor.Args.Length == 1 && typeof(IEnumerable).IsAssignableFrom(values.First().GetType()))
-                {
-                    return constuctor.ConstructorInfo.Invoke(new[] { values.ToArray() });                    
-                }
-
-                return constuctor.ConstructorInfo.Invoke(values.ToArray());           
-            }
-        }
-        
-        return Activator.CreateInstance(typeInfo)!;
-    }
-    public void Dispose()
-    {
-    }
-
-}
-
-public interface IZeClassFactory : IDisposable
-{
-    object Get();
-}
-
-public interface IZeClassComposer : IDisposable
+public interface IZeClassComposer
 {
     object? Get(Type args);
+}
+
+public abstract class ZeClassComposer<TAttribute> : IZeClassComposer
+    where TAttribute : ZeComposerAttribute
+{
+    protected ZeClassComposer(ZeComposerAttribute attribute) : this(new []{ attribute })
+    {
+    }
+
+    protected ZeClassComposer(ZeComposerAttribute[] attributes) 
+    {
+        Attributes = attributes
+            .Where(n => n.GetType().IsAssignableTo(typeof(TAttribute)))
+            .Select(n => (TAttribute)n)
+            .ToArray();
+    }
+
+    public TAttribute[] Attributes { get; }
+
+    public abstract object? Get(Type args);
 }

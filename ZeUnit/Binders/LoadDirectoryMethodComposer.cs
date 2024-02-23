@@ -9,7 +9,7 @@ public class LoadDirectoryMethodComposer<TFileMapper> : IZeMethodBinder
     private readonly string directory;
     private bool disposedValue;
 
-    public LoadDirectoryMethodComposer(ZeComposerAttribute attribute)
+    public LoadDirectoryMethodComposer(ZeBinderAttribute attribute)
     {
         directory = Path.GetFullPath(((ILoadFilesAttribute)attribute).Directory);
     }
