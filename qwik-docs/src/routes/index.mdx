@@ -104,32 +104,18 @@ The `InlineData` is a familiar tool of existing unit testing frameworks, but jus
 Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However building a testing framework on top of reactive IObservable classes, being able to build out depdeenciey chaines that for behavior becomes prety trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
 
 <Warning>
-The features around `IZeDependency` interface and `SuiteOrder` are not currently implemented in the current version of ZeUnit.  They are planned for a future release.
+The features around `DependsOn` are not currently implemented in the current version of ZeUnit.  They are planned for a future release.
 </Warning>
 
-- `OrderedSuite<NextKitchenSinkOrder>` is doing some interesting work alloing us to define that some tests in the suite have to run before others by creating a `NextKitchenSinkOrder` class that inherits from `SuiteOrder<TheKitchenSinkSuite>`.  This allowis to report on method dependencies to figure out order of execution.
-- `IZeDependency<TheKitchenSinkSuite>` is a way to define that `NextKitchenSinkSuite` depends on `TheKitchenSinkSuite` to be run first 
-
-With all the order set, the tests that would usually be bad form can be garantied to run the correct order with minimal developer code at the test level. Overriding the `OrderRun` allows to wait for a specific test with in the class to run before the next test is executed.
+- `[DependsOn("AddOneMoreFirst")]` is doing some interesting work alloing us to define that some tests in the suite have to run before others by creating a dependency.
+- `[DependsOn(typeof(TheKitchenSinkSuite))]` is a way to define that `NextKitchenSinkSuite` depends on `TheKitchenSinkSuite` to be run first 
 
 
 ```csharp
-public class NextKitchenSinkOrder : SuiteOrder<TheKitchenSinkSuite>
-{
-    public NextKitchenSinkOrder()
-    {
-        this.Fact(this, "CheckTotalValue").DependsOn("AddOneMoreFirst");        
-    }
-}
-```
 
-```csharp
-
-
+[DependsOn(typeof(TheKitchenSinkSuite))]
 [Singleton(typeof(SingletonCounter))]
-public class NextKitchenSinkSuite 
-    : OrderedSuite<NextKitchenSinkOrder>
-    , IZeDependency<TheKitchenSinkSuite>
+public class NextKitchenSinkSuite     
 {    
     private readonly SingletonCounter counter;
 
@@ -144,6 +130,7 @@ public class NextKitchenSinkSuite
         return true;
     }    
 
+    [DependsOn("AddOneMoreFirst")]
     public Fact CheckTotalValue()
     {                    
         return counter.Value() == 5;
