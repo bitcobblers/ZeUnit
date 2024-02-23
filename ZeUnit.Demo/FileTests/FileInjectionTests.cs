@@ -8,7 +8,7 @@ namespace ZeUnit.Demo.FileTests
         public int Count = 0;
     }
 
-    [Composers.Singleton(typeof(TestSingleton))]
+    [Only(typeof(TestSingleton))]
     [LamarContainer(typeof(SimpleServiceInjectionRegistry))]
     public class CoreFactoryCanMixComposers
     {
@@ -26,59 +26,6 @@ namespace ZeUnit.Demo.FileTests
             yield return this.one != null;
             yield return this.service != null;
         }
-    }
-
-    public class SingletonStateTests
-    {
-      
-        [Composers.Singleton(typeof(TestSingleton))]
-        public class FirstSingletonStateTest
-        {
-            private readonly TestSingleton onlyOne;
-
-            public FirstSingletonStateTest(TestSingleton onlyOne)
-            {
-                this.onlyOne = onlyOne;
-            }
-
-            public Fact ValueShouldBeZero()
-            {
-                return this.onlyOne.Count == 0;
-            }
-        }
-
-        [Composers.Singleton(typeof(TestSingleton))]
-        public class SecondSingletonStateTest : IZeDependency<FirstSingletonStateTest>
-        {
-            private readonly TestSingleton onlyOne;
-
-            public SecondSingletonStateTest(TestSingleton onlyOne)
-            {
-                this.onlyOne = onlyOne;
-            }
-
-            public Fact ValueAddedOneShouldBeOne()
-            {
-                return ++this.onlyOne.Count == 1;
-            }
-        }
-
-        [Composers.Singleton(typeof(TestSingleton))]
-        public class ThirdSingletonStateTest : IZeDependency<SecondSingletonStateTest>
-        {
-            private readonly TestSingleton onlyOne;
-
-            public ThirdSingletonStateTest(TestSingleton onlyOne)
-            {
-                this.onlyOne = onlyOne;
-            }
-
-            public Fact ValueShouldBeOne()
-            {
-                return this.onlyOne.Count == 1;
-            }
-        }
-
     }
 
     public class FileInjectionTests
