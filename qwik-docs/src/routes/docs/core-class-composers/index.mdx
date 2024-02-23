@@ -12,5 +12,5 @@ For a test to execute, a class needs to exist.  But before the class the exist, 
 The default lifecaylse are inherited from:
 
 - `TransientSuite` - which is the default class lifecycles and will automatically be applied to a test class that has not been marked with this inhertied class.
-- `OrderedSuite` -  this is a singleton lifecycle for the test class and as a result may require some tests to execute before others allowing the suite to be its own state machine.
+- `ReEntrySuite` -  this is a singleton lifecycle for the test class and as a result may require some tests to execute before others allowing the suite to be its own state machine.
 
