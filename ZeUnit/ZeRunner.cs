@@ -13,7 +13,7 @@ public class ZeRunner
         this.runners = testRunners;
     }
 
-    public IObservable<(ZeTest, Fact)> Run(ZeTest test, IZeLifeCycleFactory factory)
+    public IObservable<(ZeTest, Fact)> Run(ZeTest test, IZeClassFactory factory)
     {
         // foreach (var arguments in test.MethdoActivator.Get(test.Method))
 

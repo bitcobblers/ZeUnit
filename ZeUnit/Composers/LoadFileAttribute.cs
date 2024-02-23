@@ -3,10 +3,9 @@
 namespace ZeUnit.Composers;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-public class LoadFileAttribute : ZeComposerAttribute
+public class LoadFileAttribute : ZeComposerAttribute<LoadFileMethodComposer>
 {
-    public LoadFileAttribute(params string[] fileNames) 
-        : base(typeof(LoadFileMethodComposer))
+    public LoadFileAttribute(params string[] fileNames)         
     {    
         this.FileNames =  fileNames;
     }

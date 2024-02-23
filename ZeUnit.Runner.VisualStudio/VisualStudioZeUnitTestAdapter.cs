@@ -55,19 +55,11 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                 .FromAssembly(source.Key);
 
             var classes = source.Select(n => (discovery.FirstOrDefault(z => z.Name == n.FullyQualifiedName), n))
-                .GroupBy(pair => (pair.Item1?.Class, pair.Item1?.ClassActivator));
+                .GroupBy(pair => (pair.Item1?.Class, pair.Item1?.ClassFactory));
 
             foreach (var classPair in classes)
             {
-                var (@class, composer) = classPair.Key;
-                var lifeCycle = @class!.ImplementedInterfaces.Contains(typeof(IZeLifecycle))
-                ? @class.ImplementedInterfaces.First(n => n.IsGenericType).GetGenericArguments().First()
-                : typeof(TransientLifeCycleFactory);
-
-                var factory = (IZeLifeCycleFactory)Activator.CreateInstance(lifeCycle, composer!, @class!)!;
-
-
-
+                var (@class, factory) = classPair.Key;                                
                 foreach (var (zeTest, testCase) in classPair)
                 {
                     var result = new TestResult(testCase);
@@ -80,7 +72,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
                         continue;
                     }
 
-                    executionList.Add(runner.Run(zeTest, factory).Select(pair =>
+                    executionList.Add(runner.Run(zeTest, factory!).Select(pair =>
                     {
                         var (zeTest, Ze) = pair;
                         result.Duration = Ze.Duration;

@@ -3,10 +3,9 @@
 namespace ZeUnit.Composers;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-public class LoadFileGroupsAttribute : ZeComposerAttribute, ILoadFilesAttribute
+public class LoadFileGroupsAttribute : ZeComposerAttribute<LoadDirectoryMethodComposer<LoadFileGroupsFromDirectoryFileMapper>>, ILoadFilesAttribute
 {
     public LoadFileGroupsAttribute(string directory)
-        : base(typeof(LoadDirectoryMethodComposer<LoadFileGroupsFromDirectoryFileMapper>))
     {
         this.Directory = directory;
     }

@@ -6,10 +6,16 @@ namespace ZeUnit.Composers;
 public class CoreClassComposer : IZeClassComposer
 {
     private bool disposedValue;
+    private readonly Type @class;
 
-    public object Get(TypeInfo @class)
+    public CoreClassComposer(Type @class)
     {
-        return Activator.CreateInstance(@class)!;
+        this.@class = @class;
+    }
+
+    public object? Get(Type @class)
+    {
+        return Activator.CreateInstance(@class);        
     }
 
     protected virtual void Dispose(bool disposing)

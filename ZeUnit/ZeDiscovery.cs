@@ -1,4 +1,7 @@
-﻿namespace ZeUnit;
+﻿using System.Net.Http.Headers;
+using ZeUnit.Composers;
+
+namespace ZeUnit;
 
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
@@ -61,7 +64,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                     {
                         Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{activation.a.Key}::{index}",
                         Class = classType,
-                        ClassActivator = activator,
+                        ClassFactory = new TransientLifecycleFactory(new[] { activator }, classType),                        
                         Method = method,
                         Arguments = () => activation.a.Arguments,
                     });

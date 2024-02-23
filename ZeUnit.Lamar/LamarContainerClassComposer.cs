@@ -7,22 +7,21 @@ public class LamarContainerClassComposer : IZeClassComposer
     private readonly Container container;
     private bool disposedValue;
 
-    public LamarContainerClassComposer(IEnumerable<ZeComposerAttribute> attributes)
+    public LamarContainerClassComposer(IEnumerable<ZeInjectorAttribute> attributes)
     {
         this.container = new Container(new ServiceRegistry());
-        foreach (var registryType in attributes            
-            .Where(n=>n.GetType().IsAssignableTo(typeof(LamarContainerAttribute)))            
+        foreach (var registryType in attributes
+            .Where(n => n.GetType().IsAssignableTo(typeof(LamarContainerAttribute)))
             .Select(n => ((LamarContainerAttribute)n).Registry))
         {
             var registry = (ServiceRegistry)this.container.GetInstance(registryType);
             this.container.Configure(registry);
         }
     }
-    
-    public object Get(TypeInfo @class)
+
+    public object? Get(Type @class)
     {
-        
-        return this.container.GetInstance(@class);
+        return  this.container.GetInstance(@class);
     }
 
     protected virtual void Dispose(bool disposing)

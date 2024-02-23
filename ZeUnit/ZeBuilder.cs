@@ -39,7 +39,7 @@ public class ZeBuilder
 
     public IZeReporter GetReporter()
     {
-        return new CompoundReporter(this.reporters);
+        return (CompoundReporter)this.reporters;
     }
 
     public IEnumerable<ZeTestRunner> Runners()

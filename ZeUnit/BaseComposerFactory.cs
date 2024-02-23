@@ -2,10 +2,12 @@
 
 namespace ZeUnit;
 
-public abstract class BaseComposerFactory<TInterface, TDefault>
-    where TDefault : TInterface, new()
-{  
-    protected IEnumerable<TInterface> Get(IEnumerable<Attribute> attributes)
+public abstract class BaseComposerFactory<TDefault>    
+    where TDefault : IZeMethodBinder
+{
+    public abstract TDefault Create(Type defaultType);
+
+    protected IEnumerable<IZeMethodBinder> Get(IEnumerable<Attribute> attributes)
     {
         var activatorGroups = attributes
             .Where(n => n.GetType().IsAssignableTo(typeof(ZeComposerAttribute)))
@@ -14,7 +16,7 @@ public abstract class BaseComposerFactory<TInterface, TDefault>
 
         if (!activatorGroups.Any())
         {
-            yield return new TDefault();
+            yield return Create(typeof(TDefault));
             yield break;
         }
 
@@ -32,13 +34,13 @@ public abstract class BaseComposerFactory<TInterface, TDefault>
 
             if (args.Length == 0)
             {
-                yield return (TInterface)constructor.Invoke(null);
+                yield return (IZeMethodBinder)constructor.Invoke(null);
                 continue;
             }
 
             if (args.Length == 1 && typeof(IEnumerable).IsAssignableFrom(args.First().ParameterType))
             {
-                yield return (TInterface)constructor.Invoke(new[] { group.ToArray() });
+                yield return (IZeMethodBinder)constructor.Invoke(new[] { group.ToArray() });
                 continue;
             }
 
@@ -46,7 +48,7 @@ public abstract class BaseComposerFactory<TInterface, TDefault>
             {
                 foreach (var attribute in group)
                 {
-                    yield return (TInterface)constructor.Invoke(new object[] { attribute });
+                    yield return (IZeMethodBinder)constructor.Invoke(new object[] { attribute });
                 }
 
                 continue;
