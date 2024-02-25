@@ -12,7 +12,7 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       staticAdapter({
-        origin: "https://bitcobblers.github.io/ZeUnit/",
+        origin: "https://bitcobblers.github.io/",
       }),
     ],
   };
