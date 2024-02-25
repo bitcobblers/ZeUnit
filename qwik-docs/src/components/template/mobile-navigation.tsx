@@ -1,8 +1,10 @@
-import { component$, useSignal} from "@builder.io/qwik"
+import { component$, $, useStore, useSignal} from "@builder.io/qwik"
 import { Logomark } from "./logo";
 import Navigation from "./navigation";
 // import { Link } from "@builder.io/qwik-city";
 // import { Logomark } from "./logo";
+
+import { Modal, ModalContent } from '@qwik-ui/headless';
 
 const MenuIcon = component$((props: any) => {
     return (
@@ -35,30 +37,32 @@ const CloseIcon = component$((props: any) => {
   });
   
   export default component$(() => {
-    const isOpen  = useSignal(false);
-  
-     function onLinkClick(event: any) {
-       const link = event.currentTarget
-       if (
-        link.pathname + link.search + link.hash ===
-        window.location.pathname + window.location.search + window.location.hash
-      ) {
-        isOpen.value = false;
-      }
-    }
-    
+    const isOpen  = useSignal(true);
+        
+    //  function onLinkClick(event: any) {
+    //    const link = event.currentTarget
+    //    if (
+    //     link.pathname + link.search + link.hash ===
+    //     window.location.pathname + window.location.search + window.location.hash
+    //   ) {
+    //     isOpen. value = false;
+    //   }
+    // }
     return (
       <>
         <button
           type="button"
-           onClick$={() => isOpen.value = false}
+           onClick$={$(() => { 
+            console.log('clicked');
+            
+            isOpen.value = true;})}
           class="relative"
           aria-label="Open navigation"
         >
           <MenuIcon class="h-6 w-6 stroke-slate-500" />
         </button>        
         <CloseIcon class="h-6 w-6 stroke-slate-500" /> 
-         <div
+         <div hidden={!isOpen}          
           class="fixed inset-0 z-50 flex items-start overflow-y-auto bg-slate-900/50 pr-10 backdrop-blur lg:hidden"
           aria-label="Navigation"
         >
@@ -66,7 +70,7 @@ const CloseIcon = component$((props: any) => {
             <div class="flex items-center">
               <button
                 type="button"
-                onClick$={() => close()}
+                onClick$={$(() => isOpen.value = false)}
                 aria-label="Close navigation"
               >
                 <CloseIcon class="h-6 w-6 stroke-slate-500" />

@@ -46,6 +46,7 @@
     "vite-tsconfig-paths": "^4.2.1"
   },
   "dependencies": {
+    "@qwik-ui/headless": "^0.2.2",
     "@tailwindcss/typography": "^0.5.10",
     "mermaid": "^10.8.0",
     "prismjs": "^1.29.0"

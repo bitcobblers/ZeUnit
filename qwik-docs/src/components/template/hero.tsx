@@ -5,7 +5,7 @@ import HeroBackground from "./hero-background"
 import Highlight from "./highlight"
  
 const codeLanguage = 'csharp'
- const code = `<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BarebondesSuite</span>
+ const code = `<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SimpleSuite</span>
  <span class="token punctuation">{</span>
      <span class="token keyword">public</span> <span class="token return-type class-name">Fact</span> <span class="token function">GetExpectedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
      <span class="token punctuation">{</span>   
