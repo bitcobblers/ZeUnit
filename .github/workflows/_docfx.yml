@@ -44,7 +44,7 @@ jobs:
         run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,"/docs/,"/ZeUnit/docs/,g' {} \;       
 
       - name: Find and Replace HTML (/docs/ -> ZeUnit/docs/)
-        run: find ./qwik-docs/dist/ -name '*.json' -type f -exec sed -i 's,"/docs/,"/ZeUnit/docs/,g' {} \;       
+        run: find ./qwik-docs/dist/ -name '*.js*' -type f -exec sed -i 's,"/docs/,"/ZeUnit/docs/,g' {} \;       
 
       - name: Find and Replace HTML (fave-icon)
         run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,href="favicon.ico,href="ZeUnit/favicon.ico,g' {} \;       
