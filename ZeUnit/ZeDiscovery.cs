@@ -46,20 +46,23 @@ public class ZeDiscovery : IEnumerable<ZeTest>
         foreach (var method in source
             .GetTypes()
             .SelectMany(type => (type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-            .Where(m => supportedTypes.Contains(m.ReturnType)))
-            .Where(m => m.GetCustomAttributes().All(a => a?.GetType() != typeof(SkipAttribute))))
+            .Where(m => supportedTypes.Contains(m.ReturnType))))
         {
             var classType = method.DeclaringType!.GetTypeInfo();
             var lifecycle = classType.GetInterfaces()
                 .Where(n => n.IsAssignableFrom(typeof(IZeLifecycle<>)))
                 .Select(n => n.GenericTypeArguments[0])
                 .FirstOrDefault();
+
             var factory = lifecycle != null 
                 ? (IZeClassFactory)Activator.CreateInstance(lifecycle)! 
                 : new TransientLifecycleFactory(classType);
 
             var tracker = new IndexTracker();
-            var composers = this.MethodFactory.Get(method);
+            var attributes = method.GetCustomAttributes()
+                .ToArray();
+
+            var composers = this.MethodFactory.Get(attributes);
             var methodActivations = composers.SelectMany(n => n.Get(method).Select(a => (n.GetType().Name, a)));
             foreach (var activation in methodActivations)
             {
@@ -71,6 +74,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                     ClassFactory = factory,
                     Method = method,                   
                     Arguments = () => activation.a.Arguments,
+                    Skipped = attributes.Any(n=>n is SkipAttribute)
                 });
             }
         }
