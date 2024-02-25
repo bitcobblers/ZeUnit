@@ -48,7 +48,7 @@ export default component$(() => {
   }));
 
   const current = useLocation();
-  const isHome = current.url.pathname == "/ZeUnit/" || current.url.pathname == "/";
+  const isHome = current.url.pathname == "/";
   return (
     <>      
       <main class="flex min-h-full bg-white dark:bg-slate-900">
