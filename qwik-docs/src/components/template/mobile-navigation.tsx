@@ -1,10 +1,8 @@
-import { component$, $, useStore, useSignal} from "@builder.io/qwik"
-import { Logomark } from "./logo";
+import { component$, $, useSignal} from "@builder.io/qwik"
+import { Logo } from "./logo";
 import Navigation from "./navigation";
 // import { Link } from "@builder.io/qwik-city";
 // import { Logomark } from "./logo";
-
-import { Modal, ModalContent } from '@qwik-ui/headless';
 
 const MenuIcon = component$((props: any) => {
     return (
@@ -56,13 +54,12 @@ const CloseIcon = component$((props: any) => {
             console.log('clicked');
             
             isOpen.value = true;})}
-          class="relative"
+          class="relative flex"
           aria-label="Open navigation"
         >
-          <MenuIcon class="h-6 w-6 stroke-slate-500" />
-        </button>        
-        <CloseIcon class="h-6 w-6 stroke-slate-500" /> 
-         <div hidden={!isOpen}          
+          <MenuIcon class="h-6 w-6 stroke-slate-500" />          
+        </button>               
+         <div
           class="fixed inset-0 z-50 flex items-start overflow-y-auto bg-slate-900/50 pr-10 backdrop-blur hidden"
           aria-label="Navigation"
         >
@@ -74,10 +71,7 @@ const CloseIcon = component$((props: any) => {
                 aria-label="Close navigation"
               >
                 <CloseIcon class="h-6 w-6 stroke-slate-500" />
-              </button>
-              <a href="/" class="ml-6" aria-label="Home page">
-                <Logomark class="h-9 w-9" />
-              </a>
+              </button>              
             </div>
             <Navigation />
           </div>
