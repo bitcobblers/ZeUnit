@@ -2,8 +2,8 @@ import Warning from '~/components/template/warning'
 
 # Coming Soon
 
-<Warning title="Under Consutrction" >
-    This page is under consutrction and may contain icomplete or incorrect information.
+<Warning title="Under Construction" >
+    This page is under construction and may contain incomplete or incorrect information.
 </Warning>
 
 
@@ -26,4 +26,4 @@ public class InjectionZeUnitClass
 }
 ```
 
-Behind the scenes, the *SimpleServiceInjectorRegistraty* that is passed into the *LamarContainerAttribute* creates the container registration for *ISimpleInjectedService* with some implementation. When the testing framework calls a Composer defined in the *LamarContainerAttribute*, this composer is responsible for creating the instance of the class.
+Behind the scenes, the `SimpleServiceInjectorRegistry` passed into the `LamarContainerAttribute` creates the container registration for `ISimpleInjectedService` with some implementation. When the testing framework calls the composer it will use the Lamar-based implementation.
