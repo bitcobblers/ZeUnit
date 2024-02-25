@@ -1,10 +1,10 @@
 import { component$ } from "@builder.io/qwik"
-import logo from '../../../images/zeunit.png' 
+import zeunit from '/images/zeunit.png' 
   
 
 const Logomark = component$(() => {
     return (
-      <img class="h-8 w-8" src={logo} height={24} width={24} />
+      <img class="h-8 w-8" src={zeunit} height={24} width={24} />
     )
   });
   
