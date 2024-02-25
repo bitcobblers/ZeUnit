@@ -13,7 +13,7 @@ export const navigation = [
       { title: 'Rich Assertions', href: '/docs/rich-assertions/' },
       { title: 'Method Binders', href: '/docs/core-method-binders/' },      
       { title: 'Class Composers', href: '/docs/core-class-composers/' },      
-      { title: 'Test Suites & Lifecycles', href: '/docs/test-suites-lifecylces/' },
+      { title: 'Test & Suite Lifecycle', href: '/docs/test-suite-lifecylce/' },
       { title: 'Reporting', href: '/docs/core-reporting/' },
     ],
   },
