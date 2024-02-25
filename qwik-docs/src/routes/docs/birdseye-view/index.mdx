@@ -5,7 +5,7 @@ import Notes from '~/components/template/notes'
 import Warning from '~/components/template/warning'
 
 <Notes title="Follow Along">
-Jump into the [Getting Started](/docs/getting-started/) guide to follow along on your local computer.
+Jump into the [Getting Started](/) guide to follow along on your local computer.
 </Notes>
 
 
@@ -13,7 +13,7 @@ Jump into the [Getting Started](/docs/getting-started/) guide to follow along on
 
 The example above in the `SimpleSuite`, is the most basic form that of a test in ZeUnit.  There is no constructor injection or custom method bindings as a result it defaults to `TransientSuite` with a `TransientLifecycleFactory` for the class lifecycle.
 
-The test it self at the low level boils down to a simple assertion: `return value == "expected";`.   With little help from <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators" target="_blank">implicit type operators</a> magic the `bool` is converted to a `Fact<bool>` allowing the code to compile and the test to report results. 
+The test itself at the low level boils down to a simple assertion: `return value == "expected";`.   With little help from <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators" target="_blank">implicit type operators</a> magic the `bool` is converted to a `Fact<bool>` allowing the code to compile and the test to report results. 
 
 <Notes>
 A secondary implicit conversion operator is also created on `Tuple<bool, string>` to support custom messages to be returned along with the tests status.
@@ -30,12 +30,12 @@ public class SimpleSuite : TransientSuite
 ```
 
 <Notes>
-The example above explicitly defines the lifecycle by inheriting form the `TransientSuite` class, this the defualt behavior for classes that don't inherit a Suite class.
+The example above explicitly defines the lifecycle by inheriting form the `TransientSuite` class, this the default behavior for classes that don't inherit a Suite class.
 </Notes>
 
 ## Adding Assertions
 
-While the shortand `bool` and `Tuple<bool, string>` are useful for quick and dirty tests, a simple pass and fail fials to give evough details for troubleshooting, and having to write out custom messages for every test would become very tedious.  This is where `ZeUnit.Assertions` namespace shines.  The <a href="https://docs.shouldly.org/documentation/getting-started" target="_blank">shoudly</a> inspired collection of helper supercharge the testing process.
+While the shorthand `bool` and `Tuple<bool, string>` are useful for quick and dirty tests, a simple pass and fails to give enough details for troubleshooting, and having to write out custom messages for every test would become very tedious.  This is where `ZeUnit.Assertions` namespace shines.  The <a href="https://docs.shouldly.org/documentation/getting-started" target="_blank">shoudly</a> inspired collection of helper supercharge the testing process.
 
 ```csharp
 public class AssertionSuite
@@ -51,13 +51,13 @@ public class AssertionSuite
  }
 ``` 
 
-A similar test could be written using the `bool` but would require that is is broken into 3 seperate tests or that the test returns the type `IEnumerable<Fact>` allowing for `yield return` syntax for multiple assertions.
+A similar test could be written using the `bool` but would require that is is broken into 3 separate tests or that the test returns the type `IEnumerable<Fact>` allowing for `yield return` syntax for multiple assertions.
 
-The other added value in using the assertion library over the shorthand `bool` tests is the rich reporting on the objects under tests.  Somethign that is lost when implicity converting from `bool` to `Fact`.
+The other added value in using the assertion library over the shorthand `bool` tests is the rich reporting on the objects under tests.  Something that is lost when implicitly converting from `bool` to `Fact`.
 
-## The Kittche Sink
+## The Kitchen Sink
 
-The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create many test with very few lines of code.  Out the gate there are two attributes that define the attributes that are used for class composition to fill the test class dependecies.  
+The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create many test with very few lines of code.  Out the gate there are two attributes that define the attributes that are used for class composition to fill the test class dependencies.  
 
 - The `Singleton` attribute creates a single instance of a value to be shared by all the test that inject the values.  More on this shortly.
 - The `LamarContainer` attribute creates a DI container and registers the `CalculatorRegistry` to the container allowing the `ICalculator` to be injected into the class.
@@ -94,7 +94,7 @@ public class TheKitchenSinkSuite
 ```
 The `InlineData` is a familiar tool of existing unit testing frameworks, but just like the `ZeClassComposer` customizations ZeUnit focus on making custom method bindings easy to create.  More on this in the [Method Bindings](/docs/core-method-binders/) section.
 
-Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However building a testing framework on top of reactive IObservable classes, being able to build out dependencies chaines that for behavior becomes prety trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
+Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However building a testing framework on top of reactive IObservable classes, being able to build out dependencies chaines that for behavior becomes pretty trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
 
 <Warning>
 The features around `DependsOn` are not currently implemented in the current version of ZeUnit.  They are planned for a future release.
@@ -135,10 +135,10 @@ public class NextKitchenSinkSuite
 
 The outcome here is that `TheKitchenSinkSuite` is run first allowing each of the `InlineData` method binding to execute the `AdditionHarness` method.  This keeps incrementing the `SingletonCounter` and which is always the same despite `TheKitchenSinkSuite` being transient for each instance of the method binding.
 
-Once all of tests in `TheKitchenSinkSuite` the dependecy defined on `NextKitchenSinkSuite` with the `IZeDependency<TheKitchenSinkSuite>` interface is satified and ZeUnit will pick up the Facts.  The lifecycle of this class however is modied by inheritence from the `OrderedSuite<NextKitchenSinkOrder>` which deffers figure out method fact depdeacies as a `SuiteOrder` class.
+Once all of tests in `TheKitchenSinkSuite` the dependency defined on `NextKitchenSinkSuite` with the `IZeDependency<TheKitchenSinkSuite>` interface is satisfied and ZeUnit will pick up the Facts.  The lifecycle of this class however is modified by inheritance from the `OrderedSuite<NextKitchenSinkOrder>` which defers figuring out method fact dependencies as a `SuiteOrder` class.
 
-The `SuiteOrder` override method behind the scence wraps around some IObserables magic allowing tests to shake out dependecies as they complete.  The sudo code definition in the none functional example above would require that the Fact `AddOneMoreFirst` is run before `CheckTotalValue` is run.  This makes the Counter value 5 and the finaly test pass.
+The `SuiteOrder` override method behind the scene wraps around some `IObservable` magic allowing tests to shake out dependencies as they complete.  The sudo code definition in the none functional example above would require that the Fact `AddOneMoreFirst` is run before `CheckTotalValue` is run.  This makes the Counter value 5 and the finally test pass.
 
 ---
 
-Next Section: [Testing a Calculator](/docs/testing-a-calculator/)
+Next Section: [Testing a Calculator](/docs/example-calculator-tests/)

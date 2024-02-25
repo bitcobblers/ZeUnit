@@ -8,7 +8,7 @@ import Warning from '~/components/template/warning'
 
 ZeUnit is an all purpose testing framework designed to scale from the small scale of unit tests to integration and behavior tests that stand up the whole system.  In this section we will look at the steps needed to start working with ZeUnit.
 
-Like any unit testing framework, the testing project will need to include the ZeUnit NuGet packages as well as the ZeUnit.TestAdapter and Microsoft.NET.Test.Sdk to enable running the tests inside visual studio.  Open up the NuGet package manager console and run the following commands in the context of your test project.
+Like any unit testing framework, the testing project will need to include the ZeUnit NuGet packages as well as the ZeUnit.TestAdapter and Microsoft.NET.Test.Sdk to enable running the tests inside Visual Studio.  Open up the NuGet package manager console and run the following commands in the context of your test project.
 
 ```powershell
 Install-Package ZeUnit
@@ -16,7 +16,7 @@ Install-Package ZeUnit.TestAdapter
 Install-Package Microsoft.NET.Test.Sdk
 ```
 
-Paste the `SampleSuite` to replace implementation in `Class1.cs` file that is automatically created for you by visual studio.
+Paste the `SampleSuite` to replace implementation in `Class1.cs` file that is automatically created for you by Visual Studio.
 
 ```csharp
 public class SampleSuite
@@ -37,7 +37,7 @@ public class SampleSuite
 }
 ```
 
-Open up the Test Explorer window in Visual studio, and kick off the tests.  It will display a passing and failing result for the two test we created above.
+Open up the Test Explorer window in Visual studio, and kick off the tests.  It will display a passing and failing result for the two tests we created above.
 
 ## A Deeper Dive
 
@@ -58,7 +58,7 @@ Your test have dependencies and ZeUnit gives the pathway to [inject](/docs/core-
 
 ### Life-cycle & Dependency Chaining
 
-**Control over the life-cycle**: One class or many? One dependency or many? When a framework spans from unit to integration to end-to-end tests, the ability to control the [life-cycle](/docs/custom-suite-lifecycles/) of the test class becomes a powerful tool.
+**Control over the life-cycle**: One class or many? One dependency or many? When a framework spans from unit to integration to end-to-end tests, the ability to control the [life-cycle](/docs/test-suite-lifecycle/) of the test class becomes a powerful tool.
 
 
 
@@ -69,4 +69,4 @@ Don't waste time building a UI for your prototype, build a report instead that g
 
 ***
 
-Next Section: [Framework Overview](/docs/framework-overview/)
+Next Section: [Birdseye View](/docs/birdseye-view/)
