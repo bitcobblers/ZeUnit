@@ -12,7 +12,7 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       staticAdapter({
-        origin: "https://zeunit.org/",
+        origin: "https://zeunit.org",
       }),
     ],
   };

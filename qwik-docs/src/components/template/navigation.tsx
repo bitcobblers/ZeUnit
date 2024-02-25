@@ -23,7 +23,7 @@ export default component$(({
             >
               {section.links.map((link) => (
                 <li key={link.href} class="relative">
-                  <Link
+                  <a
                     href={link.href}                    
                     class={
                       'block w-full pl-3.5 before:pointer-events-none before:absolute before:-left-1 before:top-1/2 before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full' +
@@ -33,7 +33,7 @@ export default component$(({
                     }
                   >
                     {link.title}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
