@@ -1,4 +1,6 @@
-import { component$} from "@builder.io/qwik"
+import { component$, useSignal} from "@builder.io/qwik"
+import { Logomark } from "./logo";
+import Navigation from "./navigation";
 // import { Link } from "@builder.io/qwik-city";
 // import { Logomark } from "./logo";
 
@@ -17,66 +19,50 @@ const MenuIcon = component$((props: any) => {
     )
   })
   
-// const CloseIcon = component$((props: any) => {
-//     return (
-//       <svg
-//         aria-hidden="true"
-//         viewBox="0 0 24 24"
-//         fill="none"
-//         strokeWidth="2"
-//         strokeLinecap="round"
-//         {...props}
-//       >
-//         <path d="M5 5l14 14M19 5l-14 14" />
-//       </svg>
-//     )
-//   });
-  
-  // eslint-disable-next-line no-empty-pattern
-//   const CloseOnNavigation = component$(({ }: { close?: () => void }) => {
-//     // let pathname = usePathname()
-//     // let searchParams = useSearchParams()
-  
-//     // useEffect(() => {
-//     //   close()
-//     // }, [pathname, searchParams, close])
-  
-//     return null
-//   });
+const CloseIcon = component$((props: any) => {
+    return (
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        strokeWidth="2"
+        strokeLinecap="round"
+        {...props}
+      >
+        <path d="M5 5l14 14M19 5l-14 14" />
+      </svg>
+    )
+  });
   
   export default component$(() => {
-    // let [isOpen, setIsOpen] = useState$(false)
-    // let close = useCallback(() => setIsOpen(false), [setIsOpen])
+    const isOpen  = useSignal(false);
   
-    // function onLinkClick(event: any) {
-    //   let link = event.currentTarget
-    //   if (
-    //     link.pathname + link.search + link.hash ===
-    //     window.location.pathname + window.location.search + window.location.hash
-    //   ) {
-    //     close()
-    //   }
-    // }
+     function onLinkClick(event: any) {
+       const link = event.currentTarget
+       if (
+        link.pathname + link.search + link.hash ===
+        window.location.pathname + window.location.search + window.location.hash
+      ) {
+        isOpen.value = false;
+      }
+    }
     
     return (
       <>
         <button
           type="button"
-        //   onClick$={() => setIsOpen(true)}
+           onClick$={() => isOpen.value = false}
           class="relative"
           aria-label="Open navigation"
         >
           <MenuIcon class="h-6 w-6 stroke-slate-500" />
         </button>        
-          {/* <CloseOnNavigation close={close$} />         */}
-          {/* <CloseIcon class="h-6 w-6 stroke-slate-500" /> */}
-        {/* <Dialog
-          open={isOpen}
-          onClose={() => close()}
+        <CloseIcon class="h-6 w-6 stroke-slate-500" /> 
+         <div
           class="fixed inset-0 z-50 flex items-start overflow-y-auto bg-slate-900/50 pr-10 backdrop-blur lg:hidden"
           aria-label="Navigation"
         >
-          <Dialog.Panel class="min-h-full w-full max-w-xs bg-white px-4 pb-12 pt-5 sm:px-6 dark:bg-slate-900">
+          <div class="min-h-full w-full max-w-xs bg-white px-4 pb-12 pt-5 sm:px-6 dark:bg-slate-900">
             <div class="flex items-center">
               <button
                 type="button"
@@ -85,13 +71,13 @@ const MenuIcon = component$((props: any) => {
               >
                 <CloseIcon class="h-6 w-6 stroke-slate-500" />
               </button>
-              <Link href="/" class="ml-6" aria-label="Home page">
+              <a href="/" class="ml-6" aria-label="Home page">
                 <Logomark class="h-9 w-9" />
-              </Link>
+              </a>
             </div>
-            <Navigation class="mt-5 px-1" onLinkClick={onLinkClick} />
-          </Dialog.Panel>
-        </Dialog> */}
+            <Navigation />
+          </div>
+        </div>
       </>
     )
   });
