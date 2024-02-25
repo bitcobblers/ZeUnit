@@ -1,4 +1,4 @@
-The `SampleZeUnitClass` test in the previous [section](https://bitcobblers.github.io/ZeUnit/docs/Quick-Start-Guide.html), was the coal mine canary to make sure the testing framework is discovering and executing tests.  In this section, we are take a look at how ZeUnit makes "real world" testing easier as we tackle testing our extensible calculator class. 
+The `SampleZeUnitClass` test in the previous [section](https://zeunit.org/docs/Quick-Start-Guide.html), was the coal mine canary to make sure the testing framework is discovering and executing tests.  In this section, we are take a look at how ZeUnit makes "real world" testing easier as we tackle testing our extensible calculator class. 
 
 ### Lesson Plan:
 - look over some basic unit tests against the addition operation.
@@ -61,7 +61,7 @@ The code above is verbose, and "I pity the fool" who has to deal with all the co
 ```
 The instances of the `InlineData` attributes each represent a single entry/test in this test class.  We have a repeating code harness and we run different scenarios though it saving us much code and making adding additional similar data tests a beaze.
 
-`InlineData` method attribute is inspired by the `Theory` attribute from XUnit. However, in the ZeUnit universe, test method attributes of type `ZeComposerAttribute` represent an entire class of method composers that super charge the developers ability to consume test data.  ZeUnit comes stocked with some common method activators like the `InlineData` attribute.  See [Existing Method Composition](https://bitcobblers.github.io/ZeUnit/docs/Existing-Method-Composition.html) & [Custom Method Composition](https://bitcobblers.github.io/ZeUnit/docs/Custom-Method-Composition.html).
+`InlineData` method attribute is inspired by the `Theory` attribute from XUnit. However, in the ZeUnit universe, test method attributes of type `ZeComposerAttribute` represent an entire class of method composers that super charge the developers ability to consume test data.  ZeUnit comes stocked with some common method activators like the `InlineData` attribute.  See [Existing Method Composition](/docs/Existing-Method-Composition.html) & [Custom Method Composition](/docs/Custom-Method-Composition.html).
 
 ## Putting it all Together
 Assuming all the `ICalculatorOperation` are well tested, can we be sure that everything works?  Well not really, because while we have tested all the operations, we haven't really created any tests against the calculator itself.   Sure, unit testing the mechanics of the apply function on the calculator class is a must, but those shouldn't depend on any specific instances of `ICalculatorOperation`.  There is also the bootstrapping of the calculator at load time.  We have the ability to register any number of `ICalculatorOperation` with an instance of the calculator.  Testing defaults or custom modules for example would also add value and bring up the developer confidence level.

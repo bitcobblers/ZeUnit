@@ -29,29 +29,11 @@ jobs:
       - name: Install Qwik
         run: npm install
         working-directory: ./qwik-docs
-
-      - name: Configure QwikCity to use /ZeUnit/ as base path
-        run: find ./qwik-docs/vite.config.ts -type f -exec sed -i 's,qwikCity(),qwikCity({basePathname:"/ZeUnit/"}as any),g' {} \;
-
+      
       - name: Install Qwik
         run: npm run build
         working-directory: ./qwik-docs
      
-      - name: Find and Replace (/build/ -> ZeUnit/build/)        
-        run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,"/build/,"/ZeUnit/build/,g' {} \;        
-          
-      - name: Find and Replace HTML (/docs/ -> ZeUnit/docs/)
-        run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,"/docs/,"/ZeUnit/docs/,g' {} \;       
-
-      - name: Find and Replace HTML (/docs/ -> ZeUnit/docs/)
-        run: find ./qwik-docs/dist/ -name '*.js*' -type f -exec sed -i 's,"/docs/,"/ZeUnit/docs/,g' {} \;       
-
-      - name: Find and Replace HTML (fave-icon)
-        run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,href="favicon.ico,href="ZeUnit/favicon.ico,g' {} \;       
-      
-      - name: Find and Replace (/manifest.json -> ZeUnit/manifest.json)
-        run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,/manifest.json,/ZeUnit/manifest.json,g' {} \;
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
