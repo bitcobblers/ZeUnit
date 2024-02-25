@@ -1,6 +1,5 @@
 import { component$ } from "@builder.io/qwik"
 import zeunit from '/public/images/zeunit.png' 
-  
 
 const Logomark = component$(() => {
     return (
