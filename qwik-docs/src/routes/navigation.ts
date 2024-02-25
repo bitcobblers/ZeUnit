@@ -1,23 +1,18 @@
 export const navigation = [
-  {
-    title: '',
-    links: [
-      { title: 'Overview', href: '/'},      
-    ],
-  },
-  {
+  {   
     title: 'Introduction',
-    links: [      
-      { title: 'Getting Started', href: '/docs/getting-started/' },
-      { title: 'Test Execution & Dependecies', href: '/docs/test-execution/' },
-      { title: 'Testing a Calculator', href: '/docs/testing-a-calculator/' }
+    links: [
+      { title: 'Getting Started', href: '/'},      
+      { title: 'Birdseye View', href: '/docs/birdseye-view/'},      
+      { title: 'E.g. Calculator Tests', href: '/docs/example-calculator-tests/' },      
     ],
   },
   {
     title: 'Core Concepts',
     links: [
-      { title: 'Class Composers', href: '/docs/core-class-composers/' },
+      { title: 'Rich Assertions', href: '/docs/rich-assertions/' },
       { title: 'Method Binders', href: '/docs/core-method-binders/' },      
+      { title: 'Class Composers', href: '/docs/core-class-composers/' },      
       { title: 'Test Suites & Lifecycles', href: '/docs/test-suites-lifecylces/' },
       { title: 'Reporting', href: '/docs/core-reporting/' },
     ],

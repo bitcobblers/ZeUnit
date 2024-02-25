@@ -4,18 +4,11 @@ slug: getting-started
 import Notes from '~/components/template/notes'
 import Warning from '~/components/template/warning'
 
-At the heart of ZeUnit sits a design simple principle; a test is a function and functions return result(s). For ZeUnit that result is a `Fact` which reports back to the test runner.  The benefits?  A testing platform that is simple & extensible with the same tools the system is built on.   
-
-- *Control over the life-cycle*: One class or many? One dependency or many? When a framework spans from unit to integration to end-to-end tests, the ability to control the [life-cycle](/docs/custom-suite-lifecycles/) of the test class becomes a powerful tool.
-- *Class composition*: Your test have dependencies and ZeUnit gives the pathway to [inject](/docs/core-class-composers/) them directly into the test class. 
-- *Custom method bindings*: Take `InlineData` and give it the super power to write your own.  But, don't worry, there are plenty [pre-built builders](/docs/core-method-binders/) to user and learn from.
-- *Standalone Reporting*: Don't waste time building a UI for your prototype, build a report instead that gets at the business value of your stakeholders faster.  ZeUnit sees a flexible [reporting system](/docs/customizing-reporting/) as a first class citizen that writes to your CI logger or delivers stunning data driven reports.  
-
 ## Getting Started with ZeUnit
 
 ZeUnit is an all purpose testing framework designed to scale from the small scale of unit tests to integration and behavior tests that stand up the whole system.  In this section we will look at the steps needed to start working with ZeUnit.
 
-Like any unit testing framework, the testing project will need to include the ZeUnit NuGet packages as well as the ZeUnit.TestAdapter and Microsft.NET.Test.Sdk to enable running the tests inside visual studio.  Open up the NuGet package manager console and run the following commands in the context of your test project.
+Like any unit testing framework, the testing project will need to include the ZeUnit NuGet packages as well as the ZeUnit.TestAdapter and Microsoft.NET.Test.Sdk to enable running the tests inside visual studio.  Open up the NuGet package manager console and run the following commands in the context of your test project.
 
 ```powershell
 Install-Package ZeUnit
@@ -46,6 +39,34 @@ public class SampleSuite
 
 Open up the Test Explorer window in Visual studio, and kick off the tests.  It will display a passing and failing result for the two test we created above.
 
+## A Deeper Dive
+
+At the heart of ZeUnit sits a design simple principle; a test is a function and functions return result(s). For ZeUnit that result is a `Fact` which reports back to the test runner.  The benefits?  A testing platform that is simple use & easily extensible with the tools the system is built on: It is just chaining function execution.   
+
+### Custom method bindings
+
+Take the familiar example of `InlineData`, which defines some type of test parameters and give it the super power to easily [write your own](/docs/building-method-binders/).  With the goal to abstract the often repeating code which loads tests data and likely serializes it, the primary candidates for a b [built-in binder](/docs/core-method-binders/) collection are focused on file access.
+
+<Notes title="Discovery Life-Cycle">
+The `IZeMethodBinder` interface implementation described in [/docs/building-method-binders](/docs/building-method-binders) can generates zero or more test, additional data files to be treated is valid new tests.
+</Notes>
+
+### Class composition
+
+Your test have dependencies and ZeUnit gives the pathway to [inject](/docs/core-class-composers/) them directly into the test class. 
+
+
+### Life-cycle & Dependency Chaining
+
+**Control over the life-cycle**: One class or many? One dependency or many? When a framework spans from unit to integration to end-to-end tests, the ability to control the [life-cycle](/docs/custom-suite-lifecycles/) of the test class becomes a powerful tool.
+
+
+
+### Standalone Reporting
+
+Don't waste time building a UI for your prototype, build a report instead that gets at the business value of your stakeholders faster.  ZeUnit sees a flexible [reporting system](/docs/customizing-reporting/) as a first class citizen that writes to your CI logger or delivers stunning data driven reports.  
+
+
 ***
 
-Next Section: [Testing A Calculator](/docs/testing-a-calculator/)
+Next Section: [Framework Overview](/docs/framework-overview/)

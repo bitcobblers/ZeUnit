@@ -1,5 +1,11 @@
-<Notes title="Follow Allong">
-Jump into the [Getting Started](/docs/getting-started/) guide to follow allong on your local computer.
+---
+slug: framework-overview
+---
+import Notes from '~/components/template/notes'
+import Warning from '~/components/template/warning'
+
+<Notes title="Follow Along">
+Jump into the [Getting Started](/docs/getting-started/) guide to follow along on your local computer.
 </Notes>
 
 
@@ -10,7 +16,7 @@ The example above in the `SimpleSuite`, is the most basic form that of a test in
 The test it self at the low level boils down to a simple assertion: `return value == "expected";`.   With little help from <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators" target="_blank">implicit type operators</a> magic the `bool` is converted to a `Fact<bool>` allowing the code to compile and the test to report results. 
 
 <Notes>
-A secondary implicit convertion operator is also created on `Tuple<bool, string>` to suppor custom messages to be returned along with the tests status.
+A secondary implicit conversion operator is also created on `Tuple<bool, string>` to support custom messages to be returned along with the tests status.
 </Notes>
 
 ```csharp
@@ -88,13 +94,13 @@ public class TheKitchenSinkSuite
 ```
 The `InlineData` is a familiar tool of existing unit testing frameworks, but just like the `ZeClassComposer` customizations ZeUnit focus on making custom method bindings easy to create.  More on this in the [Method Bindings](/docs/core-method-binders/) section.
 
-Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However building a testing framework on top of reactive IObservable classes, being able to build out depdeenciey chaines that for behavior becomes prety trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
+Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However building a testing framework on top of reactive IObservable classes, being able to build out dependencies chaines that for behavior becomes prety trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
 
 <Warning>
 The features around `DependsOn` are not currently implemented in the current version of ZeUnit.  They are planned for a future release.
 </Warning>
 
-- `[DependsOn("AddOneMoreFirst")]` is doing some interesting work alloing us to define that some tests in the suite have to run before others by creating a dependency.
+- `[DependsOn("AddOneMoreFirst")]` is doing some interesting work allowing us to define that some tests in the suite have to run before others by creating a dependency.
 - `[DependsOn(typeof(TheKitchenSinkSuite))]` is a way to define that `NextKitchenSinkSuite` depends on `TheKitchenSinkSuite` to be run first 
 
 
@@ -127,7 +133,7 @@ public class NextKitchenSinkSuite
 
 ### Understanding The Lifecycle 
 
-The outcome here is that `TheKitchenSinkSuite` is run first allowing each of the `InlineData` method binding to excute the `AdditionHarness` method.  This keeps incrementing the `SingletonCounter` and which is always the same dispite `TheKitchenSinkSuite` being transient for each instance of the method bidning.
+The outcome here is that `TheKitchenSinkSuite` is run first allowing each of the `InlineData` method binding to execute the `AdditionHarness` method.  This keeps incrementing the `SingletonCounter` and which is always the same despite `TheKitchenSinkSuite` being transient for each instance of the method binding.
 
 Once all of tests in `TheKitchenSinkSuite` the dependecy defined on `NextKitchenSinkSuite` with the `IZeDependency<TheKitchenSinkSuite>` interface is satified and ZeUnit will pick up the Facts.  The lifecycle of this class however is modied by inheritence from the `OrderedSuite<NextKitchenSinkOrder>` which deffers figure out method fact depdeacies as a `SuiteOrder` class.
 
