@@ -38,10 +38,10 @@ jobs:
         working-directory: ./qwik-docs
      
       - name: Find and Replace (/build/ -> ZeUnit/build/)        
-        run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,/build/,/ZeUnit/build/,g' {} \;        
+        run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,"/build/,"/ZeUnit/build/,g' {} \;        
           
       - name: Find and Replace HTML (/docs/ -> ZeUnit/docs/)
-        run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,/docs/,/ZeUnit/docs/,g' {} \;       
+        run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,"/docs/,"/ZeUnit/docs/,g' {} \;       
 
       - name: Find and Replace HTML (fave-icon)
         run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,href="favicon.ico,href="ZeUnit/favicon.ico,g' {} \;       
