@@ -37,8 +37,12 @@ jobs:
       - name: Find and Replace (/build/ -> ZeUnit/build/)        
         run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,/build/,/ZeUnit/build/,g' {} \;        
           
-      - name: Find and Replace (/docs/ -> ZeUnit/docs/)
+      - name: Find and Replace HTML (/docs/ -> ZeUnit/docs/)
         run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,/docs/,/ZeUnit/docs/,g' {} \;       
+
+      - name: Find and Replace JS (/docs/ -> ZeUnit/docs/)
+        run: find ./qwik-docs/dist/ -name '*.js*' -type f -exec sed -i 's,/docs/,/ZeUnit/docs/,g' {} \;       
+
 
       - name: Find and Replace (/manifest.json -> ZeUnit/manifest.json)
         run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,/manifest.json,/ZeUnit/manifest.json,g' {} \;
