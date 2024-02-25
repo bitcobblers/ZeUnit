@@ -3,13 +3,14 @@
 ZeUnit is an all purpose testing framework designed to scale from the small scale of unit tests to integration and behavior tests that stand up the whole system.  In this section we will look at the steps needed to start working with ZeUnit.
 
 ## Lesson Plan
-- Include the necessary NuGet packages for ZeUnit to run in a test project
-- Get some tests to execute in visual studio
+
+- Install the necessary NuGet packages for ZeUnit to run in a test project.
+- Get some tests to execute in Visual Studio.
 - Identify the key difference between ZeUnit and other testing frameworks.
 
-Like any unit testing framework, the testing project will need to include the ZeUnit NuGet packages as well as the ZeUnit.TestAdapter and Microsft.NET.Test.Sdk to enable running the tests inside visual studio.  Open up the NuGet package manager console and run the following commands in the context of your test project.
+Like any unit testing framework, the testing project will need to include the ZeUnit NuGet packages as well as the ZeUnit.TestAdapter and Microsft.NET.Test.Sdk to enable running the tests inside Visual Studio.  Open up the NuGet package manager console and run the following commands in the context of your test project.
 
-```
+```powershell
 Install-Package ZeUnit
 Install-Package ZeUnit.TestAdapter
 Install-Package Microsoft.NET.Test.Sdk
@@ -36,7 +37,7 @@ public class SampleZeUnitClass
 }
 ```
 
-Open up the Test Explorer window in Visual studio, and kick off the tests.  It will display a passing and failing result for the two test we created above.
+Open up the Test Explorer window in Visual studio, and kick off the tests.  It will display a passing and failing result for the two tests we created above.
 
 ***
 

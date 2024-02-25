@@ -5,7 +5,7 @@ import HeroBackground from "./hero-background"
 import Highlight from "./highlight"
  
 const codeLanguage = 'csharp'
- const code = `<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BarebondesSuite</span>
+ const code = `<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BarebonesSuite</span>
  <span class="token punctuation">{</span>
      <span class="token keyword">public</span> <span class="token return-type class-name">Fact</span> <span class="token function">GetExpectedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
      <span class="token punctuation">{</span>   
@@ -48,7 +48,7 @@ export function Hero() {
                 ZeUnit Testing Framework
               </p>
               <p class="mt-3 text-2xl tracking-tight text-slate-400">
-                    From <span class="text-sky-400 ">barebones</span> to the full <span class="text-sky-400">kitchen sink</span> and everything in between. <span class="text-sky-400 ">ZeUnit</span> garantees writing tests isn't a bottleneck.
+                    From <span class="text-sky-400 ">barebones</span> to the <span class="text-sky-400">kitchen sink</span> and everything in between. <span class="text-sky-400 ">ZeUnit</span> guarantees writing tests isn't a bottleneck.
               </p>
               <div class="mt-8 flex gap-4 md:justify-center lg:justify-start">
                 <a type="button" href="/docs/getting-started" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Get started</a>
