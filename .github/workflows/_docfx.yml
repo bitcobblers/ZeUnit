@@ -30,13 +30,13 @@ jobs:
         run: npm install
         working-directory: ./qwik-docs
 
-      - name: Install Qwik
-        run: npm run build
-        working-directory: ./qwik-docs
-
       - name: Configure QwikCity to use /ZeUnit/ as base path
         run: find ./qwik-docs/vite.config.ts -type f -exec sed -i 's,qwikCity(),qwikCity({basePathname:"/ZeUnit/"}as any),g' {} \;
 
+      - name: Install Qwik
+        run: npm run build
+        working-directory: ./qwik-docs
+     
       # - name: Find and Replace (/build/ -> ZeUnit/build/)        
       #   run: find ./qwik-docs/dist/ -name '*.html' -type f -exec sed -i 's,/build/,/ZeUnit/build/,g' {} \;        
           
