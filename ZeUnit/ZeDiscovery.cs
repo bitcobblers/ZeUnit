@@ -74,6 +74,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                     ClassFactory = factory,
                     Method = method,                   
                     Arguments = () => activation.a.Arguments,
+
                     Skipped = attributes.Any(n => n is SkipAttribute)
                 });
             }
