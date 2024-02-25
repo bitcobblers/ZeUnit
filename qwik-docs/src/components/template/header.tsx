@@ -1,5 +1,4 @@
 import { component$ } from "@builder.io/qwik";
-import { Link } from "@builder.io/qwik-city";
 import GitHubIcon from "./git-hub-icon";
 import { Logo } from "./logo";
 // import { Logomark } from "./logo";
