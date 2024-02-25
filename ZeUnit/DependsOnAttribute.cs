@@ -5,7 +5,7 @@ public class DependsOnAttribute : Attribute
 {
     public DependsOnAttribute(Type @class)
     {
-        Dependency = @class.FullName;
+        Dependency = @class.FullName!;
     }
 
     public DependsOnAttribute(string method)
