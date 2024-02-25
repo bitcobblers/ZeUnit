@@ -4,41 +4,38 @@ import { Logo } from "./logo";
 // import { Logomark } from "./logo";
 import MobileNavigation from "./mobile-navigation";
 export default component$(() => {
-//   let [isScrolled, setIsScrolled] = useState(false)
+  //   let [isScrolled, setIsScrolled] = useState(false)
 
-//   useEffect$(() => {
-//     function onScroll() {
-//       setIsScrolled(window.scrollY > 0)
-//     }
-//     onScroll()
-//     window.addEventListener('scroll', onScroll, { passive: true })
-//     return () => {
-//       window.removeEventListener('scroll', onScroll)
-//     }
-//   }, [])
+  //   useEffect$(() => {
+  //     function onScroll() {
+  //       setIsScrolled(window.scrollY > 0)
+  //     }
+  //     onScroll()
+  //     window.addEventListener('scroll', onScroll, { passive: true })
+  //     return () => {
+  //       window.removeEventListener('scroll', onScroll)
+  //     }
+  //   }, [])
 
   return (
     <header
-      class="sticky top-0 z-50 flex flex-none flex-wrap items-center justify-between bg-white px-4 py-5 
-      shadow-md shadow-slate-900/5 transition duration-500 sm:px-6 lg:px-8 dark:shadow-none dark:bg-transparent">
-      <div class="mx-auto  w-full max-w-8xl justify-center sm:px-2 lg:px-8 xl:px-12">
-        <div class="mr-6 flex lg:hidden">
-            <MobileNavigation />
+      class="sticky top-0 z-50 flex flex-none flex-wrap items-center justify-between bg-white px-4 lg:py-5 py-1
+      shadow-md shadow-slate-900/5 transition duration-500 sm:px-4 lg:px-6 dark:shadow-none dark:bg-transparent">
+      <div class="mx-auto  w-full max-w-8xl justify-center sm:px-2 lg:px-6 xl:px-8">
+        <div class="lg:hidden">
+          <MobileNavigation />
         </div>
-        <div class="relative flex flex-grow basis-0 items-center">
-            <a href="/" aria-label="Home page">
-            {/* <Logomark class="h-9 w-9 lg:hidden" />           */}
-            <Logo class="hidden h-9 w-auto fill-slate-700 lg:block dark:fill-sky-100 text-2xl" />
-            </a>
-        </div>
-        <div class="-my-5 mr-6 sm:mr-8 md:mr-0">
-            {/* <Search /> */}
-        </div>
-        <div class="relative flex basis-0 justify-end gap-6 sm:gap-8 md:flex-grow">
-            {/* <ThemeSelector class="relative z-10" /> */}
+        <div class="relative lg:flex hidden">
+          <div class="flex-none"><a href="/" aria-label="Home page">
+            <Logo class="hidden h-9 w-auto fill-slate-700 lg:block dark:fill-sky-100 text-2xl " />
+          </a>          
+          </div>
+          <div class="flex-grow"></div>
+          <div class="flex-none">
             <a href="https://github.com/bitcobblers/ZeUnit/" target="_blank" class="group" aria-label="ZeUnit repository on GitHub">
-            <GitHubIcon class="h-6 w-6 fill-slate-400 group-hover:fill-slate-500 dark:group-hover:fill-slate-300" />
+              <GitHubIcon class="h-6 w-6 fill-slate-400 group-hover:fill-slate-500 dark:group-hover:fill-slate-300" />
             </a>
+          </div>
         </div>
       </div>
     </header>

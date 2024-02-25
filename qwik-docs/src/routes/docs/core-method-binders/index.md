@@ -105,4 +105,4 @@ ZeUnit steps this up one more notch with the introduction of the `LoadFileGroups
 The method composition system is open to be extension by writing additional method composers.  More information about building custom method composers can be found in here: [Custom Method Composition](/docs/Custom-Method-Composition.html)
 
 ***
-Next Section [Existing Class Composition](/docs/Custom-Class-Composition.html)
+Next Section [Class Composition](/docs/core-class-composers)
