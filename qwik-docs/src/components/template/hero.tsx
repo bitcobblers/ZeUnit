@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik"
-import blurCyanImage from '/images/blur-cyan.png' 
-import blurIndigoImage from '/images/blur-indigo.png'
+import blurCyanImage from '/public/images/blur-cyan.png' 
+import blurIndigoImage from '/public/images/blur-indigo.png'
 import HeroBackground from "./hero-background"
 import Highlight from "./highlight"
  
