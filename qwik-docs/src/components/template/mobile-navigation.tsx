@@ -63,7 +63,7 @@ const CloseIcon = component$((props: any) => {
         </button>        
         <CloseIcon class="h-6 w-6 stroke-slate-500" /> 
          <div hidden={!isOpen}          
-          class="fixed inset-0 z-50 flex items-start overflow-y-auto bg-slate-900/50 pr-10 backdrop-blur lg:hidden"
+          class="fixed inset-0 z-50 flex items-start overflow-y-auto bg-slate-900/50 pr-10 backdrop-blur hidden"
           aria-label="Navigation"
         >
           <div class="min-h-full w-full max-w-xs bg-white px-4 pb-12 pt-5 sm:px-6 dark:bg-slate-900">
