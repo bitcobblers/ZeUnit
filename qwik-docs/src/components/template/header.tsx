@@ -36,7 +36,6 @@ export default component$(() => {
               <GitHubIcon class="h-6 w-6 fill-slate-400 group-hover:fill-slate-500 dark:group-hover:fill-slate-300" />
             </a>
           </div>
-
         </div>
       </div>
     </header>
