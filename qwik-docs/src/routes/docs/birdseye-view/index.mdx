@@ -6,7 +6,7 @@ import Warning from '~/components/template/warning'
 
 # Birdseye View of ZeUnit
 
-In the previous section [Getting Started](/), we covered the basics of getting ZeUnit testing set up in your solution, but aside some clever assertion syntax, ZeUnit is yet to offer any real value over the existing frameworks like <a href="https://xunit.net/" target="_blank">XUnit</a>, <a href="https://nunit.org/" target="_blank">NUnit</a> or <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest" target="_blank">MS Test</a>. 
+In the previous section [Getting Started](/), we covered the basics of getting ZeUnit testing set up in your solution.  Aside from some clever assertion syntax, ZeUnit has yet to offer any real value over the existing frameworks like <a href="https://xunit.net/" target="_blank">XUnit</a>, <a href="https://nunit.org/" target="_blank">NUnit</a> or <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest" target="_blank">MS Test</a>. 
 
 <Notes title="Make ZeUnit Yours">
 The language features that are used as examples in this section are just a small subset of the features that ZeUnit has to offer.  More importantly, ZeUnit is designed to be extended and customized to fit the needs of your project.  
@@ -14,12 +14,18 @@ The language features that are used as examples in this section are just a small
 
 ## Simple Suite
 
-The example above in the `SimpleSuite`, is the most basic form that of a test in ZeUnit.  There is no constructor injection or custom method bindings as a result it defaults to `TransientSuite` with a `TransientLifecycleFactory` for the class lifecycle.
+```csharp
 
-The test itself at the low level boils down to a simple assertion: `return value == "expected";`.   With little help from <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators" target="_blank">implicit type operators</a> magic the `bool` is converted to a `Fact<bool>` allowing the code to compile and the test to report results. 
+Need Code Here?
+
+```
+
+The example above in the class `SimpleSuite`, is the most basic form of a test in ZeUnit.  There is no constructor injection or custom method bindings.  As a result, it defaults to `TransientSuite` with a `TransientLifecycleFactory` for the class lifecycle.
+
+The test itself, at a low level, boils down to a simple assertion: `return value == "expected";`.   With a little help from <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators" target="_blank">implicit type operators</a> magic, the `bool` is converted to a `Fact<bool>` allowing the code to compile and the test to report results. 
 
 <Notes>
-A secondary implicit conversion operator is also created on `Tuple<bool, string>` to support custom messages to be returned along with the tests status.
+A secondary implicit conversion operator is also created on `Tuple<bool, string>` to support custom messages to be returned along with the test's status.
 </Notes>
 
 ```csharp
@@ -33,12 +39,12 @@ public class SimpleSuite : TransientSuite
 ```
 
 <Notes title="Suite Lifecycle">
-The example above explicitly defines the lifecycle by inheriting form the `TransientSuite` class, this the default behavior for classes that don't inherit a Suite class.  More on the lifecycle in the [Test & Suite Lifecycle](/docs/test-suite-lifecycle/) section.
+The example above explicitly defines the lifecycle by inheriting from the `TransientSuite` class, this the default behavior for classes that don't inherit a Suite class.  More on the lifecycle in the [Test & Suite Lifecycle](/docs/test-suite-lifecycle/) section.
 </Notes>
 
 ## Adding Assertions
 
-While the shorthand `bool` and `Tuple<bool, string>` are useful for quick and dirty tests, a simple pass and fails to give enough details for troubleshooting, and having to write out custom messages for every test would become very tedious.  This is where `ZeUnit.Assertions` namespace shines.  The <a href="https://docs.shouldly.org/documentation/getting-started" target="_blank">shoudly</a> inspired collection of helper supercharge the testing process.
+While the shorthand `bool` and `Tuple<bool, string>` are useful for quick and dirty tests, a simple pass and fails to give enough details for troubleshooting, having to write out custom messages for every test would become very tedious.  This is where the `ZeUnit.Assertions` namespace shines.  The <a href="https://docs.shouldly.org/documentation/getting-started" target="_blank">shouldly</a> inspired collection of helpers supercharge the testing process.
 
 ```csharp
 public class AssertionSuite
@@ -54,19 +60,19 @@ public class AssertionSuite
  }
 ``` 
 
-A similar test could be written using the `bool` but would require that is is broken into 3 separate tests or that the test returns the type `IEnumerable<Fact>` allowing for `yield return` syntax for multiple assertions.
+A similar test could be written using the `bool`, but would require that it is broken into 3 separate tests or that the test returns the type `IEnumerable<Fact>` allowing for `yield return` syntax for multiple assertions.
 
-The other added value in using the assertion library over the shorthand `bool` tests is the rich reporting on the objects under tests.  Something that is lost when implicitly converting from `bool` to `Fact`.
+The other added value in using the assertion library, over the shorthand `bool` tests, is rich reporting on the objects under the tests.  This is something that is lost when implicitly converting from `bool` to `Fact`.
 
 ## The Kitchen Sink
 
-The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create many test with very few lines of code.  Out the gate there are two attributes that define the attributes that are used for class composition to fill the test class dependencies.  
+The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create many tests with very few lines of code.  Out of the gate, there are two attributes that define the attributes which are used for class composition to fill the test class dependencies.
 
-- The `Singleton` attribute creates a single instance of a value to be shared by all the test that inject the values.  More on this shortly.
+- The `Singleton` attribute creates a single instance of a value to be shared by all the tests that inject the value.  More on this shortly.
 - The `LamarContainer` attribute creates a DI container and registers the `CalculatorRegistry` to the container allowing the `ICalculator` to be injected into the class.
 
 <Notes title="Class Composition">
-These attributes are just a taste of what can be done before the test is executed by creating domain specific attributes unique to your project by overriding `ZeClassComposer` and ZeComposerAttribute` classes.  See more [Class Composers](/docs/core-class-composers/) or [Custom Class Composers](/docs/building-class-composers/).
+These attributes are just a taste of what can be done before the test is executed by creating domain specific attributes unique to your project by overriding the `ZeClassComposer` and `ZeComposerAttribute` classes.  See more [Class Composers](/docs/core-class-composers/) or [Custom Class Composers](/docs/building-class-composers/).
 </Notes>
 
 ```csharp
@@ -95,15 +101,15 @@ public class TheKitchenSinkSuite
     }    
 }
 ```
-The `InlineData` is a familiar tool of existing unit testing frameworks, but just like the `ZeClassComposer` customizations ZeUnit focus on making custom method bindings easy to create.  More on this in the [Method Bindings](/docs/core-method-binders/) section.
+The `InlineData` is a familiar tool of existing unit testing frameworks, but just like the `ZeClassComposer` customizations, ZeUnit focuses on making custom method bindings easy to create.  More on this in the [Method Bindings](/docs/core-method-binders/) section.
 
-Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However building a testing framework on top of reactive IObservable classes, being able to build out dependencies chaines that for behavior becomes pretty trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
+Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However, when building a testing framework on top of reactive IObservable classes, being able to build out dependency chains for that behavior becomes pretty trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
 
 <Warning title="Prototype">
 The features around `DependsOn` are not currently implemented in the current version of ZeUnit.  They are planned for a future release.
 </Warning>
 
-- `[DependsOn("AddOneMoreFirst")]` is doing some interesting work allowing us to define that some tests in the suite have to run before others by creating a dependency.
+- `[DependsOn("AddOneMoreFirst")]` is doing some interesting work, allowing us to define that some tests in the suite have to run before others by creating a dependency
 - `[DependsOn(typeof(TheKitchenSinkSuite))]` is a way to define that `NextKitchenSinkSuite` depends on `TheKitchenSinkSuite` to be run first 
 
 
@@ -136,11 +142,11 @@ public class NextKitchenSinkSuite
 
 ### Understanding The Lifecycle 
 
-The outcome here is that `TheKitchenSinkSuite` is run first allowing each of the `InlineData` method binding to execute the `AdditionHarness` method.  This keeps incrementing the `SingletonCounter` and which is always the same despite `TheKitchenSinkSuite` being transient for each instance of the method binding.
+The outcome here is that `TheKitchenSinkSuite` is run first, allowing each of the `InlineData` method bindings to execute the `AdditionHarness` method.  This keeps incrementing the `SingletonCounter`, which is always the same despite `TheKitchenSinkSuite` being transient for each instance of the method binding.
 
-Once all of tests in `TheKitchenSinkSuite` the dependency defined on `NextKitchenSinkSuite` with the `IZeDependency<TheKitchenSinkSuite>` interface is satisfied and ZeUnit will pick up the Facts.  The lifecycle of this class however is modified by inheritance from the `OrderedSuite<NextKitchenSinkOrder>` which defers figuring out method fact dependencies as a `SuiteOrder` class.
+Once all of the tests in `TheKitchenSinkSuite`, the dependency defined on `NextKitchenSinkSuite` with the `IZeDependency<TheKitchenSinkSuite>` interface, are satisfied, ZeUnit will pick up the Facts.  The lifecycle of this class, however, is modified by inheritance from the `OrderedSuite<NextKitchenSinkOrder>`, which defers figuring out method fact dependencies as a `SuiteOrder` class.
 
-The `SuiteOrder` override method behind the scene wraps around some `IObservable` magic allowing tests to shake out dependencies as they complete.  The sudo code definition in the none functional example above would require that the Fact `AddOneMoreFirst` is run before `CheckTotalValue` is run.  This makes the Counter value 5 and the finally test pass.
+The `SuiteOrder` override method behind the scenes wraps around some `IObservable` magic allowing tests to shake out dependencies as they complete.  The sudo code definition in the none functional example above would require that the Fact `AddOneMoreFirst` is run before `CheckTotalValue` is run.  This makes the Counter value 5 and the final test pass.
 
 ---
 

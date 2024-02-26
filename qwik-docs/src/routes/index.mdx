@@ -16,7 +16,7 @@ Install-Package ZeUnit.TestAdapter
 Install-Package Microsoft.NET.Test.Sdk
 ```
 
-Paste the `SampleSuite` to replace implementation in `Class1.cs` file that is automatically created for you by Visual Studio.
+Use the `SampleSuite` code below to replace the initial implementation of `Class1.cs`, the file that is automatically created for you by Visual Studio.
 
 ```csharp
 public class SampleSuite
@@ -37,29 +37,28 @@ public class SampleSuite
 }
 ```
 
-Open up the Test Explorer window in Visual studio, and kick off the tests.  It will display a passing and failing result for the two tests we created above.
+Open the Test Explorer window in Visual Studio, and kick off the tests.  It will display a passing and failing result for the two tests we created above.
 
 ## A Deeper Dive
 
-At the heart of ZeUnit sits a design simple principle; a test is a function and functions return result(s). For ZeUnit that result is a `Fact` which reports back to the test runner.  The benefits?  A testing platform that is simple use & easily extensible with the tools the system is built on: It is just chaining function execution.   
+At the heart of ZeUnit sits a simple design principle; a test is a function and functions return result(s). For ZeUnit, that result is a `Fact` which reports back to the test runner.  The benefits?  A testing platform that is simple to use and easily extensible with the tools the system is built on: It is just chaining function executions.   
 
 ### Custom method bindings
 
-Take the familiar example of `InlineData`, which defines some type of test parameters and give it the super power to easily [write your own](/docs/building-method-binders/).  With the goal to abstract the often repeating code which loads tests data and likely serializes it, the primary candidates for a b [built-in binder](/docs/core-method-binders/) collection are focused on file access.
+Take the familiar example of `InlineData`, which defines some types of test parameters and gives you the superpower to easily [write your own](/docs/building-method-binders/).  With the goal to abstract the often repeating code which loads tests data and likely serializes it, the primary candidates for a [built-in binder](/docs/core-method-binders/) collection are focused on file access.
 
 <Notes title="Discovery Life-Cycle">
-The `IZeMethodBinder` interface implementation described in [/docs/building-method-binders](/docs/building-method-binders) can generates zero or more test, additional data files to be treated is valid new tests.
+The `IZeMethodBinder` interface implementation described in [/docs/building-method-binders](/docs/building-method-binders) can generates zero or more tests / additional data files to be treated as valid new tests.
 </Notes>
 
 ### Class composition
 
-Your test have dependencies and ZeUnit gives the pathway to [inject](/docs/core-class-composers/) them directly into the test class. 
+Your tests have dependencies and ZeUnit gives the pathway to [inject](/docs/core-class-composers/) them directly into the test class. 
 
 
 ### Life-cycle & Dependency Chaining
 
 **Control over the life-cycle**: One class or many? One dependency or many? When a framework spans from unit to integration to end-to-end tests, the ability to control the [life-cycle](/docs/test-suite-lifecycle/) of the test class becomes a powerful tool.
-
 
 
 ### Standalone Reporting

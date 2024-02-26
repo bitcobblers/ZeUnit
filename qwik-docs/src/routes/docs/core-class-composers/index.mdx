@@ -6,13 +6,13 @@ import Warning from '~/components/template/warning'
     This page is under construction and may contain incomplete or incorrect information.
 </Warning>
 
-For a test to execute, a class needs to exist.  But before the class the exist, the dependencies also need to exist, and `ZeClassComposer` is the how handles getting the dependencies.  When a `Fact` is discovered, ZeUnit looks at the class type and identifies the lifecycle and based on that lifecycle creates a class factory that the test runner can call to get a test class.  When that test class has dependencies, `ZeClassComposer` classes become the sources for those dependencies.  
+For a test to execute, a class needs to exist.  Before the class exists, the dependencies also need to exist, and `ZeClassComposer` is how it handles getting the dependencies.  When a `Fact` is discovered, ZeUnit looks at the class type and identifies the lifecycle. Based on that lifecycle, it creates a class factory that the test runner can call to get a test class.  When that test class has dependencies, `ZeClassComposer` classes become the sources for those dependencies.  
 
 
 The default lifecycles are inherited from:
 
-- `TransientSuite` - The default class lifecycle.  Automatically be applied to test classes that have inherit from a `Suite` class.
-- `ReEntrySuite` -  Singleton lifecycle for the test class and as a result may require some tests to execute before others allowing the suite to be its own state machine.
+- `TransientSuite` - The default class lifecycle that is automatically applied to test classes which inherit from a `Suite` class
+- `ReEntrySuite` -  Singleton lifecycle for the test class and as a result may require some tests to execute before others allowing the suite to be its own state machine
 
 
 ***
