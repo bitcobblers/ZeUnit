@@ -3,8 +3,13 @@ export const navigation = [
     title: 'Introduction',
     links: [
       { title: 'Getting Started', href: '/'},      
-      { title: 'Birdseye View', href: '/docs/birdseye-view/'},      
-      { title: 'E.g. Calculator Tests', href: '/docs/example-calculator-tests/' },      
+      { title: 'Birdseye View', href: '/docs/birdseye-view/'},
+    ],
+  },
+  {   
+    title: 'Examples & Case Studies',
+    links: [
+      { title: 'Calculator Tests', href: '/docs/example-calculator-tests/' },      
     ],
   },
   {
