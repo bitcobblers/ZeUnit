@@ -20,26 +20,9 @@ export const navigation = [
   {
     title: 'Advanced Guides',
     links: [
-      { title: 'Building Class Composers', href: '/docs/building-class-composers/' },
-      { title: 'Building Method Binders', href: '/docs/building-method-binders/' },      
+      { title: 'Building Method Binders', href: '/docs/building-method-binders/' },     
+      { title: 'Building Class Composers', href: '/docs/building-class-composers/' },       
       { title: 'Customizing Reporting', href: '/docs/customizing-reporting/' },
     ],
-  },
-  // {
-  //   title: 'API reference',
-  //   links: [
-  //     { title: 'CacheAdvance.predict()', href: '/docs/cacheadvance-predict/' },
-  //     { title: 'CacheAdvance.flush()', href: '/docs/cacheadvance-flush/' },
-  //     { title: 'CacheAdvance.revert()', href: '/docs/cacheadvance-revert/' },
-  //     { title: 'CacheAdvance.regret()', href: '/docs/cacheadvance-regret/' },
-  //   ],
-  // },
-  // {
-  //   title: 'Contributing',
-  //   links: [
-  //     { title: 'How to contribute', href: '/docs/how-to-contribute/' },
-  //     { title: 'Architecture guide', href: '/docs/architecture-guide/' },
-  //     { title: 'Design principles', href: '/docs/design-principles/' },
-  //   ],
-  // },
+  }
 ]

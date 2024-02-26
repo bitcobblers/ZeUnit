@@ -1,3 +1,5 @@
+# Method Binders 
+
 Method composition is the mechanism for injecting test data into your tests.  In the previous section [Testing A Calculator](/docs/Testing-A-Calculator.html), we saw `InlineData` attributes being used to push data into a single test method.  While this is useful in many unit tests scenarios, scaling this to integration testing becomes tedious, especially with the dotnet limitations on primitive types as arguments for Attributes.  To bridge the gap into integration testing ZeUnit comes equipped with tools to help you work with test data.
 
 This is a common trend of integration frameworks, the idea of a detached data state that doesn't require the test code to be modified for additional test cases to run.

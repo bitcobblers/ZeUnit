@@ -4,10 +4,13 @@ slug: framework-overview
 import Notes from '~/components/template/notes'
 import Warning from '~/components/template/warning'
 
-<Notes title="Follow Along">
-Jump into the [Getting Started](/) guide to follow along on your local computer.
-</Notes>
+# Birdseye View of ZeUnit
 
+In the previous section [Getting Started](/), we covered the basics of getting ZeUnit testing set up in your solution, but aside some clever assertion syntax, ZeUnit is yet to offer any real value over the existing frameworks like <a href="https://xunit.net/" target="_blank">XUnit</a>, <a href="https://nunit.org/" target="_blank">NUnit</a> or <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest" target="_blank">MS Test</a>. 
+
+<Notes title="Make ZeUnit Yours">
+The language features that are used as examples in this section are just a small subset of the features that ZeUnit has to offer.  More importantly, ZeUnit is designed to be extended and customized to fit the needs of your project.  
+</Notes>
 
 ## Simple Suite
 
@@ -29,8 +32,8 @@ public class SimpleSuite : TransientSuite
  }
 ```
 
-<Notes>
-The example above explicitly defines the lifecycle by inheriting form the `TransientSuite` class, this the default behavior for classes that don't inherit a Suite class.
+<Notes title="Suite Lifecycle">
+The example above explicitly defines the lifecycle by inheriting form the `TransientSuite` class, this the default behavior for classes that don't inherit a Suite class.  More on the lifecycle in the [Test & Suite Lifecycle](/docs/test-suite-lifecycle/) section.
 </Notes>
 
 ## Adding Assertions
@@ -62,7 +65,7 @@ The `TheKitchenSinkSuite` class really showcases the power of ZeUnit to create m
 - The `Singleton` attribute creates a single instance of a value to be shared by all the test that inject the values.  More on this shortly.
 - The `LamarContainer` attribute creates a DI container and registers the `CalculatorRegistry` to the container allowing the `ICalculator` to be injected into the class.
 
-<Notes>
+<Notes title="Class Composition">
 These attributes are just a taste of what can be done before the test is executed by creating domain specific attributes unique to your project by overriding `ZeClassComposer` and ZeComposerAttribute` classes.  See more [Class Composers](/docs/core-class-composers/) or [Custom Class Composers](/docs/building-class-composers/).
 </Notes>
 
@@ -96,7 +99,7 @@ The `InlineData` is a familiar tool of existing unit testing frameworks, but jus
 
 Back to the single instance of `SingletonCounter` which might seem out of place in a test suite that is transient.  However building a testing framework on top of reactive IObservable classes, being able to build out dependencies chaines that for behavior becomes pretty trivial.  For the purists this is a unit test code smell, but as ZeUnit scales to larger integration and end-to-end tests, the ability to share state between tests that can follow each other becomes a powerful tool.
 
-<Warning>
+<Warning title="Prototype">
 The features around `DependsOn` are not currently implemented in the current version of ZeUnit.  They are planned for a future release.
 </Warning>
 
