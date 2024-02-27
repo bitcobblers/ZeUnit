@@ -9,19 +9,11 @@ import Warning from '~/components/template/warning'
 
 ```csharp
 [LamarContainer(typeof(SimpleServiceInjectionRegistry))]
-public class InjectionZeUnitClass
-{
-    private readonly ISimpleInjectedService service;
-
-    public InjectionZeTestClass(ISimpleInjectedService service)
-    {
-        this.service = service;
-    }
-
+public class InjectionZeUnitClass(ISimpleInjectedService service)
+{ 
     public Fact ConstructorInjectionTestMethodThatPasses()
     {
         return this.service.IsNotNull();
-
     }
 }
 ```

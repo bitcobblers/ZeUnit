@@ -80,22 +80,15 @@ Lets take a look at what that looks like with ZeUnit.
 
 ```csharp
 [LamarContainer(typeof(CalculatorRegistry))]
-public class TestingCalculatorIntegration
+public class TestingCalculatorIntegration(ICalculator calculator)
 {
-    private readonly ICalculator calculator;
-
-    public TestingCalculatorIntegration(ICalculator calculator)
-    {
-        this.calculator = calculator;
-    }
-
     [InlineData(null, 0)]
     [InlineData(new[] { 1d }, 1)]
     [InlineData(new[] { 1d, 2d }, 3)]
     [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
     public Fact AdditionHarness(double[] values, double expected)
     {            
-        var actual = this.calculator.Apply<AddOperation>(values);
+        var actual = calculator.Apply<AddOperation>(values);
         return actual.Is(expected);
     }
 }
