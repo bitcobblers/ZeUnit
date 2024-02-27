@@ -8,7 +8,7 @@ namespace ZeUnit.Demo.Fakes
         int GetOne();
     }
 
-    [Fake<IFakeService>]
+    [Fakes]
     public class FakeTests(Fake<IFakeService> fake) 
     {       
         public Fact FakeIsReturnsTheValue()
