@@ -6,6 +6,7 @@ public class DependsOnAttribute : Attribute
     public DependsOnAttribute(Type @class)
     {
         Dependency = @class.FullName!;
+        ClassType = @class;
     }
 
     public DependsOnAttribute(string method)
@@ -14,4 +15,5 @@ public class DependsOnAttribute : Attribute
     }
 
     public string Dependency { get; }
+    public Type ClassType { get; }
 }

@@ -1,11 +1,39 @@
 ﻿using System.Net.Http.Headers;
+using System.Reflection;
 using ZeUnit.Binders;
 using ZeUnit.Composers;
 
 namespace ZeUnit;
 
+public class ZeDependencyChainParser
+{
+    public string[] Parse(Type type, MethodInfo method)
+    {
+        var dependsOnAttributes = type.GetCustomAttributes()
+                .Where(n => n.GetType().IsAssignableTo(typeof(DependsOnAttribute)))
+                .Select(n => (DependsOnAttribute)n)
+                .Select(n => n.ClassType);
+
+        var dependsOnMethodAttributes = method.GetCustomAttributes()
+            .Where(n => n.GetType().IsAssignableTo(typeof(DependsOnAttribute)))
+            .Select(n => (DependsOnAttribute)n)
+            .Select(n => n.ClassType.FullName + ":" + n.Dependency);
+
+        return type.GetInterfaces()
+            .Where(n => n.IsAssignableFrom(typeof(IDependsOn<>)))
+            .Select(n => n.GenericTypeArguments[0])
+            
+            .Concat(dependsOnAttributes)
+            .Select(n => n.FullName!)
+            
+            .Concat(dependsOnMethodAttributes)
+            .ToArray() ?? Array.Empty<string>();
+    }
+}
+
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
+    private readonly ZeDependencyChainParser _parser = new ZeDependencyChainParser();
     private readonly List<ZeTest> tests = new();
     private readonly List<Type> supportedTypes = new List<Type>();
 
@@ -48,7 +76,11 @@ public class ZeDiscovery : IEnumerable<ZeTest>
             .SelectMany(type => (type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
             .Where(m => supportedTypes.Contains(m.ReturnType))))
         {
+            var tracker = new IndexTracker(); // TODO: need to do away with this.
             var classType = method.DeclaringType!.GetTypeInfo();
+            var attributes = method.GetCustomAttributes()
+                .ToArray();
+
             var lifecycle = classType.GetInterfaces()
                 .Where(n => n.IsAssignableFrom(typeof(IZeLifecycle<>)))
                 .Select(n => n.GenericTypeArguments[0])
@@ -58,25 +90,23 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                 ? (IZeClassFactory)Activator.CreateInstance(lifecycle)! 
                 : new TransientLifecycleFactory(classType);
 
-            var tracker = new IndexTracker();
-            var attributes = method.GetCustomAttributes()
-                .ToArray();
-
+            var dependsOn = _parser.Parse(classType, method);         
             var composers = this.MethodFactory.Get(attributes);
+
             var methodActivations = composers.SelectMany(n => n.Get(method).Select(a => (n.GetType().Name, a)));
             foreach (var activation in methodActivations)
             {
                 var index = tracker.IndexFor(classType.Name, method.Name);
                 tests.Add(new ZeTest()
                 {
-                    Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{activation.a.Key}::{index}",                    
+                    Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{activation.a.Key}::{index}",
                     Class = classType,
                     ClassFactory = factory,
-                    Method = method,                   
+                    Method = method,
                     Arguments = () => activation.a.Arguments,
-
+                    DependsOn = dependsOn,
                     Skipped = attributes.Any(n => n is SkipAttribute)
-                });
+                }) ;
             }
         }
 
