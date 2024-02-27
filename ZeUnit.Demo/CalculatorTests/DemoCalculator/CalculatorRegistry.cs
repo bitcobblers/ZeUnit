@@ -1,12 +1,12 @@
-﻿using ZeUnit.Demo.DemoCalculator.Operations;
+﻿using ZeUnit.Demo.CalculatorTests.DemoCalculator.Operations;
 
-namespace ZeUnit.Demo.DemoCalculator
+namespace ZeUnit.Demo.CalculatorTests.DemoCalculator
 {
     public class CalculatorRegistry : ServiceRegistry
     {
         public CalculatorRegistry()
         {
-            this.For<ICalculator>().Use(service => new Calculator()
+            For<ICalculator>().Use(service => new Calculator()
                 .Register(new AddOperation())
                 .Register(new SubtractOperation()));
         }

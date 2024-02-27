@@ -1,13 +1,13 @@
-﻿namespace ZeUnit.Demo.DemoCalculator.Operations
+﻿namespace ZeUnit.Demo.CalculatorTests.DemoCalculator
 {
     public class DictionarySetter<TKey, TValue> : Dictionary<TKey, TValue>
         where TKey : notnull
     {
         public DictionarySetter<TKey, TValue> Upsert(TKey key, TValue value)
         {
-            if (!this.ContainsKey(key))
+            if (!ContainsKey(key))
             {
-                this.Add(key, value);
+                Add(key, value);
             }
             else
             {

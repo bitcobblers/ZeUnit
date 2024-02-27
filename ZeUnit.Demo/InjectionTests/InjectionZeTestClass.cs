@@ -1,18 +1,11 @@
 ﻿namespace ZeUnit.Demo.InjectionTests;
 
 [LamarContainer(typeof(SimpleServiceInjectionRegistry))]
-public class InjectionZeTestClass
-{
-    private readonly ISimpleInjectedService service;
-
-    public InjectionZeTestClass(ISimpleInjectedService service)
-    {
-        this.service = service;
-    }
-
+public class InjectionZeTestClass(ISimpleInjectedService service)
+{    
     public Fact ConstructorInjectionTestMethodThatPasses()
     {
-        return new Fact(this.service)  
+        return new Fact(service)  
             .IsNotNull();
 
     }

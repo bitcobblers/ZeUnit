@@ -10,21 +10,12 @@ namespace ZeUnit.Demo.FileTests
 
     [Only(typeof(TestSingleton))]
     [LamarContainer(typeof(SimpleServiceInjectionRegistry))]
-    public class CoreFactoryCanMixComposers
-    {
-        private readonly TestSingleton one;
-        private readonly ISimpleInjectedService service;
-
-        public CoreFactoryCanMixComposers(TestSingleton one, ISimpleInjectedService service)
-        {
-            this.one = one;
-            this.service = service;
-        }
-
+    public class CoreFactoryCanMixComposers(TestSingleton one, ISimpleInjectedService service)
+    {        
         public IEnumerable<Fact> BothInjectableObjectsShouldNotBeNull()
         {
-            yield return this.one != null;
-            yield return this.service != null;
+            yield return one != null;
+            yield return service != null;
         }
     }
 

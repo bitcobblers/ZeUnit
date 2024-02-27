@@ -30,7 +30,7 @@ A secondary implicit conversion operator is also created on `Tuple<bool, string>
 
 ```csharp
 public class SimpleSuite : TransientSuite
- {
+{
      public Fact GetExpectedValueWithMessage()
      {       
          return (actual == "expected", $"Expected value does not match {actual}!!");
@@ -48,7 +48,7 @@ While the shorthand `bool` and `Tuple<bool, string>` are useful for quick and di
 
 ```csharp
 public class AssertionSuite
- {
+{
      public Fact GetExpectedValue()
      {   
          var actual = GetSomeString();    
@@ -78,16 +78,8 @@ These attributes are just a taste of what can be done before the test is execute
 ```csharp
 [Singleton(typeof(SingletonCounter))]
 [LamarContainer(typeof(CalculatorRegistry))]
-public class TheKitchenSinkSuite
+public class TheKitchenSinkSuite(ICalculator calculator, SingletonCounter counter)
 {
-    private readonly ICalculator calculator;
-    private readonly SingletonCounter counter;
-
-    public TheKitchenSinkSuite(ICalculator calculator, SingletonCounter counter)
-    {
-        this.calculator = calculator;
-        this.counter = counter;
-    }
 
     [InlineData(null, 0)]
     [InlineData(new[] { 1d }, 1)]
@@ -95,7 +87,7 @@ public class TheKitchenSinkSuite
     [InlineData(new[] { 1d, 2d, 3d, 4d }, 10)]
     public Fact AdditionHarness(double[] values, double expected)
     {            
-        var actual = this.calculator.Apply<AddOperation>(values);
+        var actual = calculator.Apply<AddOperation>(values);
         counter.Increment();
         return actual.Is(expected);
     }    
@@ -117,15 +109,8 @@ The features around `DependsOn` are not currently implemented in the current ver
 
 [DependsOn(typeof(TheKitchenSinkSuite))]
 [Singleton(typeof(SingletonCounter))]
-public class NextKitchenSinkSuite     
-{    
-    private readonly SingletonCounter counter;
-
-    public TheKitchenSinkSuite(SingletonCounter counter)
-    {        
-        this.counter = counter;
-    }
-
+public class NextKitchenSinkSuite(SingletonCounter counter)
+{
     public Fact AddOneMoreFirst()
     {            
         counter.Increment();
