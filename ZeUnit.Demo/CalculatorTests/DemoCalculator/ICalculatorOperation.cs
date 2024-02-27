@@ -1,4 +1,4 @@
-﻿namespace ZeUnit.Demo.DemoCalculator
+﻿namespace ZeUnit.Demo.CalculatorTests.DemoCalculator
 {
     public interface ICalculatorOperation
     {

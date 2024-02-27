@@ -4,10 +4,10 @@ _layout: landing
 
 # ZeUnit Testing Framework
 
-At the heart of ZeUnit sits a simple principle, functional programing is cleaner.  
-- Tests should be functions.
-- Functions should have all the necessary dependencies.
-- Functions should return a consistent results
+At the heart of ZeUnit sits a simple principle, functional programming is cleaner.  
+- Tests should be functions
+- Functions should have all the necessary dependencies
+- Functions should return consistent results
 
 Taking this "pure" function approach to testing allows some interesting windfall effects that can super charge your testing experience.
 
@@ -30,7 +30,7 @@ public void WhatYouTest()
 
 ## ZeUnit Test
 
-At the heart a test is binary, it passes or fails, so giving a `bool` as a response will be implicity converted to a `Fact` as good stratagy for coders that use descriptive unit tests names.
+At its heart a test is binary, it passes or fails, so giving a `bool` as a response will be implicity converted to a `Fact` as good stratagy for coders that use descriptive unit tests names.
 
 ```csharp
 public Fact WhatYouTestSimpleAssertion()
@@ -42,7 +42,7 @@ public Fact WhatYouTestSimpleAssertion()
 }
 ```
 
-Optionally, the more expressive Shouldly inspired assertion syntax can be used to create instance of `Fact` with additional message feedback and knowledge about the values and the assertion being made.  The example bellow would generate automated message to show the difference between the outcomes, while the example above would flag the test as pass or fail.
+Optionally, the more expressive Shouldly inspired assertion syntax can be used to create an instance of `Fact` with additional message feedback and knowledge about the values and the assertion being made.  The example bellow would generate an automated message to show the difference between the outcomes, while the example above would flag the test as pass or fail.
 
 ```csharp
 public async Task<Fact> WhatYouTestBetterAssertion()

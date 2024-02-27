@@ -1,4 +1,6 @@
-﻿namespace ZeUnit.Demo.DemoCalculator.Operations
+﻿using ZeUnit.Demo.CalculatorTests.DemoCalculator;
+
+namespace ZeUnit.Demo.CalculatorTests.DemoCalculator.Operations
 {
     public class AddOperation : ICalculatorOperation
     {
