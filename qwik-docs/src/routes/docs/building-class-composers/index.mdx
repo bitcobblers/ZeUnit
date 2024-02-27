@@ -67,10 +67,20 @@ In this case, we are not really interested in any information as this `IZeClassC
 
 ## The Composer Attribute
 
-And the easy part, just creating the marker attribute that lets ZeUnit know that the `FakesClassComposer` is used by the test class.
+And the easy part, just creating the marker attribute that lets ZeUnit know that the `FakesClassComposer` is used by the test class.  This can be thought of as the arguments for the constructor, in the case of our `FakesClassComposer` it has no arguments but other classes might.
 
 ```csharp
 public class FakesAttribute : ZeComposerAttribute<FakesClassComposer> 
+{
+}
+```
+
+A generic and none-reflection version of the same type of class also exists in the form of `FakeAttribute<TType>` which informs composer composer class also keyed to the `TType` generic to only create the `Fake<TType>` when the args request the specific `TType` type.
+
+```csharp
+public class FakeAttribute<TType> 
+    : ZeComposerAttribute<FakeClassComposer<TType>>
+    where TType : class
 {
 }
 ```
