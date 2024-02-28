@@ -6,14 +6,6 @@ export const navigation = [
       { title: 'Birdseye View', href: '/docs/birdseye-view/'},
     ],
   },
-  {   
-    title: 'Examples & Case Studies',
-    links: [
-      { title: 'Calculator Tests', href: '/case-study/calculator-tests/' },     
-      { title: 'Fakes Composer', href: '/case-study/fakes-composer/' }, 
-      { title: 'AutoFac & Partial Composition', href: '/case-study/autofac-partial-composition/' },
-    ],
-  },
   {
     title: 'Core Concepts',
     links: [
@@ -30,6 +22,14 @@ export const navigation = [
       { title: 'Building Method Binders', href: '/docs/building-method-binders/' },     
       { title: 'Building Class Composers', href: '/docs/building-class-composers/' },       
       { title: 'Customizing Reporting', href: '/docs/customizing-reporting/' },
+    ],
+  },
+  {   
+    title: 'Examples & Case Studies',
+    links: [
+      { title: 'Calculator Tests', href: '/case-study/calculator-tests/' },     
+      { title: 'Fakes Composer', href: '/case-study/fakes-composer/' }, 
+      { title: 'AutoFac & Partial Composition', href: '/case-study/autofac-partial-composition/' },
     ],
   }
 ]
