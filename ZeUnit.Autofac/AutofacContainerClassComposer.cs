@@ -14,8 +14,8 @@ public class AutofacContainerClassComposer : IZeClassComposer
     {
         var builder = new ContainerBuilder();
         foreach (var registryType in attributes
-            .Where(n => n.GetType().IsAssignableTo(typeof(AutofacContainerAttribute)))
-            .Select(n => ((AutofacContainerAttribute)n).Registry))
+            .Where(n => n.GetType().IsAssignableTo(typeof(AutofacModuleAttribute)))
+            .Select(n => ((AutofacModuleAttribute)n).Registry))
         {
             var registry = (Module)Activator.CreateInstance(registryType)!;
             builder.RegisterModule(registry);
