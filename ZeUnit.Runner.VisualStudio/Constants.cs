@@ -1,4 +1,4 @@
-﻿namespace ZeUnit.Runner.VisualStudio;
+﻿namespace ZeUnit.TestAdapter;
 
 public static class Constants
 {

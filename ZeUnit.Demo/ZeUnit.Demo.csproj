@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZeUnit.Autofac\ZeUnit.Autofac.csproj" />
     <ProjectReference Include="..\ZeUnit.FakeItEasy\ZeUnit.FakeItEasy.csproj" />
     <ProjectReference Include="..\ZeUnit.Lamar\ZeUnit.Lamar.csproj" />
     <ProjectReference Include="..\ZeUnit.Runner.VisualStudio\ZeUnit.TestAdapter.csproj" />
