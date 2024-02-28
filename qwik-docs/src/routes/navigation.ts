@@ -9,7 +9,9 @@ export const navigation = [
   {   
     title: 'Examples & Case Studies',
     links: [
-      { title: 'Calculator Tests', href: '/docs/example-calculator-tests/' },      
+      { title: 'Calculator Tests', href: '/case-study/calculator-tests/' },     
+      { title: 'Fakes Composer', href: '/case-study/fakes-composer/' }, 
+      { title: 'AutoFac & Partial Composition', href: '/case-study/autofac-partial-composition/' },
     ],
   },
   {

@@ -8,7 +8,7 @@ Quick links by section, the full documentation is available on the [ZeUnit](http
     
 - [Getting Started](https://zeunit.org/)      
 - [Birdseye View](https://zeunit.org/docs/birdseye-view/)
-- [E.g. Calculator Tests](https://zeunit.org/docs/example-calculator-tests/)
+- [E.g. Calculator Tests](https://zeunit.org/case-study/calculator-tests/)
     
 ### Core Concepts
 
