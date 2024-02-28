@@ -6,23 +6,23 @@ Quick links by section, the full documentation is available on the [ZeUnit](http
    
 ### Introduction
     
-- [Getting Started](/)      
-- [Birdseye View](/docs/birdseye-view/)
-- [E.g. Calculator Tests](/docs/example-calculator-tests/)
+- [Getting Started](https://zeunit.org/)      
+- [Birdseye View](https://zeunit.org/docs/birdseye-view/)
+- [E.g. Calculator Tests](https://zeunit.org/case-study/calculator-tests/)
     
 ### Core Concepts
 
-- [Rich Assertions](/docs/rich-assertions/)
-- [Method Binders](/docs/core-method-binders/)
-- [Class Composers](/docs/core-class-composers/)
-- [Test & Suite Lifecycle](/docs/test-suite-lifecycle/)
-- [Reporting](/docs/core-reporting/)
+- [Rich Assertions](https://zeunit.org/docs/rich-assertions/)
+- [Method Binders](https://zeunit.org/docs/core-method-binders/)
+- [Class Composers](https://zeunit.org/docs/core-class-composers/)
+- [Test & Suite Lifecycle](https://zeunit.org/docs/test-suite-lifecycle/)
+- [Reporting](https://zeunit.org/docs/core-reporting/)
 
 ### Advanced Guides
     
-- [Building Class Composers](/docs/building-class-composers/)
-- [Building Method Binders](/docs/building-method-binders/)
-- [Customizing Reporting](/docs/customizing-reporting/)
+- [Building Class Composers](https://zeunit.org/docs/building-class-composers/)
+- [Building Method Binders](https://zeunit.org/docs/building-method-binders/)
+- [Customizing Reporting](https://zeunit.org/docs/customizing-reporting/)
 
 ## Why ZeUnit
 XUnit and NUnit are both battle hardened frameworks that are running countless tests in the wild.  Our tools and work seamlessly with the existing frameworks that is seems like dark wizardry not worthy to mess around with.  
