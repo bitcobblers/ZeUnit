@@ -1,4 +1,4 @@
-﻿namespace ZeUnit.Demo.InjectionTests;
+﻿namespace ZeUnit.Demo.LamarInjectionTests;
 
 public class SimpleServiceInjectionRegistry : ServiceRegistry
 {
