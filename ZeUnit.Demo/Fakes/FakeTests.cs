@@ -7,6 +7,7 @@ namespace ZeUnit.Demo.Fakes
     public class SystemUnderTest(IFakeService service)
     {
         public int DoWork() => service.GetOne();
+        public int DoWorkAdd(int value) => service.GetOne() + value;
     }
 
 
@@ -54,5 +55,19 @@ namespace ZeUnit.Demo.Fakes
             var sut = new SystemUnderTest(fake.FakedObject);
             return Throws<Exception>.On(() => sut.DoWork());            
         }
+
+        public Fact FakeIsReturnsTheValueWithArg1()
+        {
+            var sut = new SystemUnderTest(fake.FakedObject);
+            return Throws<Exception>.On(sut.DoWorkAdd, 1);
+        }
+
+        public Fact FakeIsReturnsTheValueWithArg2()
+        {
+            var sut = new SystemUnderTest(fake.FakedObject);
+            return Throws<Exception>.On(() => sut.DoWorkAdd(1));
+        }
+
+
     }
 }
