@@ -5,7 +5,7 @@ using ZeUnit.FakeItEasy;
 namespace ZeUnit.Demo.AutofacInjectionTests;
 
 [Fakes]
-[AutofacContainer(typeof(SimpleServiceInjectionModule))]
+[AutofacModule<SimpleServiceInjectionModule>()]
 public class AutofacInjectionZeTestClass(
     Func<ISimpleInjectedDependency, ISimpleInjectedService> factory, 
     Fake<ISimpleInjectedDependency> fake)
@@ -16,6 +16,5 @@ public class AutofacInjectionZeTestClass(
         var instance = factory(fake.FakedObject);
 
         return instance.Test() == "Fake";
-
     }
 }

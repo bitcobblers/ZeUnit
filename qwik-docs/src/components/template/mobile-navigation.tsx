@@ -1,5 +1,6 @@
 import { component$, $, useSignal } from "@builder.io/qwik"
 import Navigation from "./navigation";
+import { Logo } from "./logo";
 // import { Link } from "@builder.io/qwik-city";
 // import { Logomark } from "./logo";
 
@@ -60,6 +61,7 @@ export default component$(() => {
         class="relative flex"
         aria-label="Open navigation"
       >
+        <Logo class="block fill-slate-700 dark:fill-sky-100 text-2xl " />
         <MenuIcon class="h-6 w-6 stroke-slate-500" />
       </button>
       <div
