@@ -27,7 +27,7 @@ public static partial class ThrowsException
 
         public static Fact On<TType>(Func<TType> fn)
         {
-            return On(() => _ = fn());
+            return On(() => { _ = fn();  });
         }
         
         public static Fact On(Action action)               
