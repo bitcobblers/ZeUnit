@@ -49,16 +49,8 @@ namespace ZeUnit.Demo.Fakes
     {
         public Fact FakeIsReturnsTheValue()
         {
-            // THis needs a better helper, but should be able to compose an assertion for this
-            try
-            {
-                fake.FakedObject.GetOne();
-            }
-            catch (Exception ex)
-            {
-                return new Fact(ex).Assert(new AssertPassed("Expected Error"));
-            }
-            return new Fact<Exception>(null!).Assert(new AssertFailed("No Error was Thrown")); ;
+            Action run = () => fake.FakedObject.GetOne();
+            return run.Throws<Exception>();
         }
     }
 }
