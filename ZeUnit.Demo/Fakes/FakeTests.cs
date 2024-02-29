@@ -52,7 +52,7 @@ namespace ZeUnit.Demo.Fakes
         public Fact FakeIsReturnsTheValue()
         {
             var sut = new SystemUnderTest(fake.FakedObject);
-            return Throws<Exception>.On(sut.DoWork);            
+            return Throws<Exception>.On(() => sut.DoWork());            
         }
     }
 }
