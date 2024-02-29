@@ -2,29 +2,39 @@
 
 public static class ThrowsException
 {
-    public static Fact Throws<TError>(this Action action)
-        where TError : Exception
+    public delegate void ActionUnderTest();
+
+    public static class Throws<TException>
+        where TException : Exception
     {
-        try
+        public static Fact On<TType>(Func<TType> fn)
         {
-            action();
-            return new Fact<TError>(null!)
-                .Assert(new AssertFailed($"Expected {typeof(TError)} but no error was thrown."));
+            return On(() => _ = fn());
         }
-        catch (Exception ex)
+        
+        public static Fact On(Action action)               
         {
-            var type = ex.GetType();
-            if (type == typeof(TError))
+            var errorType = typeof(TException);
+            try
             {
-                return new Fact<TError>((TError)ex)
-                    .Assert(new AssertPassed($"Expected error {type} was thrown."));
+                action();
+                return new Fact(null!)
+                    .Assert(new AssertFailed($"Expected {errorType} but no error was thrown."));
             }
+            catch (Exception ex)
+            {
+                var type = ex.GetType();
+                if (type == errorType)
+                {
+                    return new Fact(ex)
+                        .Assert(new AssertPassed($"Expected error {type} was thrown."));
+                }
 
-            return new Fact<TError>(null!)                
-                .Assert(new AssertFailed($"Expected {typeof(TError)} but error of type {type} was thrown."))
-                .Assert(new AssertError(ex));
+                return new Fact(null!)
+                    .Assert(new AssertFailed($"Expected {errorType} but error of type {type} was thrown."))
+                    .Assert(new AssertError(ex));
 
-        }        
+            }
+        }
     }
-
 }

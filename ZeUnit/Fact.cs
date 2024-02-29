@@ -8,6 +8,7 @@ public class Fact<TType> : Fact
     public TType Value => (TType)Actual!;
 }
 
+
 public class Fact : IEnumerable<ZeAssert>
 {
     private readonly List<ZeAssert> assertions = new();
