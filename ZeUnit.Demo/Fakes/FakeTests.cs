@@ -1,6 +1,5 @@
 ﻿using FakeItEasy;
 using ZeUnit.FakeItEasy;
-using static ZeUnit.Assertions.ThrowsException;
 
 namespace ZeUnit.Demo.Fakes
 {
@@ -53,19 +52,19 @@ namespace ZeUnit.Demo.Fakes
         public Fact FakeIsReturnsTheValue()
         {
             var sut = new SystemUnderTest(fake.FakedObject);
-            return Throws<Exception>.On(() => sut.DoWork());            
+            return Is<Exception>.Thrown(() => sut.DoWork());            
         }
 
         public Fact FakeIsReturnsTheValueWithArg1()
         {
             var sut = new SystemUnderTest(fake.FakedObject);
-            return Throws<Exception>.On(sut.DoWorkAdd, 1);
+            return Is<Exception>.Thrown(sut.DoWorkAdd, 1);
         }
 
         public Fact FakeIsReturnsTheValueWithArg2()
         {
             var sut = new SystemUnderTest(fake.FakedObject);
-            return Throws<Exception>.On(() => sut.DoWorkAdd(1));
+            return Is<Exception>.Thrown(() => sut.DoWorkAdd(1));
         }
 
 
