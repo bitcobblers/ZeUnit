@@ -1,70 +1,73 @@
 ---
-slug: getting-started
+slug: why-zeunit
 ---
 import Notes from '~/components/template/notes'
 import Warning from '~/components/template/warning'
 
-## Getting Started with ZeUnit
+## Why ZeUnit?
 
-ZeUnit is an all purpose testing framework designed to scale from the small scale of unit tests to integration and behavior tests that stand up the whole system.  In this section we will look at the steps needed to start working with ZeUnit.
+ZeUnit was born from the frustrations of integration testing.  While the vast field of offering all very in the approach, a common but theme across the frameworks was the inherent misunderstanding about the target audience of these tools.
 
-Like any unit testing framework, the testing project will need to include the ZeUnit NuGet packages as well as the ZeUnit.TestAdapter and Microsoft.NET.Test.Sdk to enable running the tests inside Visual Studio.  Open up the NuGet package manager console and run the following commands in the context of your test project.
+<Warning title="The Flawed Assumption">
+Anyone besides software engineers will write integration/acceptance tests. If only the markdown is simple enough, business people will metamorph in software engineers.
+</Warning>
 
-```powershell
-Install-Package ZeUnit
-Install-Package ZeUnit.TestAdapter
-Install-Package Microsoft.NET.Test.Sdk
-```
+The sales pitch for these integration frameworks always boils down to *"Our markdown is simple enough!!!"* for business folk to write tests, but the harsh reality is that inevitably it will be an engineer that writes these tests.  Only now, handcuffed by the *"simple"* markdown instead of being empowered by Turing complete language they know and love.
 
-Use the `SampleSuite` code below to replace the initial implementation of `Class1.cs`, the file that is automatically created for you by Visual Studio.
+<Notes title="Business has Data not Tests">
+To walk back the combative sound of the previous paragraph, the expectation that business folk would write test (aka code) is outlandish!  They don't write code, **engineers write code**, they, the **business folk crete the data**.  
 
-```csharp
-public class SampleSuite
-{
-    public Fact SimpleTestMethodThatPasses() 
-    {            
-        var result = 2 + 2;
-        return result
-            .Is(4)            
-            .IsType<int>();
-    }
-
-    public async Task<Fact> SimpleAsyncTestMethodThatFails()
-    {
-        var result = await GetFiveLater();
-        return result == 5;            
-    }
-}
-```
-
-Open the Test Explorer window in Visual Studio, and kick off the tests.  It will display a passing and failing result for the two tests we created above.
-
-## A Deeper Dive
-
-At the heart of ZeUnit sits a simple design principle; a test is a function and functions return result(s). For ZeUnit, that result is a `Fact` which reports back to the test runner.  The benefits?  A testing platform that is simple to use and easily extensible with the tools the system is built on: It is just chaining function executions.   
-
-### Custom method bindings
-
-Take the familiar example of `InlineData`, which defines some types of test parameters and gives you the superpower to easily [write your own](/docs/building-method-binders/).  With the goal to abstract the often repeating code which loads tests data and likely serializes it, the primary candidates for a [built-in binder](/docs/core-method-binders/) collection are focused on file access.
-
-<Notes title="Discovery Life-Cycle">
-The `IZeMethodBinder` interface implementation described in [/docs/building-method-binders](/docs/building-method-binders) can generates zero or more tests / additional data files to be treated as valid new tests.
+**Data is the obvious handshake** between engineers who write the tests and the business people who create requirements.
 </Notes>
 
-### Class composition
+Now with a vision in mind, the idea behind ZeUnit was born.  Build an integration framework with out the 🥒 or other markdown files, and let dotnet developers write tests in C#.  Along the way, thought experiments  turned into proofs of concept and proofs of concept turned into working prototypes.  The result is a framework that tries to bring **functional programming** and element of **composition** to make testing more **repeatable** and **easier to scale** while keeping a consistent mental model across all scales all the way down to the simplest unit test.
 
-Your tests have dependencies and ZeUnit gives the pathway to [inject](/docs/core-class-composers/) them directly into the test class. 
+## Unit vs. Integration vs. End-to-End
 
+How big is a unit test? Is it bigger than a breadbox? 
 
-### Life-cycle & Dependency Chaining
+<Notes title="For the Tech-heads">
+Tired of all the "blah blah blah" and *"philosophy"* of testing? Need to get down and dirty with the code? Skip ahead to [birdseye view](/docs/birdseye-view/) and get a feeling for the different scale of testing the best way a bit-jockey can.  Also see [getting-started](/docs/getting-started/) for a quick start guide to writing your own ZeUnit tests.
+</Notes>
 
-**Control over the life-cycle**: One class or many? One dependency or many? When a framework spans from unit to integration to end-to-end tests, the ability to control the [life-cycle](/docs/test-suite-lifecycle/) of the test class becomes a powerful tool.
+The book [How Google Tests Software](https://amzn.to/3G4e4V4) talks about a system of test classification that doesn't neatly fit into the bucket of unit or integration testing.  Google instead classifies their tests as small, medium or large.  With that said, there existing duality of testing with in the testing tools at our disposal.
 
+* **Unit Testing** - in dotnet, this would be XUnit or NUnit, both of which focus on small scale testing and don't come with tools that enable contextual state.  The dogma that comes with using these framework chastises the use of classes that set up state, preaching a pure test instantiating all of it's scope.
+* **Integration Testing** - these would be your SpecFlow, Fitnesse and StoryTeller.  At the abstract layer, these frameworks enable some kind of system state abstracted behind a fixture.  But with the tendency of these languages to use runtime test interpreters, writing low level integration tests is not really practical.
 
-### Standalone Reporting
+But what if that distinction is less important than the weight we give it today.  ZeUnit tries to straddle the line between those worlds offering a simple enough language for writing quick pure unit tests and exposing a path of progressive enhancement to scale test complexity and size.  
 
-Don't waste time building a UI for your prototype, build a report instead that gets at the business value of your stakeholders faster.  ZeUnit sees a flexible [reporting system](/docs/customizing-reporting/) as a first class citizen that writes to your CI logger or delivers stunning data driven reports.  
+- Is your test **"Small"**? It probably has no dependencies and lives inside a `TransientSuite` [lifecycle](/docs/test-suite-lifecycle/). At this scale there might be value to extending the tests with some [method binders](/docs/core-method-binders/) to test reuse with method re-entry.  The [fakes-composer](/case-study/fakes-composer/) case-study offers helpful walk-through of the elements of [class composition](/docs/core-class-composers/), which could be pushing the limits of the **unit** test breadbox.
+- For **"Medium"** size tests, parts of the system will need to be in-place for the tests to run correctly.  This is where [class composition](/docs/core-class-composers/) really starts to shine.  Composers built around the [DI containers](/docs/lamar-dependency-injection/) of choice can consume the same modules used by the application to create containers unique to the test.
+- Getting upt to **"Large"** tests? Test might need to execute as a [specific chains of events](/docs/test-dependency-chain/) and generate meaningful [reporting data](/docs/core-reporting/) that shared with a larger audiences.
 
+The simpler mental model comes down to composition of dependencies and a function that a `Fact` [assertion](/docs/facts-and-assertions) no matter the scale of the test.
+
+## Tests, A Developers Best Friend & Worst Enemy
+
+A common trope, at least on [r/dotnet](https://www.reddit.com/r/dotnet/) is lack of testing out in the business world.  The lack of testing is often a result of the lack of time to write tests, or the lack of understanding of the value of tests.  This is truly one of the most "shoot your self in the foot" moments in software engineering. Inevitably the lack of testing leads to a scurry of manual testing and likely slipped deadlines, which only re-enforces the idea that there is not enough time to write tests.
+
+The truth is that testing isn't easy, and while it is a powerful tool in the developer toolbox few developers are well practiced with it.  Moreover hard "code coverage" numbers are often seen as hurdles to clear rather than a standard to strive for.
+
+Here are some warning signs that engineers don't understand the value of tests:
+
+### Long tests with many assertions.
+
+Cover coverage standards are often tracked by ci/cd automation, the game the system developmers writing end-to-end tests under the flag of writing unit tests resulting in high coverage with very few tests.  The outcome is a false sense of security and a mole hunt when one of those tests fails.
+
+<Warning title="End-to-End Canary Tets">
+The value of a good suite of small fine grained tests is that test failures point to specific areas of the code reducing the time to troubleshoot and address future issues.  When a test failure means that something, somewhere, at some time might be broken, that is no better than a canary flagging the entire mine as unsafe.
+</Warning>
+
+### End of development test crunch.
+
+*"I am finishing up the feature by writing tests."* is a trope of an agile standup conversation. The question arises, can it be known how finished a feature is if it is untested? 
+
+Tests are not an afterthought, they are the checklist along the way to validate that how you think the computer will understand you is how the computer actually understands you. It is there to test your assumptions before too any assumptions are stacked on top each other and it is impossible to know which untested assumption is the root cause of the problem.
+
+### Long refactoring times due to breaking tests
+
+This is where ZeUnit really breaks the mold with the other forms of testing and brings the re-usability to all scales of testing.  The "DRY" montra so prevelent in all aspects of software engineering is looked down on when applying it to testing.  To the test purist, ZeUnit is an abomination because it isn't shackled to the "Assemble, Act, Assert" dogma of unit testing.  At least, the "Assemble" element of the trinity is abstracted away behind the custom class composers or method binders which are re-used from test to test.
 
 ***
 

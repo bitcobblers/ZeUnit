@@ -1,0 +1,71 @@
+---
+slug: getting-started
+---
+import Notes from '~/components/template/notes'
+import Warning from '~/components/template/warning'
+
+## Getting Started with ZeUnit
+
+ZeUnit is an all purpose testing framework designed to scale from the small scale of unit tests to integration and behavior tests that stand up the whole system.  In this section we will look at the steps needed to start working with ZeUnit.
+
+Like any unit testing framework, the testing project will need to include the ZeUnit NuGet packages as well as the ZeUnit.TestAdapter and Microsoft.NET.Test.Sdk to enable running the tests inside Visual Studio.  Open up the NuGet package manager console and run the following commands in the context of your test project.
+
+```powershell
+Install-Package ZeUnit
+Install-Package ZeUnit.TestAdapter
+Install-Package Microsoft.NET.Test.Sdk
+```
+
+Use the `SampleSuite` code below to replace the initial implementation of `Class1.cs`, the file that is automatically created for you by Visual Studio.
+
+```csharp
+public class SampleSuite
+{
+    public Fact SimpleTestMethodThatPasses() 
+    {            
+        var result = 2 + 2;
+        return result
+            .Is(4)            
+            .IsType<int>();
+    }
+
+    public async Task<Fact> SimpleAsyncTestMethodThatFails()
+    {
+        var result = await GetFiveLater();
+        return result == 5;            
+    }
+}
+```
+
+Open the Test Explorer window in Visual Studio, and kick off the tests.  It will display a passing and failing result for the two tests we created above.
+
+## A Deeper Dive
+
+At the heart of ZeUnit sits a simple design principle; a test is a function and functions return result(s). For ZeUnit, that result is a `Fact` which reports back to the test runner.  The benefits?  A testing platform that is simple to use and easily extensible with the tools the system is built on: It is just chaining function executions.   
+
+### Custom method bindings
+
+Take the familiar example of `InlineData`, which defines some types of test parameters and gives you the superpower to easily [write your own](/docs/building-method-binders/).  With the goal to abstract the often repeating code which loads tests data and likely serializes it, the primary candidates for a [built-in binder](/docs/core-method-binders/) collection are focused on file access.
+
+<Notes title="Discovery Life-Cycle">
+The `IZeMethodBinder` interface implementation described in [/docs/building-method-binders](/docs/building-method-binders) can generates zero or more tests / additional data files to be treated as valid new tests.
+</Notes>
+
+### Class composition
+
+Your tests have dependencies and ZeUnit gives the pathway to [inject](/docs/core-class-composers/) them directly into the test class. 
+
+
+### Life-cycle & Dependency Chaining
+
+**Control over the life-cycle**: One class or many? One dependency or many? When a framework spans from unit to integration to end-to-end tests, the ability to control the [life-cycle](/docs/test-suite-lifecycle/) of the test class becomes a powerful tool.
+
+
+### Standalone Reporting
+
+Don't waste time building a UI for your prototype, build a report instead that gets at the business value of your stakeholders faster.  ZeUnit sees a flexible [reporting system](/docs/customizing-reporting/) as a first class citizen that writes to your CI logger or delivers stunning data driven reports.  
+
+
+***
+
+Next Section: [Birdseye View](/docs/birdseye-view/)

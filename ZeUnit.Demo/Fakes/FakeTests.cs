@@ -6,6 +6,7 @@ namespace ZeUnit.Demo.Fakes
     public class SystemUnderTest(IFakeService service)
     {
         public int DoWork() => service.GetOne();
+        public int DoWorkAdd(int value) => service.GetOne() + value;
     }
 
 
@@ -29,8 +30,9 @@ namespace ZeUnit.Demo.Fakes
     {
         public Fact FakeIsReturnsTheValue()
         {
-            var value = fake.FakedObject.GetOne();
-            return  value == 1;
+            var sut = new SystemUnderTest(fake.FakedObject);
+            var result = sut.DoWork();
+            return result == 1;
         }
     }
 
@@ -49,16 +51,22 @@ namespace ZeUnit.Demo.Fakes
     {
         public Fact FakeIsReturnsTheValue()
         {
-            // THis needs a better helper, but should be able to compose an assertion for this
-            try
-            {
-                fake.FakedObject.GetOne();
-            }
-            catch (Exception ex)
-            {
-                return new Fact(ex).Assert(new AssertPassed("Expected Error"));
-            }
-            return new Fact<Exception>(null!).Assert(new AssertFailed("No Error was Thrown")); ;
+            var sut = new SystemUnderTest(fake.FakedObject);
+            return Is<Exception>.Thrown(() => sut.DoWork());            
         }
+
+        public Fact FakeIsReturnsTheValueWithArg1()
+        {
+            var sut = new SystemUnderTest(fake.FakedObject);
+            return Is<Exception>.Thrown(sut.DoWorkAdd, 1);
+        }
+
+        public Fact FakeIsReturnsTheValueWithArg2()
+        {
+            var sut = new SystemUnderTest(fake.FakedObject);
+            return Is<Exception>.Thrown(() => sut.DoWorkAdd(1));
+        }
+
+
     }
 }
