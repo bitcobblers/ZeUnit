@@ -12,7 +12,7 @@ Quick links by section, the full documentation is available on the [ZeUnit](http
     
 ### Core Concepts
 
-- [Rich Assertions](https://zeunit.org/docs/rich-assertions/)
+- [Rich Assertions](https://zeunit.org/docs/facts-and-assertions/)
 - [Method Binders](https://zeunit.org/docs/core-method-binders/)
 - [Class Composers](https://zeunit.org/docs/core-class-composers/)
 - [Test & Suite Lifecycle](https://zeunit.org/docs/test-suite-lifecycle/)

@@ -13,7 +13,7 @@ public class ConsoleReporter : IZeReporter
         Console.WriteLine($"[{test.Class!.FullName}]::{test.Method!.Name} - {result.State}");
         foreach (var assertion in result)
         {
-            Console.WriteLine($" -- {assertion.Message}");
+            Console.WriteLine($" -- {assertion}");
         }
 
         if (result.State == ZeStatus.Failed)

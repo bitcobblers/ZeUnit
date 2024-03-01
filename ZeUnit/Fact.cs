@@ -1,13 +1,4 @@
-﻿using ZeUnit.Assertions;
-namespace ZeUnit;
-
-public class Fact<TType> : Fact
-{
-    public Fact(TType actual) : base(actual) { }
-
-    public TType Value => (TType)Actual!;
-}
-
+﻿namespace ZeUnit;
 
 public class Fact : IEnumerable<ZeAssert>
 {
@@ -41,7 +32,16 @@ public class Fact : IEnumerable<ZeAssert>
 
     IEnumerator IEnumerable.GetEnumerator() => assertions.GetEnumerator();
 
-    public static implicit operator Fact(bool outcome) => new Fact<bool>(outcome).True();
-    public static implicit operator Fact((bool, string) outcome) => new Fact<bool>(outcome.Item1).True(outcome.Item2);
+    public static implicit operator Fact(bool fact) => (fact, $"Expected ['true'] Got: ['{fact}']");
+    public static implicit operator Fact((bool Outcome, string Message) fact) => 
+        new Fact<bool>(fact.Outcome).Assert(fact.Outcome
+            ? new AssertPassed(fact.Message)
+            : new AssertFailed(fact.Message));
+}
 
+public class Fact<TType> : Fact
+{
+    public Fact(TType actual) : base(actual) { }
+
+    public TType Value => (TType)Actual!;
 }

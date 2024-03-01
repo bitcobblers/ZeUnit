@@ -15,9 +15,14 @@ The language features that are used as examples in this section are just a small
 ## Simple Suite
 
 ```csharp
-
-Need Code Here?
-
+public class SimpleSuite
+{
+    public Fact GetExpectedValue()
+    {   
+        var actual = GetSomeString();    
+        return actual == "expected";
+    }
+}
 ```
 
 The example above in the class `SimpleSuite`, is the most basic form of a test in ZeUnit.  There is no constructor injection or custom method bindings.  As a result, it defaults to `TransientSuite` with a `TransientLifecycleFactory` for the class lifecycle.
