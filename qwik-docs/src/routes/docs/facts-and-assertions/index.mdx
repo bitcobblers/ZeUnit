@@ -1,20 +1,63 @@
 import Warning from '~/components/template/warning'
+import Notes from '~/components/template/notes'
 
-# Rich Assertions with Fluent Syntax
+# Facts & Assertions
 
-A strong validation of a good idea is the way that many may try to replicate it.  One can only speculate, but both of these libraries seem to dislike `Assert` as they seem to do away with the need for it.
+What truly makes ZeUnit functional over other testing libraries is the resulting `Fact` value expect from a ZeUnit test instead of a call to `Assert`.  This is the mechanism that feeds the outcome back to the test runner.  The `Fact` is a value with a collection of `Assertion` values defining the test outcome along with a description.  
+
+### Implicit Type Conversion Example
+
+But, hold the horses, the examples aren't returning `Fact` they are returning a `bool`.  
+
+```csharp
+public class SimpleSuite
+{
+    public Fact GetExpectedValue()
+    {   
+        var actual = GetSomeString();    
+        return actual == "expected";
+    }
+}
+```
+
+The magic here is treating any the `bool` as a `Fact<bool>` that expects the value to be true and fails the test if the value is false.  For some added reporting, the Assertion message can be explicitly set using the `(bool, string)` construct.  All this power from so few lines:
+
+```csharp
+    public static implicit operator Fact(bool fact) => (fact, $"Expected ['true'] Got: ['{fact}']");
+    public static implicit operator Fact((bool Outcome, string Message) fact) => 
+        new Fact<bool>(fact.Outcome).Assert(fact.Outcome
+            ? new AssertPassed(fact.Message)
+            : new AssertFailed(fact.Message));
+```
+
+<Notes title="Make it Yours">
+The path to writing custom and domain specific assertion can be found in the code above either though other implicit operators in your test constructs or static classes and methods that return other versions of `Fact<TType>` with custom assertions.
+</Notes>
+
+### Possible Assertions
+
+- **Skipped**: This is state assigned to test that are marked by the `Skip` attribute or are dependent on tests that are marked by the `Skip` attribute.
+- **Deferred**: An internal and temporary state.  `Deferred` tells the runner to retry the test when the dependencies have all satisfied.  Any test still in the `Deferred` state when no test can run will be re-evaluated to the `Error` state.
+- **Passed**: The happy path state of a test.  This will override the deferred state of a test once the test can execute.
+- **Failed**: will override other lower states, and will mark the test as failed in the case that any of the test assertions are in this state.
+- **Error**: An internal failure state, the `Error` state super-seeds all the other assertions logging the `Exception` that was raised.
+
+
+## Fluent Syntax
+
+
+It should come as no surprise that the syntax style from libraries listed bellow can find synergy with the functional style of testing that is offered by ZeUnit.
 
 - [shouldly](https://docs.shouldly.org/)
 - [Fluent Assertions](https://fluentassertions.com/introduction)
-
-It should come as no surprise that the syntax style these libraries use can find such synergy with the functional style of testing that is offered by ZeUnit.
-
-## What is `Fact<TType>`?
 
 <Warning title="Under Construction" >
     This page is under construction and may contain incomplete or incorrect information.
 </Warning>
 
+
 ---
 
 Next Section: [Method Binders](/docs/core-method-binders/)
+
+
