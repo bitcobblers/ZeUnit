@@ -1,4 +1,10 @@
 ﻿namespace ZeUnit.Assertions;
+
+public static class Is
+{
+    public static Fact Skipped(string message = "Skipped during execution.") => new Fact(null!).Assert(new AssertSkipped(message));
+}
+
 public static class Is<TException>
     where TException : Exception
 {
