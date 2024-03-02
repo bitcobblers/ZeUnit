@@ -7,7 +7,7 @@ public class LamarContainerAttribute : ZeComposerAttribute<LamarContainerClassCo
     {
     }
 
-    public LamarContainerAttribute(Type registry) : base()
+    public LamarContainerAttribute(Type registry)
     {
         if (!registry.IsAssignableTo(typeof(ServiceRegistry)))
         {
