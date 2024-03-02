@@ -43,7 +43,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
     public void RunTests(IEnumerable<TestCase>? tests, IRunContext? runContext, IFrameworkHandle? frameworkHandle)
     {
-        frameworkHandle!.SendMessage(TestMessageLevel.Informational, $"Running Tests");
+        frameworkHandle!.SendMessage(TestMessageLevel.Informational, "Running Tests");
         var sources = tests!.GroupBy(n => n.Source);
         var executionList = new List<Task>();
         var runner = new ZeRunner(testRunnerDiscovery.Runners());
