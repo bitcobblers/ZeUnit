@@ -8,7 +8,7 @@ public class AutofacContainerAttribute : ZeComposerAttribute<AutofacContainerCla
     {
     }
 
-    public AutofacContainerAttribute(Type registry) : base()
+    public AutofacContainerAttribute(Type registry)
     {
         if (!registry.IsAssignableTo(typeof(Module)))
         {
