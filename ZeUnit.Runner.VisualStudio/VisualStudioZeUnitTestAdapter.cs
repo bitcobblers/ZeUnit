@@ -43,7 +43,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
     public void RunTests(IEnumerable<TestCase>? tests, IRunContext? runContext, IFrameworkHandle? frameworkHandle)
     {
-        frameworkHandle!.SendMessage(TestMessageLevel.Informational, $"Running {tests!.Count()}");
+        frameworkHandle!.SendMessage(TestMessageLevel.Informational, $"Running Tests");
         var sources = tests!.GroupBy(n => n.Source);
         var executionList = new List<Task>();
         var runner = new ZeRunner(testRunnerDiscovery.Runners());
@@ -58,7 +58,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
             foreach (var classPair in classes)
             {
-                var (@class, factory) = classPair.Key;
+                var (_, factory) = classPair.Key;
                 foreach (var (zeTest, testCase) in classPair)
                 {
                     var result = new TestResult(testCase);
@@ -73,7 +73,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
                     executionList.Add(runner.Run(zeTest, factory!).Select(pair =>
                     {
-                        var (zeTest, Ze) = pair;
+                        var (_, Ze) = pair;
                         result.Duration = Ze.Duration;
                         result.Outcome = Ze.Any() && Ze.All(x => x.Status == ZeStatus.Passed)
                             ? TestOutcome.Passed
