@@ -4,7 +4,7 @@ namespace ZeUnit.Reporters;
 
 public class CompoundReporter : IZeReporter
 {
-    private List<IZeReporter> reporters;
+    private readonly List<IZeReporter> reporters;
 
     public CompoundReporter(List<IZeReporter> reporters)
     {

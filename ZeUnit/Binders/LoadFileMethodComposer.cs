@@ -6,7 +6,7 @@ public class LoadFileMethodComposer : IZeMethodBinder
 {
     private bool disposedValue;
     private readonly LoadFileAttribute attribute;
-    private List<IZeFileLoader> loaders = new()
+    private readonly List<IZeFileLoader> loaders = new()
     {
         new StreamFileLoader(),
         new FileStreamFileLoader(),

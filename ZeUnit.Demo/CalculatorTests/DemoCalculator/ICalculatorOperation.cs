@@ -1,7 +1,6 @@
-﻿namespace ZeUnit.Demo.CalculatorTests.DemoCalculator
+﻿namespace ZeUnit.Demo.CalculatorTests.DemoCalculator;
+
+public interface ICalculatorOperation
 {
-    public interface ICalculatorOperation
-    {
-        double? Apply(double? current, double[] args);
-    }
+    double? Apply(double? current, double[] args);
 }

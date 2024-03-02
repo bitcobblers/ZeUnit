@@ -1,2 +1,1 @@
-﻿global using System.Reflection;
-global using Lamar;
+﻿global using Lamar;

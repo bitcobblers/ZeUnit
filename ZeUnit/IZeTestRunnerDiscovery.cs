@@ -1,9 +1,8 @@
 ﻿
-namespace ZeUnit
+namespace ZeUnit;
+
+public interface IZeTestRunnerDiscovery
 {
-    public interface IZeTestRunnerDiscovery
-    {
-        ZeTestRunner[] Runners();
-        Type[] SupportedTypes();
-    }
+    ZeTestRunner[] Runners();
+    Type[] SupportedTypes();
 }
