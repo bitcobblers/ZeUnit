@@ -1,5 +1,7 @@
 ### ZeUnit 
 
+[![Qodana](https://github.com/bitcobblers/ZeUnit/actions/workflows/code_quality.yml/badge.svg)](https://github.com/bitcobblers/ZeUnit/actions/workflows/code_quality.yml)
+
 ## Documentation
 
 Quick links by section, the full documentation is available on the [ZeUnit](https://zeunit.org) homepage. 
