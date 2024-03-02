@@ -1,6 +1,4 @@
-﻿using System.Reactive.Linq;
-
-namespace ZeUnit.Demo.EnumerableTests;
+﻿namespace ZeUnit.Demo.EnumerableTests;
 
 public class EnumerableTests
 {
