@@ -1,0 +1,86 @@
+import Warning from '~/components/template/warning'
+
+# Fakes Composer
+
+<Warning title="Under Construction" >
+    This page is under construction and may contain incomplete or incorrect information.
+</Warning>
+
+Looking over in the demo project, this example can be found here: <a href="https://github.com/bitcobblers/ZeUnit/blob/main/ZeUnit.Demo/Fakes/FakeTests.cs" target="_blank">FakeTests</a>
+
+```csharp
+public interface IFakeService
+{
+    int GetOne();
+}
+
+[Fakes]
+public class FakeTests(Fake<IFakeService> fake) 
+{       
+    public Fact FakeIsReturnsTheValue()
+    {
+        fake.CallsTo(x => x.GetOne())
+            .Returns(1);
+
+        return fake.FakedObject.GetOne() == 1;
+    }
+}
+```
+
+What actually happens behind the scence is the implementation of two types:
+
+- A `ZeComposerAttribute` generic implementation that points to an instance of a `IZeClassComposer` class.
+- The `IZeClassComposer` implementation defined by the `ZeComposerAttribute` which knows how to take data from the `ZeComposerAttribute` and create the types the class is dependent on.
+
+A natural implementation includes the `LamarContainerAttribute` or the `FakesAttribute` this article digs into.
+
+## Building the Composer
+
+For ZeUnit to know how to populate the dependencies of a test class it will look to a collection of `IZeClassComposer` instances, asking each of the composers for the classes it needs and doing its best to compose from all the response.  Here is the `FakesClassComposer`
+
+```csharp
+public class FakesClassComposer : IZeClassComposer    
+{
+    protected Dictionary<Type, Func<object>> factory = new Dictionary<Type, Func<object>>();
+
+    public object? Get(Type args)
+    {
+        var genericType = args.GetGenericArguments().FirstOrDefault();
+        if (genericType == null || !args.FullName.StartsWith("FakeItEasy.Fake"))
+        {
+            return default;
+        }
+        if (!factory.ContainsKey(genericType)) 
+        {
+            Type fakeType = typeof(Fake<>).MakeGenericType(new Type[] { genericType });
+            factory.Add(genericType, () => Activator.CreateInstance(fakeType)!);            
+        }        
+
+        return factory[genericType]();
+    }    
+}
+```
+
+Part of the big function here is that the `IZeClassComposer` interface returns the `Nullable<object>` from the get call, allowing a composer to fail to return a type.
+
+In this case, we are not really interested in any information as this `IZeClassComposer` is generic looking at the `Type args` to both be a generic argument and to be of a type `FakeItEasy.Fake`.  And knowing that if we request that type we should make the generic version of `new Fake<TType>()` something that we do caching the reflection call to the activator into a function.
+
+## The Composer Attribute
+
+And the easy part, just creating the marker attribute that lets ZeUnit know that the `FakesClassComposer` is used by the test class.  This can be thought of as the arguments for the constructor, in the case of our `FakesClassComposer` it has no arguments but other classes might.
+
+```csharp
+public class FakesAttribute : ZeComposerAttribute<FakesClassComposer> 
+{
+}
+```
+
+A generic and none-reflection version of the same type of class also exists in the form of `FakeAttribute<TType>` which informs composer composer class also keyed to the `TType` generic to only create the `Fake<TType>` when the args request the specific `TType` type.
+
+```csharp
+public class FakeAttribute<TType> 
+    : ZeComposerAttribute<FakeClassComposer<TType>>
+    where TType : class
+{
+}
+```

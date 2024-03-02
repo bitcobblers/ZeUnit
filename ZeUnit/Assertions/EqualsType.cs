@@ -1,5 +1,7 @@
 ﻿namespace ZeUnit.Assertions;
 
+
+
 public static class EqualsType
 {
     public static Fact IsType<TExpected>(this Fact actual)

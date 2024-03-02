@@ -1,4 +1,4 @@
-﻿namespace ZeUnit.Runner.VisualStudio;
+﻿namespace ZeUnit.TestAdapter;
 
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
@@ -21,7 +21,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
     public VisualStudioZeUnitTestAdapter()
     {
-        this.testRunnerDiscovery = new DefaultTestRunnerDiscovery();
+        testRunnerDiscovery = new DefaultTestRunnerDiscovery();
     }
 
     public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger,
@@ -59,7 +59,7 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
             foreach (var classPair in classes)
             {
-                var (@class, factory) = classPair.Key;                                
+                var (@class, factory) = classPair.Key;
                 foreach (var (zeTest, testCase) in classPair)
                 {
                     var result = new TestResult(testCase);

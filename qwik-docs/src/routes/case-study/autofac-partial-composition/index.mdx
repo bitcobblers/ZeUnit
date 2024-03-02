@@ -1,0 +1,39 @@
+import Warning from '~/components/template/warning'
+
+# Autofac Partial Composition
+
+<Warning title="Under Construction" >
+    This page is under construction and may contain incomplete or incorrect information.
+</Warning>
+
+## Painting the Scene
+
+[Autofac](https://autofac.org/) is a popular dependency injection framework for .NET and you are building an application .  It is a mature and feature rich framework that is widely used in the .NET community.  It is a popular choice for dependency injection in .NET Core and .NET Framework applications.
+
+Adding these behaviors will require additional packages to be added to your project:
+
+```
+Install-Package ZeUnit.FakeItEasy
+Install-Package ZeUnit.Autofac
+```
+
+# The Contrived Example
+
+Examples of frameworks are often a bit contorted to show off the framework while making a mockery of the testing framework it self.  
+
+```csharp
+[Fakes]
+[AutofacModule<SimpleServiceInjectionModule>()]
+public class AutofacInjectionZeTestClass(
+    Func<ISimpleInjectedDependency, ISimpleInjectedService> factory, 
+    Fake<ISimpleInjectedDependency> fake)
+{    
+    public Fact ConstructorInjectionTestMethodThatPasses()
+    {
+        fake.CallsTo(n => n.Value()).Returns("Fake");
+        var instance = factory(fake.FakedObject);
+
+        return instance.Test() == "Fake";
+    }
+}
+```

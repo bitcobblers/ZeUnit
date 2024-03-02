@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using ZeUnit.Demo.InjectionTests;
+using ZeUnit.Demo.LamarInjectionTests;
 
 namespace ZeUnit.Demo.FileTests
 {
