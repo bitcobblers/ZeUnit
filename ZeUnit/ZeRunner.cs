@@ -1,6 +1,5 @@
 ﻿using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Timers;
 
 namespace ZeUnit;
 
@@ -40,8 +39,8 @@ public class ZeRunner
 
 public class ZeTestException : IObservable<(ZeTest, Fact)>
 {
-    private ZeTest test;
-    private Exception ex;
+    private readonly ZeTest test;
+    private readonly Exception ex;
 
     public ZeTestException(ZeTest test, Exception ex)
     {

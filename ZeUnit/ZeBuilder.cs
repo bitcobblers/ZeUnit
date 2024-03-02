@@ -1,15 +1,13 @@
 ﻿namespace ZeUnit;
 
 using System.Reactive.Linq;
-using System.Reactive;
 using ZeUnit.Reporters;
-using ZeUnit.Assertions;
 
 public class ZeBuilder
 {
-    private List<Func<ZeDiscovery, ZeDiscovery>> configs = new();
-    private List<IZeReporter> reporters = new();
-    private IZeTestRunnerDiscovery runnerDiscovery;    
+    private readonly List<Func<ZeDiscovery, ZeDiscovery>> configs = new();
+    private readonly List<IZeReporter> reporters = new();
+    private readonly IZeTestRunnerDiscovery runnerDiscovery;    
 
     public ZeBuilder() : this(new DefaultTestRunnerDiscovery())
     {        

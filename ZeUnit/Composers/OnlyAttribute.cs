@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace ZeUnit.Composers;
+﻿namespace ZeUnit.Composers;
 
 public class OnlyAttribute : ZeComposerAttribute<SingletonComposer>
 {

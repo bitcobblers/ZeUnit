@@ -1,12 +1,11 @@
 ﻿using System.Reactive.Linq;
 
-namespace ZeUnit.Demo.EnumerableTests
+namespace ZeUnit.Demo.EnumerableTests;
+
+public class EnumerableTests
 {
-    public class EnumerableTests
+    public IEnumerable<Fact> EnumerableTestRun()
     {
-        public IEnumerable<Fact> EnumerableTestRun()
-        {
-            return Enumerable.Range(1, 5).Select(i => i.Is(i));
-        }
+        return Enumerable.Range(1, 5).Select(i => i.Is(i));
     }
 }
