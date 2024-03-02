@@ -1,13 +1,12 @@
-﻿namespace ZeUnit.Demo.CalculatorTests.DemoCalculator
+﻿namespace ZeUnit.Demo.CalculatorTests.DemoCalculator;
+
+public interface ICalculator
 {
-    public interface ICalculator
-    {
-        ICalculator Register(ICalculatorOperation operation);
+    ICalculator Register(ICalculatorOperation operation);
 
-        ICalculator Apply<TOperation>(params double[] args) where TOperation : ICalculatorOperation;
+    ICalculator Apply<TOperation>(params double[] args) where TOperation : ICalculatorOperation;
 
-        ICalculator Apply(Type operation, params double[] args);
+    ICalculator Apply(Type operation, params double[] args);
 
-        double? Value { get; }
-    }
+    double? Value { get; }
 }

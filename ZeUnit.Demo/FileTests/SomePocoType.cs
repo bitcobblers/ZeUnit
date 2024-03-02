@@ -1,7 +1,6 @@
-﻿namespace ZeUnit.Demo.FileTests
+﻿namespace ZeUnit.Demo.FileTests;
+
+public class SomePocoType
 {
-    public class SomePocoType
-    {
-        public string Text { get; set; } = string.Empty;
-    }
+    public string Text { get; set; } = string.Empty;
 }
