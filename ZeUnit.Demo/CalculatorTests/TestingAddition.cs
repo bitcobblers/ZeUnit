@@ -1,5 +1,4 @@
-﻿using ZeUnit.Demo.CalculatorTests.DemoCalculator;
-using ZeUnit.Demo.CalculatorTests.DemoCalculator.Operations;
+﻿using ZeUnit.Demo.CalculatorTests.DemoCalculator.Operations;
 
 namespace ZeUnit.Demo.CalculatorTests
 {

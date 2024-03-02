@@ -1,6 +1,4 @@
-﻿using System.IO.Enumeration;
-
-namespace ZeUnit.Binders;
+﻿namespace ZeUnit.Binders;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class LoadFileAttribute : ZeBinderAttribute<LoadFileMethodComposer>

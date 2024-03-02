@@ -1,6 +1,4 @@
-﻿using ZeUnit.Assertions;
-
-namespace ZeUnit.Demo.FileTests
+﻿namespace ZeUnit.Demo.FileTests
 {
     public class DirectoryInjectionTests
     {

@@ -1,9 +1,7 @@
 ﻿namespace ZeUnit;
 
 using System.Reactive.Linq;
-using System.Reactive;
 using ZeUnit.Reporters;
-using ZeUnit.Assertions;
 
 public class ZeBuilder
 {
