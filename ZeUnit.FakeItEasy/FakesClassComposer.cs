@@ -4,7 +4,7 @@ namespace ZeUnit.FakeItEasy;
 
 public class FakesClassComposer : IZeClassComposer    
 {
-    protected Dictionary<Type, Func<object>> factory = new Dictionary<Type, Func<object>>();
+    protected Dictionary<Type, Func<object>> factory = new();
 
     public object? Get(Type args)
     {
