@@ -6,7 +6,7 @@ public class CoreMethodComposer : IZeMethodBinder
 
     public IEnumerable<MethodBinderInfo> Get(MethodInfo method)
     {
-        yield return new(method.Name, new object[0]);
+        yield return new(method.Name, Array.Empty<object>());
     }
 
     protected virtual void Dispose(bool disposing)

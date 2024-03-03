@@ -20,7 +20,7 @@ public class ZeRunner
         try
         {                
             var runner = runners.First(n => n.SupportType == test.Method!.ReturnType);            
-            return runner.Run(test, factory, test.Arguments?.Invoke() ?? new object[0]).Select(n =>
+            return runner.Run(test, factory, test.Arguments?.Invoke() ?? Array.Empty<object>()).Select(n =>
             {
                 n.Item2.Duration = DateTime.Now - startTime;
                 return n;
