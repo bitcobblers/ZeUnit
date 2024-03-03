@@ -7,3 +7,8 @@ include:
   - name: RedundantStringInterpolation
   - name: UseArrayEmptyMethod
   - name: UseUtf8StringLiteral
+  - name: AutoPropertyCanBeMadeGetOnly.Global
+  - name: FieldCanBeMadeReadOnly.Global
+  - name: UseIsOperator.1
+  - name: CheckForReferenceEqualityInstead.1
+  - name: UseMethodIsInstanceOfType

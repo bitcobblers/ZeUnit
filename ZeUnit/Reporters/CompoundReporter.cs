@@ -26,5 +26,5 @@ public class CompoundReporter : IZeReporter
         reporters.ForEach(reporter => reporter.OnNext(value));
     }
 
-    public static implicit operator CompoundReporter(List<IZeReporter> reporters) => new CompoundReporter(reporters);
+    public static implicit operator CompoundReporter(List<IZeReporter> reporters) => new(reporters);
 }

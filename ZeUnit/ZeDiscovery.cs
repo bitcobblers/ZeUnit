@@ -30,9 +30,9 @@ public class ZeDependencyChainParser
 
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
-    private readonly ZeDependencyChainParser _parser = new ZeDependencyChainParser();
+    private readonly ZeDependencyChainParser _parser = new();
     private readonly List<ZeTest> tests = new();
-    private readonly List<Type> supportedTypes = new List<Type>();
+    private readonly List<Type> supportedTypes = new();
 
     public ZeDiscovery(IEnumerable<Type> supportedTypes)
     {
@@ -59,7 +59,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
         return this;
     }
 
-    public ComposerMethodFactory MethodFactory = new ComposerMethodFactory();
+    public ComposerMethodFactory MethodFactory = new();
 
     public ZeDiscovery FromAssembly(string source)
     {

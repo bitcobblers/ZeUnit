@@ -6,7 +6,7 @@ namespace ZeUnit.Story;
 public class StoryReporter : IZeReporter
 {
     private readonly string fileName;
-    private readonly List<(ZeTest, Fact)> tests = new List<(ZeTest, Fact)>();
+    private readonly List<(ZeTest, Fact)> tests = new();
 
     public StoryReporter(string fileName = "story.html")
     {
