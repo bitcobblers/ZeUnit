@@ -4,8 +4,8 @@ namespace ZeUnit.Reporters;
 
 public class ConsoleReporter : IZeReporter
 {
-    private int total = 0;
-    private int error = 0;
+    private int total;
+    private int error;
 
     public void OnNext((ZeTest, Fact) value)
     {

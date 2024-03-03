@@ -4,43 +4,43 @@ namespace ZeUnit;
 
 public class ZeBuilder
 {
-    private readonly List<Func<ZeDiscovery, ZeDiscovery>> configs = new();
-    private readonly List<IZeReporter> reporters = new();
-    private readonly IZeTestRunnerDiscovery runnerDiscovery;    
+    private readonly List<Func<ZeDiscovery, ZeDiscovery>> _configs = new();
+    private readonly List<IZeReporter> _reporters = new();
+    private readonly IZeTestRunnerDiscovery _runnerDiscovery;    
 
     public ZeBuilder() : this(new DefaultTestRunnerDiscovery())
     {        
     }
     public ZeBuilder(IZeTestRunnerDiscovery runnerDiscovery)
     {
-        this.runnerDiscovery = runnerDiscovery;       
+        this._runnerDiscovery = runnerDiscovery;       
     }
 
     public ZeBuilder With(Func<ZeDiscovery, ZeDiscovery> configFn)
     {
-        this.configs.Add(configFn);
+        this._configs.Add(configFn);
         return this;
     }
 
     public ZeBuilder With(params IZeReporter[] reporters)
     {
-        this.reporters.AddRange(reporters);
+        this._reporters.AddRange(reporters);
         return this;
     }            
 
     public ZeDiscovery GetDiscovery()
     {
-        var discovery = new ZeDiscovery(runnerDiscovery.SupportedTypes());
-        return configs.Aggregate(discovery, (discovery, config) => config(discovery));        
+        var discovery = new ZeDiscovery(_runnerDiscovery.SupportedTypes());
+        return _configs.Aggregate(discovery, (discovery, config) => config(discovery));        
     }
 
     public IZeReporter GetReporter()
     {
-        return (CompoundReporter)this.reporters;
+        return (CompoundReporter)this._reporters;
     }
 
     public IEnumerable<ZeTestRunner> Runners()
     {
-        return runnerDiscovery.Runners();
+        return _runnerDiscovery.Runners();
     }
 }
