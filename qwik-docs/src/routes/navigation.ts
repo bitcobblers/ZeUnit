@@ -4,13 +4,13 @@ export const navigation = [
     links: [
       { title: 'Why ZeUnit?', href: '/' },
       { title: 'Birdseye View', href: '/docs/birdseye-view/' },
-      { title: 'Getting Started', href: '/docs/getting-started' }
+      { title: 'Getting Started', href: '/docs/getting-started' },
+      { title: 'Testing Tools', href: '/docs/testing-tools/' },
     ],
   },
   {
     title: 'Core Concepts',
-    links: [
-      { title: 'Fact & Assertions', href: '/docs/facts-and-assertions/' },
+    links: [      
       { title: 'Method Binders', href: '/docs/core-method-binders/' },
       { title: 'Class Composers', href: '/docs/core-class-composers/' },
       { title: 'Test & Suite Lifecycle', href: '/docs/test-suite-lifecycle/' },
@@ -20,6 +20,7 @@ export const navigation = [
   {
     title: 'Advanced Guides',
     links: [
+      { title: 'Fact & Assertions', href: '/docs/facts-and-assertions/' },
       { title: 'Building Method Binders', href: '/docs/building-method-binders/' },
       { title: 'Building Class Composers', href: '/docs/building-class-composers/' },
       { title: 'Customizing Reporting', href: '/docs/customizing-reporting/' },
