@@ -71,7 +71,7 @@ export default component$(() => {
           aria-label="Navigation"
         >
           <div class="h-full w-full bg-white px-4 pb-12 pt-5 sm:px-6 dark:bg-slate-900">            
-            <Navigation/>
+            <Navigation />
           </div>
         </div> 
         : <></>
