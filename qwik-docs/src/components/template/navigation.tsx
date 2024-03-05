@@ -2,16 +2,15 @@ import { component$ } from "@builder.io/qwik"
 import { useLocation } from "@builder.io/qwik-city";
 import { navigation } from "~/routes/navigation";
 
-export default component$(({
-  className,  
-}: {
-  className?: string
+export default component$(( args: {
+  class?: string,
+  columns?: number,
   onLinkClick?: any
 }) => {
   const pathname = useLocation();
   return (
-    <nav class={'text-base lg:text-sm' + className}>
-      <ul role="list" class="space-y-9">
+    <nav class={'text-base lg:text-sm ' + args.class}>
+      <ul role="list" class={`space-y-9 grid grid-cols-${args.columns || 1} gap-4`}>
         {navigation.map((section) => (
           <li key={section.title}>
             <h4 class="font-display font-medium text-slate-900 dark:text-white">
