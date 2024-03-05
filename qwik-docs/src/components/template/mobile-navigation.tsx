@@ -1,4 +1,4 @@
-import { component$, $, useStore, useSignal } from "@builder.io/qwik"
+import { component$, useStore } from "@builder.io/qwik"
 import Navigation from "./navigation";
 import { Logo } from "./logo";
 import GitHubIcon from "./git-hub-icon";
@@ -67,11 +67,11 @@ export default component$(() => {
       </div>
       {menu.isOpen 
         ? <div
-          class="flex z-50 items-start bg-slate-900/50 backdrop-blur"
+          class="flex z-50 items-start w-full"
           aria-label="Navigation"
         >
-          <div class="h-full w-full max-w-xs bg-white px-4 pb-12 pt-5 sm:px-6 dark:bg-slate-900">            
-            <Navigation />
+          <div class="h-full w-full bg-white px-4 pb-12 pt-5 sm:px-6 dark:bg-slate-900">            
+            <Navigation class="w-full" columns={2} />
           </div>
         </div> 
         : <></>
