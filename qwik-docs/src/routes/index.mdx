@@ -3,17 +3,33 @@ slug: why-zeunit
 ---
 import Notes from '~/components/template/notes'
 import Warning from '~/components/template/warning'
+import Card from '~/components/template/card'
 import TwoColumns from '~/components/template/two-columns'
+import { HiCheckCircleMini, HiShieldCheckSolid, HiPrinterMini, HiCog8ToothSolid } from "@qwikest/icons/heroicons";
 
-{/*
+
 ## What is ZeUnit?
 
+ZeUnit is the vision of a unified mental model for testing, smoothing the difference between unit, integration and end-to-end tests with progression of progressive enhancement of extensable framework features.  This unified approach not only simplifies the testing process but also fosters a consistent and cohesive testing strategy across your project.
+
  <TwoColumns>
-<div>test</div>
-<div>test</div>
-<div>test</div>
-<div>test</div>
-</TwoColumns> */}
+    <Card title='Simple & Functional'>
+        <HiCheckCircleMini q:slot='icon' />
+        ZeUnit embodies the ideals of functional programming, treating each test as a function that [return a result](/docs/returning-results). This approach ensures composability and seamlessly resuability as your project grows.
+    </Card>
+    <Card title='Scaling to Integration Testing'>
+        <HiShieldCheckSolid q:slot='icon' />
+        Armed with [class composers](/docs/core-class-composers) and [method binders](/docs/core-method-binders)  ZeUnit scales to handling requirements of dependencies and testing data while keeping to the same consitent testing syntax.
+    </Card>
+    <Card title='Tailored Reporting'>
+        <HiPrinterMini q:slot='icon' />
+       Visual [stunning reports](/docs/core-reporting) from ZeUnit provide early deliverables to stakeholders, allowing for low-effort user experience (UX) testing during greenfield project development.
+    </Card>
+    <Card title='Powerfully Adaptable'>
+        <HiCog8ToothSolid q:slot='icon' />
+        ZeUnit is readily extensible, allowing developers to tailor the test projects to a specific busiens domain with roll-your-own classes to customize [assertions](/docs/facts-and-assertions), [class composers](/docs/building-class-composers), [method binders](/docs/building-method-binders) and even [test life-cycles](/docs/test-suite-lifecycle).
+    </Card>
+</TwoColumns>
 
 
 ## Why ZeUnit?
@@ -89,4 +105,3 @@ This is where ZeUnit really breaks the mold with the other forms of testing and 
 ***
 
 Next Section: [Birdseye View](/docs/birdseye-view/)
-import gridContainer from "~/components/template/grid-container"

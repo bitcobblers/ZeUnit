@@ -9,6 +9,7 @@ import { Hero } from "~/components/template/hero";
 import Navigation from "~/components/template/navigation";
 import mermaid from "mermaid";
 
+
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
   // https://qwik.builder.io/docs/caching/
@@ -56,7 +57,7 @@ export default component$(() => {
         <Header />
 
         {isHome && <Hero/>}
-
+        
         <div class="relative mx-auto flex w-full max-w-8xl flex-auto justify-center sm:px-2 lg:px-8 xl:px-12">
           <div class="hidden lg:relative lg:block lg:flex-none">
             <div class="absolute inset-y-0 right-0 w-[50vw] bg-slate-50 dark:hidden" />

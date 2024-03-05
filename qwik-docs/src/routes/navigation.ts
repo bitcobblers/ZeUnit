@@ -5,7 +5,7 @@ export const navigation = [
       { title: 'Why ZeUnit?', href: '/' },
       { title: 'Birdseye View', href: '/docs/birdseye-view/' },
       { title: 'Getting Started', href: '/docs/getting-started' },
-      { title: 'Testing Tools', href: '/docs/testing-tools/' },
+      { title: 'Returning Results', href: '/docs/returning-results/' },
     ],
   },
   {
