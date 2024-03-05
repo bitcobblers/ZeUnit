@@ -36,7 +36,7 @@ const CloseIcon = component$((props: any) => {
 });
 
 export default component$(() => {
-  const menu = useStore({ isOpen: true});  
+  const menu = useStore({ isOpen: false});  
   return (
     <>
       <div class="w-full">
