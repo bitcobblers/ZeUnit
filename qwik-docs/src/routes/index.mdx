@@ -75,32 +75,6 @@ But what if that distinction is less important than the weight it is given today
 - Getting upt to **"Large"** tests? Test might need to execute as a [specific chains of events](/docs/test-dependency-chain/) and generate meaningful [reporting data](/docs/core-reporting/) that shared with a larger audiences.
 
 The simpler mental model comes down to composition of dependencies and a function that a `Fact` [assertion](/docs/facts-and-assertions) no matter the scale of the test.
- 
-## Tests, A Developers Best Friend & Worst Enemy
-
-A common trope, at least on [r/dotnet](https://www.reddit.com/r/dotnet/) is lack of testing out in the business world.  The lack of testing is often a result of the lack of time to write tests, or the lack of understanding of the value of tests.  This is truly one of the most "shoot your self in the foot" moments in software engineering. Inevitably the lack of testing leads to a scurry of manual testing and likely slipped deadlines, which only re-enforces the idea that there is not enough time to write tests.
-
-The truth is that testing isn't easy, and while it is a powerful tool in the developer toolbox few developers are well practiced with it.  Moreover hard "code coverage" numbers are often seen as hurdles to clear rather than a standard to strive for.
-
-Here are some warning signs that engineers don't understand the value of tests:
-
-### Long tests with many assertions.
-
-Cover coverage standards are often tracked by ci/cd automation, the game the system developers writing end-to-end tests under the flag of writing unit tests resulting in high coverage with very few tests. The outcome is a false sense of security and a mole hunt when one of those tests fails.
-
-<Warning title="End-to-End Canary Tets">
-The value of a good suite of small fine grained tests is that test failures point to specific areas of the code reducing the time to troubleshoot and address future issues.  When a test failure means that something, somewhere, at some time might be broken, that is no better than a canary flagging the entire mine as unsafe.
-</Warning>
-
-### End of development test crunch.
-
-*"I am finishing up the feature by writing tests."* is a trope of an agile standup conversation. The question arises, can it be known how finished a feature is if it is untested? 
-
-Tests are not an afterthought, they are the checklist along the way to validate that how you think the computer will understand you is how the computer actually understands you. It is there to test your assumptions before too any assumptions are stacked on top each other and it is impossible to know which untested assumption is the root cause of the problem.
-
-### Long refactoring times due to breaking tests
-
-This is where ZeUnit really breaks the mold with the other forms of testing and brings the re-usability to all scales of testing.  The "DRY" montra so prevelent in all aspects of software engineering is looked down on when applying it to testing.  To the test purist, ZeUnit is an abomination because it isn't shackled to the "Assemble, Act, Assert" dogma of unit testing.  At least, the "Assemble" element of the trinity is abstracted away behind the custom class composers or method binders which are re-used from test to test.
 
 ***
 
