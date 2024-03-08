@@ -1,14 +1,25 @@
-﻿namespace ZeUnit.FakeItEasy;
+﻿using FakeItEasy;
 
-public class FakeAttribute<TType,TComposer> 
-    : ZeComposerAttribute<FakeClassComposer<TType, TComposer>>
-    where TComposer : IFakeComposer<TType>, new()
-    where TType : class
-{ 
-}
+namespace ZeUnit.FakeItEasy;
 
-public class FakeAttribute<TType> 
+public class FakeAttribute<TType>
     : ZeComposerAttribute<FakeClassComposer<TType>>
+    , IFakeComposer<TType>
     where TType : class
 {
+    public virtual Fake<TType> Create()
+    {
+        return new Fake<TType>();
+    }
+
+    protected virtual Fake<TType> Build(Fake<TType> fake)
+    {
+        return fake;
+    }
+}
+
+public interface IFakeComposer<TType>
+    where TType : class
+{
+    Fake<TType> Create();
 }

@@ -41,7 +41,6 @@ public class AutofacContainerClassComposer : IZeClassComposer
         }
     }
 
-
     public void Dispose()
     {
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
