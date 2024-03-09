@@ -21,10 +21,10 @@ export const navigation = [
   {
     title: 'Advanced Guides',
     links: [
-      { title: 'Tailored Reporting', href: '/docs/tailored-reporting/' },
       { title: 'Building Method Binders', href: '/docs/building-method-binders/' },
       { title: 'Building Class Composers', href: '/docs/building-class-composers/' },
-      { title: 'Customizing Reporting', href: '/docs/customizing-reporting/' },
+      { title: 'Custom Test Lifecycle', href: '/docs/custom-test-lifecycle/' },
+      { title: 'Tailored Reporting', href: '/docs/tailored-reporting/' },
     ],
   },
   {

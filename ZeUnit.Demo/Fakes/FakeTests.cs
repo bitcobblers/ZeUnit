@@ -15,7 +15,7 @@ public interface IFakeService
     int GetOne();
 }
 
-public class HappyPathFakeComposer : FakeAttribute<IFakeService>
+public class HappyPathFakeComposer : FakeAttribute<IFakeService, HappyPathFakeComposer>
 {
     protected override Fake<IFakeService> Build(Fake<IFakeService> fake)
     {
@@ -36,7 +36,7 @@ public class FakeTests(Fake<IFakeService> fake)
     }
 }
 
-public class ErrorPathFakeService : FakeAttribute<IFakeService>
+public class ErrorPathFakeService : FakeAttribute<IFakeService, ErrorPathFakeService>
 {
     protected override Fake<IFakeService> Build(Fake<IFakeService> fake)
     {

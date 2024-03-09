@@ -1,4 +1,6 @@
-﻿using ZeUnit.Binders;
+﻿using System;
+using System.Reflection;
+using ZeUnit.Binders;
 
 namespace ZeUnit;
 
@@ -68,42 +70,59 @@ public class ZeDiscovery : IEnumerable<ZeTest>
 
     public ZeDiscovery FromAssembly(Assembly source)
     {
+        var errorClass = new DiscoveryErrorLifecycleFactory();
         foreach (var method in source
             .GetTypes()
             .SelectMany(type => (type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
             .Where(m => supportedTypes.Contains(m.ReturnType))))
         {
+            
             var tracker = new IndexTracker(); // TODO: need to do away with this.
             var classType = method.DeclaringType!.GetTypeInfo();
             var attributes = method.GetCustomAttributes()
                 .ToArray();
-
-            var lifecycle = classType.GetInterfaces()
-                .Where(n => n.IsAssignableFrom(typeof(IZeLifecycle<>)))
-                .Select(n => n.GenericTypeArguments[0])
-                .FirstOrDefault();
-
-            var factory = lifecycle != null 
-                ? (IZeClassFactory)Activator.CreateInstance(lifecycle)! 
-                : new TransientLifecycleFactory(classType);
-
-            var dependsOn = _parser.Parse(classType, method);         
-            var composers = this.MethodFactory.Get(attributes);
-
-            var methodActivations = composers.SelectMany(n => n.Get(method).Select(a => (n.GetType().Name, a)));
-            foreach (var activation in methodActivations)
+            try
             {
-                var index = tracker.IndexFor(classType.Name, method.Name);
+                var lifecycle = classType.GetInterfaces()
+                    .Where(n => n.IsAssignableFrom(typeof(IZeLifecycle<>)))
+                    .Select(n => n.GenericTypeArguments[0])
+                    .FirstOrDefault();
+
+                var factory = lifecycle != null
+                    ? (IZeClassFactory)Activator.CreateInstance(lifecycle)!
+                    : new TransientLifecycleFactory(classType, new ComposerClassFactory(classType));
+
+                var dependsOn = _parser.Parse(classType, method);
+                var composers = this.MethodFactory.Get(attributes);
+
+                var methodActivations = composers.SelectMany(n => n.Get(method).Select(a => (n.GetType().Name, a)));
+                foreach (var activation in methodActivations)
+                {
+                    var index = tracker.IndexFor(classType.Name, method.Name);
+                    tests.Add(new ZeTest()
+                    {
+                        Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{activation.a.Key}::{index}",
+                        Class = classType,
+                        ClassFactory = factory,
+                        Method = method,
+                        Arguments = () => activation.a.Arguments,
+                        DependsOn = dependsOn,
+                        Skipped = attributes.Any(n => n is SkipAttribute)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
                 tests.Add(new ZeTest()
                 {
-                    Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{activation.a.Key}::{index}",
+                    Name = $"{classType.FullName}::{method.Name}::Discovery::Lifecycle",
                     Class = classType,
-                    ClassFactory = factory,
-                    Method = method,
-                    Arguments = () => activation.a.Arguments,
-                    DependsOn = dependsOn,
+                    ClassFactory = errorClass,
+                    Method = errorClass.GetHandler(),
+                    Arguments = () => Array.Empty<object>(),
+                    DependsOn = Array.Empty<string>(),
                     Skipped = attributes.Any(n => n is SkipAttribute)
-                }) ;
+                });
             }
         }
 

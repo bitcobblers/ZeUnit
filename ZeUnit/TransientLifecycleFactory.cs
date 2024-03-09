@@ -1,13 +1,43 @@
-﻿namespace ZeUnit;
+﻿using System.Reflection;
+
+namespace ZeUnit;
+
+
+public class NoTestDiscovered
+{
+    public static MethodInfo TestHandler = typeof(NoTestDiscovered).GetMethod("ReportOnError")!;
+    
+    [Skip]
+    public Fact ReportOnError(Exception ex)
+    {
+         return new Fact(ex)
+            .Assert(new AssertError(ex));
+    }
+}
+
+
+public class DiscoveryErrorLifecycleFactory : IZeClassFactory
+{
+    public MethodInfo GetHandler() => NoTestDiscovered.TestHandler;
+
+    public object Get()
+    {
+        return new NoTestDiscovered();
+    }
+
+    public void Dispose()
+    {
+    }
+}
 
 public class TransientLifecycleFactory : IZeClassFactory
 {
     private readonly ComposerClassFactory zeClassComposer;
     private readonly TypeInfo typeInfo;
 
-    public TransientLifecycleFactory(TypeInfo typeInfo)
+    public TransientLifecycleFactory(TypeInfo typeInfo, ComposerClassFactory factory)
     {
-        this.zeClassComposer = new ComposerClassFactory(typeInfo);
+        this.zeClassComposer = factory;
         this.typeInfo = typeInfo;
     }
     
