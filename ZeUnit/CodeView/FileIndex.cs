@@ -20,7 +20,7 @@ namespace ZeUnit.CodeView
         }
         public int GetLastIndex((string, int, int Location, Match) lookup)
         {
-            return this.Aggregate(-1, (value, item) => item.Location < lookup.Location ? item.Index : value);
+            return this.Aggregate(0, (value, item) => item.Location < lookup.Location ? item.Index + 1 : value);
         }
         public string GetLast((string, int, int Location, Match) lookup) 
         { 
@@ -79,7 +79,6 @@ namespace ZeUnit.CodeView
     {
         private string defaultNamespace = "test";
         private string defaultClass = "Program";
-        private string defaultMethod = "Main";
 
         private static Regex newlineRegex = new Regex(@"(\n)");
         private static Regex namespaceRegex = new Regex(@"namespace (.*)[;?]");
