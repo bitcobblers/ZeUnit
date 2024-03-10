@@ -16,10 +16,10 @@ public class TestCaseBuilder
                     test.Name,
                     new Uri(Constants.ExecutorUri),
                     source)
-        {
-            CodeFilePath = test.Class!.FullName,
+        {              
+            CodeFilePath = test?.CodeInfo?.FileName ?? test.Name,
             DisplayName = test.Name,
-            LineNumber = 1,
+            LineNumber = test?.CodeInfo?.LineNumber ?? 0,
         };
     }
 }

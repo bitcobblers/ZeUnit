@@ -45,7 +45,7 @@ public static class Is<TException>
         catch (Exception ex)
         {
             var type = ex.GetType();
-            if (type == errorType)
+            if (type.IsAssignableTo(errorType))
             {
                 return new Fact(ex)
                     .Assert(new AssertPassed($"Expected error {type} was thrown."));

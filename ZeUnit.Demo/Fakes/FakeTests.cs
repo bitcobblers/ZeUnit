@@ -15,17 +15,17 @@ public interface IFakeService
     int GetOne();
 }
 
-public class HappyPathComposer : FakeComposer<IFakeService>
+public class HappyPathFakeComposer : FakeAttribute<HappyPathFakeComposer, IFakeService>
 {
-    protected override Fake<IFakeService> Compose(Fake<IFakeService> fake)
+    protected override Fake<IFakeService> Build(Fake<IFakeService> fake)
     {
         fake.CallsTo(x => x.GetOne())
             .Returns(1);
-        return base.Compose(fake);
+        return fake;
     }
 }    
 
-[Fake<IFakeService, HappyPathComposer>]
+[HappyPathFakeComposer]
 public class FakeTests(Fake<IFakeService> fake) 
 {
     public Fact FakeIsReturnsTheValue()
@@ -36,17 +36,17 @@ public class FakeTests(Fake<IFakeService> fake)
     }
 }
 
-public class ErrorPathComposer : FakeComposer<IFakeService>
+public class ErrorPathFakeService : FakeAttribute<ErrorPathFakeService, IFakeService>
 {
-    protected override Fake<IFakeService> Compose(Fake<IFakeService> fake)
+    protected override Fake<IFakeService> Build(Fake<IFakeService> fake)
     {
         fake.CallsTo(x => x.GetOne())
             .Throws(new Exception());
-        return base.Compose(fake);
+        return fake;
     }
 }
 
-[Fake<IFakeService, ErrorPathComposer>]
+[ErrorPathFakeService]
 public class FakeTests2(Fake<IFakeService> fake)
 {
     public Fact FakeIsReturnsTheValue()

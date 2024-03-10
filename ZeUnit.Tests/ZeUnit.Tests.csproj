@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZeUnit.Autofac\ZeUnit.Autofac.csproj" />
+    <ProjectReference Include="..\ZeUnit.Demo\ZeUnit.Demo.csproj" />
+    <ProjectReference Include="..\ZeUnit.FakeItEasy\ZeUnit.FakeItEasy.csproj" />
+    <ProjectReference Include="..\ZeUnit.Lamar\ZeUnit.Lamar.csproj" />
+    <ProjectReference Include="..\ZeUnit.Runner.VisualStudio\ZeUnit.TestAdapter.csproj" />
+    <ProjectReference Include="..\ZeUnit.Story\ZeUnit.Story.csproj" />
+    <ProjectReference Include="..\ZeUnit\ZeUnit.csproj" />
+  </ItemGroup>
+
+</Project>

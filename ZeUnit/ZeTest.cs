@@ -1,4 +1,12 @@
 ﻿namespace ZeUnit;
+public record MethodCodeInfo(
+        string FileName,
+        int LineNumber,
+        string Namespace,
+        string ClassName,
+        string MethodName,
+        string Lifestyle,
+        string[] Requires);
 
 public class ZeTest
 {
@@ -9,6 +17,8 @@ public class ZeTest
     public IZeClassFactory? ClassFactory { get; set; }
     
     public TypeInfo? Class { get; set; }    
+
+    public MethodCodeInfo CodeInfo { get; set; }
 
     public MethodInfo? Method { get; set; }    
 
