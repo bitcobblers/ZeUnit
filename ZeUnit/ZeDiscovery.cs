@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using ZeUnit.Binders;
+using ZeUnit.CodeView;
 
 namespace ZeUnit;
 
@@ -32,6 +33,11 @@ public class ZeDependencyChainParser
 
 public class ZeDiscovery : IEnumerable<ZeTest>
 {
+    private static FileIndexParser parser = new();
+    private readonly MethodCodeInfo[] codeProvider = new ZeCodeSolutionProvider().Code()
+        .SelectMany(n=> parser.ReadTest(n))
+        .ToArray();
+   
     private readonly ZeDependencyChainParser _parser = new();
     private readonly List<ZeTest> tests = new();
     private readonly List<Type> supportedTypes = new();
@@ -98,11 +104,15 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                 var methodActivations = composers.SelectMany(n => n.Get(method).Select(a => (n.GetType().Name, a)));
                 foreach (var activation in methodActivations)
                 {
+                    var codeInfo = codeProvider
+                        .FirstOrDefault(x=>x.MethodName == method.Name && x.ClassName == classType.Name);
+
                     var index = tracker.IndexFor(classType.Name, method.Name);
                     tests.Add(new ZeTest()
                     {
                         Name = $"{classType.FullName}::{method.Name}::{activation.Name}::{activation.a.Key}::{index}",
                         Class = classType,
+                        CodeInfo = codeInfo,
                         ClassFactory = factory,
                         Method = method,
                         Arguments = () => activation.a.Arguments,
@@ -119,7 +129,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                     Class = classType,
                     ClassFactory = errorClass,
                     Method = errorClass.GetHandler(),
-                    Arguments = () => Array.Empty<object>(),
+                    Arguments = () => new object[] { ex },
                     DependsOn = Array.Empty<string>(),
                     Skipped = attributes.Any(n => n is SkipAttribute)
                 });
