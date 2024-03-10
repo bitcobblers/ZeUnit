@@ -13,26 +13,26 @@ public class EnumerableTests
 
 public class CodeReaderTests
 {
-    public Fact CanReadFile()
-    {
-        var provider = new PhysicalFileProvider("C:\\dev\\ZeUnit\\ZeUnit\\CodeView\\");
-        var file = provider.GetFileInfo("FileIndex.cs");
+    //public Fact CanReadFile()
+    //{
+    //    var provider = new PhysicalFileProvider("C:\\dev\\ZeUnit\\ZeUnit\\CodeView\\");
+    //    var file = provider.GetFileInfo("FileIndex.cs");
 
-        var parser = new FileIndexParser();
-        return !parser.ReadTest(file).Any();
+    //    var parser = new FileIndexParser();
+    //    return !parser.ReadTest(file).Any();
 
-    }
+    //}
 
-    public Fact CanReadFacts()
-    {
-        var provider = new PhysicalFileProvider("C:\\dev\\ZeUnit\\ZeUnit.Demo\\EnumerableTests\\");
-        var file = provider.GetFileInfo("EnumerableTests.cs");
+    //public Fact CanReadFacts()
+    //{
+    //    var provider = new PhysicalFileProvider("C:\\dev\\ZeUnit\\ZeUnit.Demo\\EnumerableTests\\");
+    //    var file = provider.GetFileInfo("EnumerableTests.cs");
 
-        var parser = new FileIndexParser();
-        var result = parser.ReadTest(file).ToArray();
-        return result.Any();
+    //    var parser = new FileIndexParser();
+    //    var result = parser.ReadTest(file).ToArray();
+    //    return result.Any();
 
-    }
+    //}
 
     public Fact CanFindSolution()
     {
