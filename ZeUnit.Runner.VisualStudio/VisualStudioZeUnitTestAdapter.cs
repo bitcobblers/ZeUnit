@@ -73,11 +73,16 @@ public class VisualStudioZeUnitTestAdapter : ITestDiscoverer, ITestExecutor
 
                     executionList.Add(runner.Run(zeTest, factory!).Select(pair =>
                     {
-                        var (_, Ze) = pair;
+                        var (_, Ze) = pair;                        
                         result.Duration = Ze.Duration;
                         result.Outcome = Ze.Any() && Ze.All(x => x.Status == ZeStatus.Passed)
                             ? TestOutcome.Passed
                             : TestOutcome.Failed;
+
+                        foreach (var zeResult in Ze)
+                        {
+                            result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, zeResult.Message));
+                        }
                         frameworkHandle.RecordResult(result);
                         frameworkHandle.RecordEnd(testCase, result.Outcome);
                         return Ze;

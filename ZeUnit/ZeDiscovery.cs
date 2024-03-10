@@ -87,6 +87,9 @@ public class ZeDiscovery : IEnumerable<ZeTest>
             var classType = method.DeclaringType!.GetTypeInfo();
             var attributes = method.GetCustomAttributes()
                 .ToArray();
+
+            var codeInfo = codeProvider
+                        .FirstOrDefault(x => x.MethodName == method.Name && x.ClassName == classType.Name);
             try
             {
                 var lifecycle = classType.GetInterfaces()
@@ -104,9 +107,6 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                 var methodActivations = composers.SelectMany(n => n.Get(method).Select(a => (n.GetType().Name, a)));
                 foreach (var activation in methodActivations)
                 {
-                    var codeInfo = codeProvider
-                        .FirstOrDefault(x=>x.MethodName == method.Name && x.ClassName == classType.Name);
-
                     var index = tracker.IndexFor(classType.Name, method.Name);
                     tests.Add(new ZeTest()
                     {
@@ -128,6 +128,7 @@ public class ZeDiscovery : IEnumerable<ZeTest>
                     Name = $"{classType.FullName}::{method.Name}::Discovery::Lifecycle",
                     Class = classType,
                     ClassFactory = errorClass,
+                    CodeInfo = codeInfo,
                     Method = errorClass.GetHandler(),
                     Arguments = () => new object[] { ex },
                     DependsOn = Array.Empty<string>(),
