@@ -1,13 +1,21 @@
 ﻿using FakeItEasy;
+using ZeUnit.Composers;
 
 namespace ZeUnit.FakeItEasy;
 
-public class FakeAttribute<TType, TAttribute>
-    : ZeComposerAttribute<FakeClassComposer<TType, TAttribute>>
-    , IFakeAttribute<TType>
+public class FakeAttribute<TAttribute, TType>
+     : ZeComposerAttribute<SingletonComposer<TAttribute>>
+    , IZeBuilderAttribute    
+    where TAttribute : FakeAttribute<TAttribute, TType>
     where TType : class
-    where TAttribute : FakeAttribute<TType, TAttribute>
 {
+    public Type Type => typeof(Fake<TType>);
+
+    public object Build()
+    {
+        return Build(Create());
+    }
+
     public virtual Fake<TType> Create()
     {
         return new Fake<TType>();
@@ -17,10 +25,4 @@ public class FakeAttribute<TType, TAttribute>
     {
         return fake;
     }
-}
-
-public interface IFakeAttribute<TType>
-    where TType : class
-{
-    Fake<TType> Create();
 }

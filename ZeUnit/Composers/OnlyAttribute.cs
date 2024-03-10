@@ -1,5 +1,6 @@
 ﻿namespace ZeUnit.Composers;
 
+
 public interface IZeBuilderAttribute
 {
     Type Type { get; }
